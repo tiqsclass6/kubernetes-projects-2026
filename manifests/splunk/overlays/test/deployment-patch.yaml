@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: splunk-example
 spec:
-  replicas: 2                               # example: different replica count for test
+  replicas: 1                               # example: different replica count for test
   template:
     spec:
       containers:
@@ -11,8 +11,8 @@ spec:
         image: splunk/splunk:latest           # override image
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "250m"
+            memory: "128Mi"
+            cpu: "100m"
           limits:
-            memory: "1Gi"
-            cpu: "500m"
+            memory: "256Mi"
+            cpu: "250m"
