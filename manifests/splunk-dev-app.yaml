@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
     targetRevision: project-2
-    path: splunk/overlays/dev
+    path: manifests/splunk/overlays/dev
 
   destination:
     server: https://kubernetes.default.svc
