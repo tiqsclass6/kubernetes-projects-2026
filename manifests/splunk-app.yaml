@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/<ORG>/<REPO>.git
-    targetRevision: main
-    path: splunk
+    repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
+    targetRevision: project-2
+    path: splunk/base
 
   destination:
     server: https://kubernetes.default.svc

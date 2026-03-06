@@ -7,13 +7,13 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/<ORG>/<REPO>.git
-    targetRevision: main
+    repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
+    targetRevision: project-2
     path: splunk/overlays/test
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: splunk-dev
+    namespace: splunk-test
 
   syncPolicy:
     automated:
@@ -21,6 +21,5 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-
 
 # kubectl apply -f splunk-test-app.yaml

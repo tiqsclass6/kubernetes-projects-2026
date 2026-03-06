@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Script: deploy-argocd-security-lab.sh
-# Purpose: Deploy minimal Argo CD + RBAC configuration + optional Splunk apps
-#          based on the homework file structure under manifests/
-# Usage:   ./deploy-argocd-security-lab.sh    (run from the directory containing 'manifests/')
+# Script: deployment.sh
+# Purpose: Install official stable Argo CD (using Server-Side Apply) + custom RBAC
+#          + Splunk Application resources for security lab / educational use
+#
+# Usage:   ./deployment.sh    (run from directory containing 'manifests/')
 # =============================================================================
 
 set -euo pipefail
@@ -13,38 +14,28 @@ IFS=$'\n\t'
 # Configuration
 # ──────────────────────────────────────────────────────────────────────────────
 
+NAMESPACE="argocd"
 MANIFESTS_DIR="manifests"
 RBAC_DIR="${MANIFESTS_DIR}/rbac"
 
-NAMESPACE="argocd"
+EXPECTED_APP_REPO="https://github.com/tiqsclass6/kubernetes-projects-2026.git"
 
-# Core Argo CD component files (apply order matters)
-CORE_FILES=(
-  "argocd-namespace.yaml"
-  "argocd-deploy.yaml"
-  "argocd-repo.yaml"
-  "argocd-controller.yaml"
-  "argocd-port.yaml"
-)
-
-# RBAC ConfigMap (applied right after core components)
 RBAC_FILE="argocd-rbac-cm.yaml"
 
-# Optional Splunk-related Argo CD Application manifests
 SPLUNK_FILES=(
   "splunk-app.yaml"
   "splunk-dev-app.yaml"
   "splunk-test-app.yaml"
 )
 
-# Colors for output
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Helper Functions
+# Helpers
 # ──────────────────────────────────────────────────────────────────────────────
 
 log_info()  { printf "${GREEN}[INFO]${NC}  %s\n" "$*"; }
@@ -52,129 +43,106 @@ log_warn()  { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 log_error() { printf "${RED}[ERROR]${NC} %s\n" "$*" >&2; exit 1; }
 
 check_file_exists() {
-  local file="$1"
-  local fullpath="$2"
-  [[ -f "$fullpath" ]] || log_error "Required file not found: $fullpath"
+  local path="$1"
+  [[ -f "$path" ]] || log_error "Required file not found: $path"
 }
 
 wait_for_pods_ready() {
-  local namespace="$1"
-  local timeout=180
-  local interval=10
-  local elapsed=0
-
-  log_info "Waiting for all pods in namespace '$namespace' to become Ready (timeout: ${timeout}s)..."
-
-  while [ $elapsed -lt $timeout ]; do
-    if kubectl -n "$namespace" wait --for=condition=Ready pod --all --timeout=0s &>/dev/null; then
-      log_info "All pods in namespace '$namespace' are Ready."
-      return 0
-    fi
-    sleep "$interval"
-    elapsed=$((elapsed + interval))
-    printf "."
-  done
-  log_error "Timeout waiting for pods to become ready in namespace '$namespace'"
+  local ns="$1"
+  local timeout=300
+  log_info "Waiting for pods in namespace '${ns}' to become Ready (timeout: ${timeout}s)..."
+  if ! kubectl -n "${ns}" wait --for=condition=Ready pod --all --timeout="${timeout}s"; then
+    log_error "Timeout waiting for pods in '${ns}'"
+  fi
+  log_info "All pods in '${ns}' are Ready."
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Main Logic
+# Main
 # ──────────────────────────────────────────────────────────────────────────────
 
-log_info "Starting Argo CD deployment with RBAC (security lab variant)..."
+log_info "Starting Argo CD deployment (official + custom RBAC)"
 
-if [[ ! -d "$MANIFESTS_DIR" ]]; then
-  log_error "Directory '${MANIFESTS_DIR}' not found. Please run this script from the parent directory."
-fi
-
-# 1. Validate core files
-for file in "${CORE_FILES[@]}"; do
-  check_file_exists "$file" "${MANIFESTS_DIR}/${file}"
+# 1. Validate files
+check_file_exists "${RBAC_DIR}/${RBAC_FILE}"
+for f in "${SPLUNK_FILES[@]}"; do
+  [[ -f "${MANIFESTS_DIR}/${f}" ]] && log_info "Found: ${f}" || log_warn "Skipped (not found): ${f}"
 done
 
-# Validate RBAC file
-check_file_exists "$RBAC_FILE" "${RBAC_DIR}/${RBAC_FILE}"
+# 2. Install official Argo CD with Server-Side Apply
+log_info "Creating namespace '${NAMESPACE}' if needed..."
+kubectl create namespace "${NAMESPACE}" --dry-run=client -o yaml | kubectl apply -f -
 
-# 2. Apply core Argo CD components
-log_info "Applying core Argo CD components from ${MANIFESTS_DIR}/ ..."
+log_info "Installing official stable Argo CD (using Server-Side Apply)..."
+kubectl apply -n "${NAMESPACE}" -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml \
+  --server-side --force-conflicts
 
-for file in "${CORE_FILES[@]}"; do
-  fullpath="${MANIFESTS_DIR}/${file}"
-  log_info "Applying $file ..."
-  kubectl apply -f "$fullpath" || log_error "Failed to apply $fullpath"
-done
+# 3. Wait for readiness
+wait_for_pods_ready "${NAMESPACE}"
 
-# 3. Apply RBAC ConfigMap
-rbac_fullpath="${RBAC_DIR}/${RBAC_FILE}"
-log_info "Applying RBAC configuration: $RBAC_FILE ..."
-kubectl apply -f "$rbac_fullpath" || log_error "Failed to apply $rbac_fullpath"
+# 4. Apply & reload custom RBAC
+log_info "Applying custom RBAC..."
+kubectl apply -f "${RBAC_DIR}/${RBAC_FILE}"
 
-# 4. Wait for Argo CD pods to become ready
-wait_for_pods_ready "$NAMESPACE"
+log_info "Restarting argocd-server to load new RBAC..."
+kubectl -n "${NAMESPACE}" rollout restart deployment argocd-server
+kubectl -n "${NAMESPACE}" rollout status deployment argocd-server --timeout=120s
 
-# 5. Show verification output
-log_info "Verification — Pods in namespace ${NAMESPACE}:"
-kubectl -n "$NAMESPACE" get pods -o wide
+# 5. Verification
+log_info "Pods in ${NAMESPACE}:"
+kubectl -n "${NAMESPACE}" get pods -o wide
 
-log_info "Verification — Services in namespace ${NAMESPACE}:"
-kubectl -n "$NAMESPACE" get svc
+log_info "Current Applications:"
+kubectl -n "${NAMESPACE}" get applications 2>/dev/null || echo "(none yet)"
 
-log_info "Verification — ConfigMaps in namespace ${NAMESPACE} (RBAC):"
-kubectl -n "$NAMESPACE" get configmap argocd-rbac-cm -o yaml --show-managed-fields=false
+# 6. UI access instructions
+log_info "Argo CD UI:"
+log_info "  kubectl -n ${NAMESPACE} port-forward svc/argocd-server 8080:443"
+log_info "  Open: https://localhost:8080 (accept self-signed cert warning)"
+log_info "Credentials:"
+log_info "  Username: admin"
+echo "  Password: kubectl -n ${NAMESPACE} get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode; echo"
 
-# 6. Provide access instructions
-log_info "Argo CD UI Access Options:"
+# 7. Apply Splunk apps
+log_info "Applying Splunk manifests (repo: ${EXPECTED_APP_REPO})..."
 
-log_info "NodePort access (port 30081):"
-kubectl get nodes -o wide | grep -v '^NAME' | awk '{print "  http://" $6 ":30081"}'
-echo "  (use any listed INTERNAL-IP or EXTERNAL-IP)"
-
-log_info "Port-forward access (recommended for local/lab usage):"
-echo "  kubectl -n ${NAMESPACE} port-forward svc/argocd-server 9081:9081 &"
-echo "  Then open in browser: http://localhost:9081"
-
-log_info "Initial credentials:"
-echo "  Username: admin"
-echo "  Password: Retrieve with:"
-echo "    kubectl -n ${NAMESPACE} get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 --decode; echo"
-
-# 7. Optional: Deploy Splunk-related Applications
-log_info "Applying available Splunk Application manifests..."
-
-applied_splunk=false
-for file in "${SPLUNK_FILES[@]}"; do
-  fullpath="${MANIFESTS_DIR}/${file}"
-  if [[ -f "$fullpath" ]]; then
-    log_info "Applying $file ..."
-    kubectl apply -f "$fullpath" || log_error "Failed to apply $fullpath"
-    applied_splunk=true
+applied=false
+for f in "${SPLUNK_FILES[@]}"; do
+  p="${MANIFESTS_DIR}/${f}"
+  if [[ -f "$p" ]]; then
+    log_info "Applying ${f}..."
+    kubectl apply -f "$p" || log_error "Apply failed: ${f}"
+    applied=true
   else
-    log_warn "File not found (skipping): $fullpath"
+    log_warn "Skipped (missing): ${f}"
   fi
 done
 
-if [[ "$applied_splunk" == true ]]; then
-  log_info "Verification — Argo CD Applications:"
-  kubectl -n "$NAMESPACE" get applications
+if [[ "$applied" == true ]]; then
+  log_info "Applications:"
+  kubectl -n "${NAMESPACE}" get applications
 
-  log_info "Waiting briefly for namespace(s) creation / initial sync..."
-  sleep 12
+  log_info "Waiting for initial sync/namespace creation..."
+  sleep 15
 
-  for ns in splunk splunk-dev; do
-    if kubectl get namespace "$ns" &>/dev/null; then
-      log_info "Resources in namespace '$ns' (may still be provisioning):"
+  for ns in splunk splunk-dev splunk-test; do
+    if kubectl get ns "$ns" &>/dev/null; then
+      log_info "Resources in '${ns}':"
       kubectl -n "$ns" get pods,svc,pvc --ignore-not-found
     else
-      log_warn "Namespace '$ns' does not yet exist."
+      log_warn "Namespace '${ns}' not yet created (sync may be pending)."
     fi
   done
+
+  log_info "Sync command (after login):"
+  echo "  argocd app sync splunk splunk-dev splunk-test"
 else
-  log_warn "No Splunk Application manifests were applied."
+  log_warn "No Splunk manifests applied."
 fi
 
-log_info "Deployment completed successfully."
-log_info "Next recommended steps:"
-echo "  • Retrieve the admin password (command shown above)"
-echo "  • Log in to the UI and verify RBAC behavior with different user groups"
-echo "  • Review argocd-rbac-cm.yaml to understand role bindings"
-echo "  • Consider adding TLS and removing --insecure for non-lab environments"
+log_info "Deployment complete."
+log_info "Next:"
+echo "  • Get password (above)"
+echo "  • Log in to UI"
+echo "  • Sync applications"
+echo "  • Test RBAC with different roles"

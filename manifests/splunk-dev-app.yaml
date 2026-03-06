@@ -7,8 +7,8 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/<ORG>/<REPO>.git
-    targetRevision: main
+    repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
+    targetRevision: project-2
     path: splunk/overlays/dev
 
   destination:
@@ -22,5 +22,4 @@ spec:
     syncOptions:
       - CreateNamespace=true
 
-
-#kubectl apply -f splunk-dev-app.yaml
+# kubectl apply -f splunk-dev-app.yaml
