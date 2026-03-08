@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sArgoAppEnvironment
+metadata:
+  name: argo-app-env-namespace-lock
+spec:
+  match:
+    kinds:
+      - apiGroups: ["argoproj.io"]
+        kinds: ["Application"]
+  parameters:
+    envLabelKey: "env"
+    allowedNamespaceByEnv:
+      prod: "splunk-prod"
+      dev: "splunk-dev"
+      test: "splunk-test"

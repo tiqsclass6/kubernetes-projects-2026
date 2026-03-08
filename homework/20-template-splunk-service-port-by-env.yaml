@@ -1,0 +1,45 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sserviceportbyenv
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sServicePortByEnv
+      validation:
+        openAPIV3Schema:
+          properties:
+            allowedPortByNamespace:
+              type: object
+              additionalProperties:
+                type: integer
+            serviceName:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sserviceportbyenv
+
+        is_service {
+          input.review.kind.group == ""
+          input.review.kind.kind == "Service"
+        }
+
+        violation[{"msg": msg}] {
+          is_service
+          svc := input.review.object
+
+          # Only enforce against the targeted service name (keeps class scope tight)
+          svc.metadata.name == input.parameters.serviceName
+
+          ns := svc.metadata.namespace
+          allowed := input.parameters.allowedPortByNamespace[ns]
+          allowed != 0
+
+          some i
+          port := svc.spec.ports[i].port
+          port != allowed
+
+          msg := sprintf("DENY: Service %v in namespace %v must expose port %v (got %v)", [svc.metadata.name, ns, allowed, port])
+        }

@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: splunk-dev
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  project: splunk-dev
+  source:
+    repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
+    targetRevision: project-3
+    path: splunk/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: splunk-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

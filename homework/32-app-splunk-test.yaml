@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: splunk-test
+  namespace: argocd
+  labels:
+    env: test
+spec:
+  project: splunk-test
+  source:
+    repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
+    targetRevision: project-3
+    path: splunk/overlays/test
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: splunk-test
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
