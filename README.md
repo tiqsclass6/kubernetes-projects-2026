@@ -1,7 +1,8 @@
 # 📽 **Project 2 - Argo CD GitOps Security Lab (Splunk Multi-Environment Deployment)**
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-EKS-blue?logo=kubernetes)
-![GitOps](https://img.shields.io/badge/GitOps-ArgoCD-orange?logo=argo)
+![GitOps](https://img.shields.io/badge/Deployment-GitOps-orange)
+![License](https://img.shields.io/badge/License-MIT-blue)
 ![Terraform](https://img.shields.io/badge/IaC-Terraform-purple?logo=terraform)
 ![AWS](https://img.shields.io/badge/Cloud-AWS-black?logo=amazonaws)
 ![Security](https://img.shields.io/badge/Security-RBAC-green)
@@ -42,8 +43,23 @@ This lab demonstrates:
 - GitOps application lifecycle
 - RBAC security enforcement
 - Argo CD automation
-- multi-environment deployments
+- Multi-environment deployments
 - Kubernetes operational validation
+
+---
+
+## 🥼 **DevOps Skills Demonstrated**
+
+This lab demonstrates the following DevOps capabilities:
+
+- **Infrastructure as Code** ➡ *Terraform*  
+- **Cloud Platform** ➡ *AWS EKS*  
+- **Container Orchestration** ➡ *Kubernetes*  
+- **GitOps Deployment** ➡ *Argo CD*  
+- **Security Enforcement** ➡ *RBAC Policies*  
+- **Environment Isolation** ➡ *Kubernetes Namespaces*  
+- **Automation** ➡ *Bash scripting*  
+- **Operational Validation** ➡ *automated lab status checks*
 
 ---
 
@@ -76,6 +92,118 @@ kubectl get nodes
 ```
 
 ![lab-requirements.jpg](/Screenshots/lab-requirements.jpg)
+
+---
+
+## 🧑‍🏫 **Network Architecture Diagram**
+
+```mermaid
+flowchart TB
+
+%% ===============================
+%% USERS
+%% ===============================
+
+subgraph Users
+A[👤 admin1<br>Admin Role]
+B[👤 student1<br>Dev/Test Operator]
+C[👤 student2<br>Dev/Test Operator]
+end
+
+%% ===============================
+%% GITOPS SOURCE
+%% ===============================
+
+subgraph GitOps
+D[🐙 GitHub Repository<br>Application Manifests]
+end
+
+%% ===============================
+%% INFRASTRUCTURE
+%% ===============================
+
+subgraph Infrastructure
+E[🟪 Terraform Infrastructure Code]
+F[☁ AWS EKS Cluster]
+end
+
+%% ===============================
+%% ARGOCD
+%% ===============================
+
+subgraph ArgoCD
+G[🔶 Argo CD Controller]
+H[🔐 Argo CD RBAC Policies]
+end
+
+%% ===============================
+%% KUBERNETES
+%% ===============================
+
+subgraph Kubernetes
+I[☸ splunk-dev Namespace]
+J[☸ splunk-test Namespace]
+K[☸ splunk-prod Namespace]
+end
+
+%% ===============================
+%% APPLICATIONS
+%% ===============================
+
+subgraph Applications
+L[📊 Splunk Dev Application]
+M[📊 Splunk Test Application]
+N[📊 Splunk Production Application]
+end
+
+%% ===============================
+%% USER ACCESS FLOW
+%% ===============================
+
+A -->|Admin Access| G
+B -->|Dev/Test Access| G
+C -->|Dev/Test Access| G
+
+%% ===============================
+%% GITOPS FLOW
+%% ===============================
+
+D -->|GitOps Sync| G
+
+%% ===============================
+%% INFRASTRUCTURE FLOW
+%% ===============================
+
+E -->|Infrastructure Provisioning| F
+
+%% ===============================
+%% CLUSTER CONTROL
+%% ===============================
+
+F -->|Cluster Connection| G
+
+%% ===============================
+%% RBAC ENFORCEMENT
+%% ===============================
+
+G -->|Access Control Policies| H
+
+%% ===============================
+%% NAMESPACE DEPLOYMENT
+%% ===============================
+
+F --> I
+F --> J
+F --> K
+
+%% ===============================
+%% APPLICATION DEPLOYMENT
+%% ===============================
+
+I --> L
+J --> M
+K --> N
+```
 
 ---
 
@@ -115,22 +243,6 @@ Each environment is isolated using:
 - Argo CD AppProjects
 - RBAC policy enforcement
 
-The workflow looks like:
-
-```text
-Git Repo
-   │
-   ▼
-Argo CD
-   │
-   ▼
-Kubernetes Cluster
-   │
-   ├── splunk-dev
-   ├── splunk-test
-   └── splunk-prod
-```
-
 This pattern is widely used in **enterprise GitOps platforms**.
 
 ---
@@ -140,7 +252,7 @@ This pattern is widely used in **enterprise GitOps platforms**.
 ```text
 project-2/
 │
-├── manifests/                                                                # GitOps manifests for Argo CD and applications
+├── manifests/                                   # GitOps manifests for Argo CD and applications
 │   ├── rbac/
 │   │   └── argocd-rbac-cm.yaml
 │   │
@@ -161,7 +273,7 @@ project-2/
 │   │       └── test/
 │   │           ├── deployment.yaml
 │   │           └── kustomization.yaml
-|   │
+│   │
 │   ├── argocd-controller.yaml
 │   ├── argocd-deploy.yaml
 │   ├── argocd-namespace.yaml
@@ -172,7 +284,7 @@ project-2/
 │   ├── splunk-prod-app.yaml
 │   └── splunk-test-app.yaml
 |
-├── Screenshots/                                                              # Screenshots of lab steps and results
+├── Screenshots/                                 # Screenshots of lab steps and results
 |   ├── argocd-apps-sync.jpg
 |   ├── argocd-cluster-state.jpg
 |   ├── deploy-script-port-fwd.jpg
@@ -181,6 +293,8 @@ project-2/
 |   ├── deploy-script-pt3.jpg
 |   ├── deploy-script-pt4.jpg
 |   ├── deploy-script-pt5.jpg
+|   ├── get-secret-command.jpg
+|   ├── kubeconfig-get-nodes.jpg
 |   ├── lab-final-check-pt1.jpg
 |   ├── lab-final-check-pt2.jpg
 |   ├── lab-final-check-pt3.jpg
@@ -202,9 +316,6 @@ project-2/
 |   ├── teardown-pt1.jpg
 |   ├── teardown-pt2.jpg
 |   ├── teardown-pt3.jpg
-|   ├── users-pt1.jpg
-|   ├── users-pt2.jpg
-|   ├── users-pt3.jpg
 |   ├── terraform-apply.jpg
 |   ├── terraform-destroy.jpg
 |   ├── terraform-init-fmt-validate.jpg
@@ -213,29 +324,29 @@ project-2/
 |   ├── users-pt2.jpg
 |   └── users-pt3.jpg
 |
-├── scripts/                                                                  # Automation scripts for lab operations
+├── scripts/                                     # Automation scripts for lab operations
 │   ├── 1-deployment.sh
 │   ├── 2-rbac.sh
 │   ├── 3-users.sh
 │   ├── 4-lab-final-check.sh
 │   └── 5-teardown.sh
 │
-├── .gitignore                                                                # Git ignore file
-├── 0-var.tf                                                                  # Variable definitions for Terraform
-├── 1-auth.tf                                                                 # AWS provider and authentication configuration for Terraform
-├── 2-vpc.tf                                                                  # VPC configuration for Terraform
-├── 3-subnets.tf                                                              # Subnet configuration for Terraform
-├── 4-igw.tf                                                                  # Internet Gateway configuration for Terraform
-├── 5-nat.tf                                                                  # Elastic IP and NAT Gateway configuration for Terraform
-├── 6-rtb.tf                                                                  # Route Table configuration for Terraform
-├── 7-eks.tf                                                                  # EKS cluster file for Terraform
-├── 8-node.tf                                                                 # Node group configuration for Terraform
-├── 9-runtime.tf                                                              # Runtime configuration for Terraform (IAM roles, policies, etc.)
-├── 10-iam-oidc.tf                                                            # IAM OIDC provider configuration for Terraform
-├── 11a-storage-iam.tf                                                        # Storage IAM configuration file for Terraform
-├── 11b-storage-helm.tf                                                       # Helm storage configuration for Terraform
-├── 12-outputs.tf                                                             # Output definitions
-└── README.md                                                                 # This file
+├── .gitignore                                   # Git ignore file
+├── 0-var.tf                                     # Variable definitions for Terraform
+├── 1-auth.tf                                    # AWS provider and authentication configuration for Terraform
+├── 2-vpc.tf                                     # VPC configuration for Terraform
+├── 3-subnets.tf                                 # Subnet configuration for Terraform
+├── 4-igw.tf                                     # Internet Gateway configuration for Terraform
+├── 5-nat.tf                                     # Elastic IP and NAT Gateway configuration for Terraform
+├── 6-rtb.tf                                     # Route Table configuration for Terraform
+├── 7-eks.tf                                     # EKS cluster file for Terraform
+├── 8-node.tf                                    # Node group configuration for Terraform
+├── 9-runtime.tf                                 # Runtime configuration for Terraform (IAM roles, policies, etc.)
+├── 10-iam-oidc.tf                               # IAM OIDC provider configuration for Terraform
+├── 11a-storage-iam.tf                           # Storage IAM configuration file for Terraform
+├── 11b-storage-helm.tf                          # Helm storage configuration for Terraform
+├── 12-outputs.tf                                # Output definitions
+└── README.md                                    # This file
 ```
 
 ---
@@ -243,6 +354,8 @@ project-2/
 ## 🛠️ **Terraform Deployment Steps**
 
 Provision infrastructure using Terraform.
+
+> Terraform provisions the AWS infrastructure required for the lab, including VPC networking, EKS cluster, node groups, IAM roles, and Kubernetes runtime components.
 
 ```bash
 terraform init
@@ -280,7 +393,7 @@ The lab environment is automated using several scripts.
 
 ### 💻 1. **`1-deployment.sh`**
 
-#### Installs Argo CD and deploys the GitOps environment
+Installs Argo CD and deploys the GitOps environment
 
 ```bash
 ./scripts/1-deployment.sh
@@ -292,7 +405,7 @@ The lab environment is automated using several scripts.
 ![deploy-script-pt4.jpg](/Screenshots/deploy-script-pt4.jpg)
 ![deploy-script-pt5.jpg](/Screenshots/deploy-script-pt5.jpg)
 
-This script performs:
+#### **This script performs**
 
 - Argo CD installation
 - AppProject deployment
@@ -330,6 +443,8 @@ https://localhost:8080
 ```bash
 ./scripts/2-rbac.sh
 ```
+
+RBAC configuration script applies access control policies to Argo CD.
 
 ![rbac-pt1.jpg](/Screenshots/rbac-pt1.jpg)
 ![rbac-pt2.jpg](/Screenshots/rbac-pt2.jpg)
@@ -413,7 +528,11 @@ This removes:
 
 ---
 
-## 🖼️ **Artifacts and Screenshots**
+## 🖼️ **Demo and Artifacts**
+
+### 📦 **Argo CD Deployment Demo**
+
+  <https://github.com/user-attachments/assets/8ff7903a-1010-4696-bec0-e73701660e5e>
 
 ### 🖥️ **Cluster State**
 
@@ -463,6 +582,20 @@ This removes:
 ### 👥 **User Accounts**
 
 ![splunk-user-accounts.jpg](/Screenshots/splunk-user-accounts.jpg)
+
+---
+
+## 📝 **Lab Outcome**
+
+After completing this lab the environment contains:
+
+- AWS EKS Kubernetes cluster
+- Argo CD GitOps controller
+- Three isolated environments (dev/test/prod)
+- RBAC enforced user access
+- Automated validation scripts
+
+This demonstrates a production-style GitOps deployment model.
 
 ---
 
@@ -547,5 +680,7 @@ kubectl -n argocd get cm argocd-rbac-cm -o yaml
 
 ## 👥 **Authors**
 
-- **Author:** T.I.Q.S.
-- **Group Leader:** John Sweeney
+- **Author:** T.I.Q.S. DevSecOps
+  - **GitHub:** <https://github.com/tiqsclass6>
+
+- **Lab Team Lead:** John Sweeney
