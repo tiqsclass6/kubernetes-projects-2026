@@ -4,7 +4,7 @@ metadata:
   name: splunk
   namespace: argocd
 spec:
-  project: default
+  project: splunk-prod
 
   source:
     repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
@@ -13,7 +13,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: splunk
+    namespace: splunk-prod
 
   syncPolicy:
     automated:

@@ -4,7 +4,7 @@ metadata:
   name: splunk-dev
   namespace: argocd
 spec:
-  project: default
+  project: splunk-dev
 
   source:
     repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
