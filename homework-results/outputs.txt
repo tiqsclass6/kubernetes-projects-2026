@@ -31,7 +31,7 @@ k8sserviceportbyenv     6m35s
 $ kubectl get constraints | egrep 'argo-app-env-namespace-lock|splunk-service-port-lock'
 
 k8sargoappenvironment.constraints.gatekeeper.sh/argo-app-env-namespace-lock   deny                 0
-k8sserviceportbyenv.constraints.gatekeeper.sh/splunk-service-port-lock   deny                 0
+k8sserviceportbyenv.constraints.gatekeeper.sh/splunk-service-port-lock        deny                 0
 
 ======================================================================
 5. Argo CD Applications
@@ -48,12 +48,14 @@ splunk-test   Synced        Healthy
 ======================================================================
 $ kubectl apply -f "homework/40-cheat-prod-to-dev.yaml"
 
-Error from server (Forbidden): error when creating "homework/40-cheat-prod-to-dev.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [argo-app-env-namespace-lock] DENY: ArgoCD Application env=prod must deploy only to namespace splunk-prod (got splunk-dev)
+Error from server (Forbidden): error when creating "homework/40-cheat-prod-to-dev.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [argo-app-env-namespace-lock] 
+DENY: ArgoCD Application env=prod must deploy only to namespace splunk-prod (got splunk-dev)
 
 ======================================================================
 7. Cheat Test - Prod Service Wrong Port
 ======================================================================
 $ kubectl apply -f "homework/41-cheat-prod-service-wrong-port.yaml"
 
-Error from server (Forbidden): error when creating "homework/41-cheat-prod-service-wrong-port.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [splunk-service-port-lock] DENY: Service splunk in namespace splunk-prod must expose port 8091 (got 28091)
+Error from server (Forbidden): error when creating "homework/41-cheat-prod-service-wrong-port.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [splunk-service-port-lock] 
+DENY: Service splunk in namespace splunk-prod must expose port 8091 (got 28091)
 
