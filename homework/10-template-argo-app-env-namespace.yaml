@@ -9,6 +9,7 @@ spec:
         kind: K8sArgoAppEnvironment
       validation:
         openAPIV3Schema:
+          type: object
           properties:
             envLabelKey:
               type: string
@@ -21,13 +22,9 @@ spec:
       rego: |
         package k8sargoappenvironment
 
-        is_argocd_app {
+        violation[{"msg": msg}] {
           input.review.kind.group == "argoproj.io"
           input.review.kind.kind == "Application"
-        }
-
-        violation[{"msg": msg}] {
-          is_argocd_app
 
           env_key := input.parameters.envLabelKey
           env := input.review.object.metadata.labels[env_key]

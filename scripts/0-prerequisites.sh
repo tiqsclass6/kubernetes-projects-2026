@@ -8,11 +8,7 @@
 # =============================================================================
 
 set -euo pipefail
-IFS=$'\n\t'
 
-# ──────────────────────────────────────────────────────────────────────────────
-# COLOR DEFINITIONS
-# ──────────────────────────────────────────────────────────────────────────────
 MAGENTA='\033[0;95m'
 TEAL='\033[0;36m'
 YELLOW='\033[1;33m'
@@ -32,9 +28,6 @@ log_info()  { printf "${GREEN}[INFO]${NC}  %s\n" "$*"; }
 log_warn()  { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 log_error() { printf "${RED}[ERROR]${NC} %s\n" "$*" >&2; exit 1; }
 
-# ──────────────────────────────────────────────────────────────────────────────
-# CONFIG
-# ──────────────────────────────────────────────────────────────────────────────
 AWS_REGION="${AWS_REGION:-us-east-1}"
 CLUSTER_NAME="${CLUSTER_NAME:-demo}"
 TF_DIR="${TF_DIR:-.}"
@@ -84,7 +77,7 @@ check_file_exists() {
 print_header "$MAGENTA" "PROJECT 3 PREFLIGHT CHECKS"
 
 log_info "Validating required local tools..."
-for cmd in bash aws kubectl helm terraform grep awk sed; do
+for cmd in bash aws kubectl helm terraform grep awk sed jq; do
   check_command_exists "$cmd"
 done
 
@@ -113,6 +106,13 @@ fi
 
 log_info "Checking Helm access..."
 helm version >/dev/null 2>&1 || log_error "Helm is not functioning correctly."
+
+log_info "Checking whether Argo CD CRD already exists..."
+if kubectl get crd applications.argoproj.io >/dev/null 2>&1; then
+  log_info "Argo CD Application CRD found."
+else
+  log_warn "Argo CD Application CRD not found yet. Install Argo CD before running 4-deploy-apps.sh."
+fi
 
 print_header "$TEAL" "PREFLIGHT SUMMARY"
 log_info "AWS Region         : ${AWS_REGION}"

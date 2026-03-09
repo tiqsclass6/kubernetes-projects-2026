@@ -6,11 +6,11 @@ metadata:
   labels:
     env: test
 spec:
-  project: splunk-test
+  project: default
   source:
     repoURL: https://github.com/tiqsclass6/kubernetes-projects-2026.git
     targetRevision: project-3
-    path: splunk/overlays/test
+    path: manifests/splunk/overlays/test
   destination:
     server: https://kubernetes.default.svc
     namespace: splunk-test

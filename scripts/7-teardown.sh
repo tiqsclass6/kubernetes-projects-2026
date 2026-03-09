@@ -3,17 +3,13 @@
 # Script: 7-teardown.sh
 # Purpose: Cleanly remove Project 3 lab resources in reverse order:
 #          cheat tests, Argo CD apps, constraints, templates, namespaces,
-#          Gatekeeper, and Terraform infrastructure.
+#          Argo CD, Gatekeeper, artifacts, and Terraform infrastructure.
 #
 # Usage:   ./scripts/7-teardown.sh
 # =============================================================================
 
 set -euo pipefail
-IFS=$'\n\t'
 
-# ──────────────────────────────────────────────────────────────────────────────
-# COLOR DEFINITIONS
-# ──────────────────────────────────────────────────────────────────────────────
 MAGENTA='\033[0;95m'
 TEAL='\033[0;36m'
 YELLOW='\033[1;33m'
@@ -43,14 +39,19 @@ safe_delete_file() {
   fi
 }
 
-# ──────────────────────────────────────────────────────────────────────────────
+# -----------------------------------------------------------------------------
 # CONFIG
-# ──────────────────────────────────────────────────────────────────────────────
+# -----------------------------------------------------------------------------
 TF_DIR="${TF_DIR:-.}"
 PLAN_DESTROY="${PLAN_DESTROY:-false}"
 HOMEWORK_DIR="${HOMEWORK_DIR:-homework}"
+ARTIFACTS_DIR="${ARTIFACTS_DIR:-homework-results}"
+
 GATEKEEPER_NAMESPACE="${GATEKEEPER_NAMESPACE:-gatekeeper-system}"
 GATEKEEPER_RELEASE="${GATEKEEPER_RELEASE:-gatekeeper}"
+
+ARGOCD_NAMESPACE="${ARGOCD_NAMESPACE:-argocd}"
+REMOVE_ARTIFACTS="${REMOVE_ARTIFACTS:-false}"
 
 CHEAT_NS_FILE="${HOMEWORK_DIR}/40-cheat-prod-to-dev.yaml"
 CHEAT_PORT_FILE="${HOMEWORK_DIR}/41-cheat-prod-service-wrong-port.yaml"
@@ -67,6 +68,8 @@ PORT_TEMPLATE="${HOMEWORK_DIR}/20-template-splunk-service-port-by-env.yaml"
 
 NS_FILE="${HOMEWORK_DIR}/00-namespaces.yaml"
 
+ARGOCD_INSTALL_URL="https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml"
+
 print_header "$MAGENTA" "PROJECT 3 TEARDOWN"
 
 command -v kubectl >/dev/null 2>&1 || log_error "kubectl not found."
@@ -82,6 +85,10 @@ safe_delete_file "${APP_PROD}"
 safe_delete_file "${APP_DEV}"
 safe_delete_file "${APP_TEST}"
 
+echo
+echo "--- Argo CD application resources removal complete ---"
+echo
+
 print_header "$MAGENTA" "3. REMOVE GATEKEEPER CONSTRAINTS"
 safe_delete_file "${PORT_CONSTRAINT}"
 safe_delete_file "${ARGO_CONSTRAINT}"
@@ -90,10 +97,23 @@ print_header "$MAGENTA" "4. REMOVE GATEKEEPER CONSTRAINT TEMPLATES"
 safe_delete_file "${PORT_TEMPLATE}"
 safe_delete_file "${ARGO_TEMPLATE}"
 
+echo
+echo "--- Gatekeeper policy resources removal complete ---"
+echo
+
 print_header "$MAGENTA" "5. REMOVE SPLUNK NAMESPACES"
 safe_delete_file "${NS_FILE}"
 
-print_header "$MAGENTA" "6. UNINSTALL GATEKEEPER"
+print_header "$MAGENTA" "6. REMOVE ARGO CD INSTALLATION"
+if kubectl get namespace "${ARGOCD_NAMESPACE}" >/dev/null 2>&1; then
+  log_info "Removing Argo CD install manifest resources"
+  kubectl delete -n "${ARGOCD_NAMESPACE}" -f "${ARGOCD_INSTALL_URL}" --ignore-not-found || true
+  kubectl delete namespace "${ARGOCD_NAMESPACE}" --ignore-not-found || true
+else
+  log_warn "Namespace ${ARGOCD_NAMESPACE} does not exist."
+fi
+
+print_header "$MAGENTA" "7. UNINSTALL GATEKEEPER"
 if helm status "${GATEKEEPER_RELEASE}" -n "${GATEKEEPER_NAMESPACE}" >/dev/null 2>&1; then
   helm uninstall "${GATEKEEPER_RELEASE}" -n "${GATEKEEPER_NAMESPACE}" || true
 else
@@ -106,7 +126,25 @@ else
   log_warn "Namespace ${GATEKEEPER_NAMESPACE} does not exist."
 fi
 
-print_header "$MAGENTA" "7. DESTROY TERRAFORM INFRASTRUCTURE"
+echo
+echo "--- Argo CD and Gatekeeper removal complete ---"
+echo
+
+print_header "$MAGENTA" "8. OPTIONAL ARTIFACT CLEANUP"
+if [[ "${REMOVE_ARTIFACTS}" == "true" ]]; then
+  if [[ -d "${ARTIFACTS_DIR}" ]]; then
+    rm -f "${ARTIFACTS_DIR}/outputs.txt" \
+          "${ARTIFACTS_DIR}/resources.json" \
+          "${ARTIFACTS_DIR}/json-commands.txt" 2>/dev/null || true
+    log_info "Removed generated artifacts from ${ARTIFACTS_DIR}"
+  else
+    log_warn "Artifacts directory not found: ${ARTIFACTS_DIR}"
+  fi
+else
+  log_info "Keeping generated artifacts in ${ARTIFACTS_DIR}"
+fi
+
+print_header "$MAGENTA" "9. DESTROY TERRAFORM INFRASTRUCTURE"
 cd "${TF_DIR}"
 
 if [[ "${PLAN_DESTROY}" == "true" ]]; then

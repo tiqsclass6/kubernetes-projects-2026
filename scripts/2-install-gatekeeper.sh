@@ -8,7 +8,6 @@
 # =============================================================================
 
 set -euo pipefail
-IFS=$'\n\t'
 
 MAGENTA='\033[0;95m'
 TEAL='\033[0;36m'
@@ -32,6 +31,7 @@ log_error() { printf "${RED}[ERROR]${NC} %s\n" "$*" >&2; exit 1; }
 GATEKEEPER_NAMESPACE="${GATEKEEPER_NAMESPACE:-gatekeeper-system}"
 GATEKEEPER_RELEASE="${GATEKEEPER_RELEASE:-gatekeeper}"
 WAIT_TIMEOUT="${WAIT_TIMEOUT:-300s}"
+GATEKEEPER_REPLICAS="${GATEKEEPER_REPLICAS:-1}"
 
 print_header "$MAGENTA" "INSTALLING GATEKEEPER"
 
@@ -48,7 +48,7 @@ kubectl create namespace "${GATEKEEPER_NAMESPACE}" --dry-run=client -o yaml | ku
 print_header "$MAGENTA" "3. INSTALL OR UPGRADE GATEKEEPER"
 helm upgrade --install "${GATEKEEPER_RELEASE}" gatekeeper/gatekeeper \
   --namespace "${GATEKEEPER_NAMESPACE}" \
-  --set replicas=2
+  --set replicas="${GATEKEEPER_REPLICAS}"
 
 print_header "$MAGENTA" "4. WAIT FOR PODS"
 kubectl -n "${GATEKEEPER_NAMESPACE}" wait --for=condition=Ready pod --all --timeout="${WAIT_TIMEOUT}"
@@ -60,3 +60,4 @@ kubectl get validatingwebhookconfigurations | grep gatekeeper || log_error "Gate
 
 print_header "$MAGENTA" "GATEKEEPER INSTALLATION COMPLETE"
 log_info "Gatekeeper is ready."
+log_info "Controller replicas: ${GATEKEEPER_REPLICAS}"

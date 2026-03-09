@@ -8,7 +8,6 @@
 # =============================================================================
 
 set -euo pipefail
-IFS=$'\n\t'
 
 MAGENTA='\033[0;95m'
 TEAL='\033[0;36m'
@@ -37,6 +36,9 @@ ARGO_CONSTRAINT="${HOMEWORK_DIR}/11-constraint-argo-app-env-namespace.yaml"
 PORT_TEMPLATE="${HOMEWORK_DIR}/20-template-splunk-service-port-by-env.yaml"
 PORT_CONSTRAINT="${HOMEWORK_DIR}/21-constraint-splunk-service-port-by-env.yaml"
 
+ARGO_CRD_NAME="k8sargoappenvironment.constraints.gatekeeper.sh"
+PORT_CRD_NAME="k8sserviceportbyenv.constraints.gatekeeper.sh"
+
 print_header "$MAGENTA" "APPLYING GATEKEEPER POLICIES"
 
 for f in "$NS_FILE" "$ARGO_TEMPLATE" "$ARGO_CONSTRAINT" "$PORT_TEMPLATE" "$PORT_CONSTRAINT"; do
@@ -49,16 +51,22 @@ kubectl apply -f "${NS_FILE}"
 print_header "$MAGENTA" "2. APPLY ARGO APP ENV / NAMESPACE TEMPLATE"
 kubectl apply -f "${ARGO_TEMPLATE}"
 
-print_header "$MAGENTA" "3. APPLY ARGO APP ENV / NAMESPACE CONSTRAINT"
+print_header "$MAGENTA" "3. WAIT FOR ARGO CONSTRAINT CRD"
+kubectl wait --for=condition=Established "crd/${ARGO_CRD_NAME}" --timeout=60s || log_error "Timed out waiting for ${ARGO_CRD_NAME}"
+
+print_header "$MAGENTA" "4. APPLY ARGO APP ENV / NAMESPACE CONSTRAINT"
 kubectl apply -f "${ARGO_CONSTRAINT}"
 
-print_header "$MAGENTA" "4. APPLY SPLUNK SERVICE PORT TEMPLATE"
+print_header "$MAGENTA" "5. APPLY SPLUNK SERVICE PORT TEMPLATE"
 kubectl apply -f "${PORT_TEMPLATE}"
 
-print_header "$MAGENTA" "5. APPLY SPLUNK SERVICE PORT CONSTRAINT"
+print_header "$MAGENTA" "6. WAIT FOR SERVICE-PORT CONSTRAINT CRD"
+kubectl wait --for=condition=Established "crd/${PORT_CRD_NAME}" --timeout=60s || log_error "Timed out waiting for ${PORT_CRD_NAME}"
+
+print_header "$MAGENTA" "7. APPLY SPLUNK SERVICE PORT CONSTRAINT"
 kubectl apply -f "${PORT_CONSTRAINT}"
 
-print_header "$TEAL" "6. VALIDATE POLICIES"
+print_header "$TEAL" "8. VALIDATE POLICIES"
 kubectl get ns --show-labels | grep splunk || true
 echo
 kubectl get constrainttemplates | egrep "k8sargoappenvironment|k8sserviceportbyenv" || \

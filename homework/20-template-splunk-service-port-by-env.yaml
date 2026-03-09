@@ -9,13 +9,14 @@ spec:
         kind: K8sServicePortByEnv
       validation:
         openAPIV3Schema:
+          type: object
           properties:
+            serviceName:
+              type: string
             allowedPortByNamespace:
               type: object
               additionalProperties:
                 type: integer
-            serviceName:
-              type: string
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
@@ -30,7 +31,6 @@ spec:
           is_service
           svc := input.review.object
 
-          # Only enforce against the targeted service name (keeps class scope tight)
           svc.metadata.name == input.parameters.serviceName
 
           ns := svc.metadata.namespace
