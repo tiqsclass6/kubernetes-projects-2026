@@ -6,15 +6,20 @@ variable "enable_kubeconfig" {
 variable "project_id" {
   description = "GCP project ID"
   type        = string
+  default     = "class-6-5-tiqs"
 }
 
 variable "region" {
-  default = "us-east1"
+  description = "GCP region for resource deployment"
+  type        = string
+  default     = "us-central1"
 }
 
 # core VPC parameters
 variable "vpc_cidr" {
-  default = "10.100.0.0/16"
+  description = "CIDR block for the VPC network"
+  type        = string
+  default     = "10.100.0.0/16"
 }
 
 variable "subnet_cidr_blocks" {

@@ -1,10 +1,5 @@
 # Local .terraform directories
 **/.terraform/*
-.terraform/
-.terraform.lock.hcl
-terraform.tfstate
-terraform.tfstate.backup
-*.tfvars
 
 # .tfstate files
 *.tfstate
@@ -41,6 +36,12 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# JSON files
+*.json
+
 .terraform.lock.hcl
 example.kubeconfig
 *.mp4
+
+# INI files
+*.ini

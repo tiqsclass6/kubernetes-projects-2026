@@ -31,6 +31,7 @@ log_error() { printf "${RED}[ERROR]${NC} %s\n" "$*" >&2; exit 1; }
 export PROJECT_ID="${PROJECT_ID:-class-6-5-tiqs}"
 export REGION="${REGION:-us-central1}"
 export CLUSTER_NAME="${CLUSTER_NAME:-demo}"
+export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/class-6-5-tiqs-095c33bf9f57.json"
 
 export TF_DIR="${TF_DIR:-./terraform}"
 export FLUX_DIR="${FLUX_DIR:-./flux}"

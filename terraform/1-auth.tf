@@ -24,22 +24,23 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "kubernetes"
-    prefix = "terraform/state"
-    key    = "project-4/terraform.tfstate"
+    bucket = "tiqs-kubernetes"
+    prefix = "project-4/terraform/state"
   }
 }
 
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project     = var.project_id
+  region      = var.region
+  credentials = file("../class-6-5-tiqs-095c33bf9f57.json")
 
   default_labels = local.common_labels
 }
 
 provider "google-beta" {
-  project = var.project_id
-  region  = var.region
+  project     = var.project_id
+  region      = var.region
+  credentials = file("../class-6-5-tiqs-095c33bf9f57.json")
 
   default_labels = local.common_labels
 }

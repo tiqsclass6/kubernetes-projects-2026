@@ -7,7 +7,7 @@ variable "artifact_registry_repository_id" {
 variable "artifact_registry_location" {
   description = "Artifact Registry repository location"
   type        = string
-  default     = "us-east1"
+  default     = "us-central1"
 }
 
 variable "artifact_registry_format" {

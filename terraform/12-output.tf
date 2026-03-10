@@ -27,13 +27,13 @@ output "workload_identity" {
   }
 }
 
-output "gke_storage_classes" {
-  description = "Custom CSI-backed storage classes created for GKE"
-  value = [
-    kubernetes_storage_class_v1.premium_rwo.metadata[0].name,
-    kubernetes_storage_class_v1.standard_rwo.metadata[0].name
-  ]
-}
+# output "gke_storage_classes" {
+#   description = "Custom CSI-backed storage classes created for GKE"
+#   value = [
+#     kubernetes_storage_class_v1.premium_rwo.metadata[0].name,
+#     kubernetes_storage_class_v1.standard_rwo.metadata[0].name
+#   ]
+# }
 
 output "artifact_registry_repository" {
   description = "Artifact Registry repository for GKE images"

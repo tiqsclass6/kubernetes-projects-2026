@@ -5,6 +5,7 @@ metadata:
   namespace: splunk-dev
 data:
   SPLUNK_START_ARGS: "--accept-license"
+  SPLUNK_GENERAL_TERMS: "--accept-sgt-current-at-splunk-com"
   SPLUNK_ENABLE_LISTEN: "9997"
-  SPLUNK_WEB_PORT: "8091"
   SPLUNK_HOME: "/opt/splunk"
+  SPLUNK_WEB_PORT: "8091"
