@@ -1,0 +1,17 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: splunk-dev
+  namespace: flux-system
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: platform-repo
+  path: ./clusters/dev/splunk
+  prune: true
+  wait: true
+  timeout: 10m
+  # If your Splunk folder includes namespace.yaml, omit targetNamespace.
+  # If you want Flux to force all objects into one namespace, set this:
+  targetNamespace: splunk-dev

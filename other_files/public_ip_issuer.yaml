@@ -1,0 +1,22 @@
+# Use this only if:
+# your Ingress gets a public IP/hostname
+# DNS for your host points to it
+# port 80/443 are reachable from the internet
+
+
+
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: you@example.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging-account-key
+    solvers:
+      - http01:
+          ingress:
+            class: nginx

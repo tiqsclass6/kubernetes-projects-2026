@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: splunk
+  namespace: splunk-dev
+spec:
+  serviceName: splunk
+  replicas: 1
+  selector:
+    matchLabels:
+      app: splunk
+  template:
+    metadata:
+      labels:
+        app: splunk
+    spec:
+      containers:
+        - name: splunk
+          image: splunk/splunk:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: web
+              containerPort: 8091
+            - name: mgmt
+              containerPort: 8089
+            - name: hec
+              containerPort: 8088
+            - name: splunktcp
+              containerPort: 9997
+          envFrom:
+            - configMapRef:
+                name: splunk-config
+          env:
+            - name: SPLUNK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: splunk-secret
+                  key: SPLUNK_PASSWORD
+          volumeMounts:
+            - name: splunk-data
+              mountPath: /opt/splunk/var
+      volumes:
+        - name: splunk-data
+          persistentVolumeClaim:
+            claimName: splunk-pvc

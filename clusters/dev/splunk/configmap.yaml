@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: splunk-config
+  namespace: splunk-dev
+data:
+  SPLUNK_START_ARGS: "--accept-license"
+  SPLUNK_ENABLE_LISTEN: "9997"
+  SPLUNK_WEB_PORT: "8091"
+  SPLUNK_HOME: "/opt/splunk"

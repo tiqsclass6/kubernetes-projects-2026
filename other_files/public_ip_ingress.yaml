@@ -1,0 +1,30 @@
+# Use this only if:
+# your Ingress gets a public IP/hostname
+# DNS for your host points to it
+# port 80/443 are reachable from the internet
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: splunk-web
+  namespace: splunk-dev
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  tls:
+    - hosts:
+        - splunk-dev.example.com
+      secretName: splunk-web-tls
+  rules:
+    - host: splunk-dev.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: splunk
+                port:
+                  number: 8091
+

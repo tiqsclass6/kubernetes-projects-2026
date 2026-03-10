@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: platform-repo
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/tiqsclass6/kubernetes-projects-2026.git
+  ref:
+    branch: project-4
