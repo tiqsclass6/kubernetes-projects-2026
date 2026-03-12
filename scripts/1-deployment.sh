@@ -64,7 +64,7 @@ EXPECTED_PROJECTS=(
 )
 
 EXPECTED_APPS=(
-  "splunk:splunk-prod:splunk-prod"
+  "splunk:splunk-prod:splunk"
   "splunk-dev:splunk-dev:splunk-dev"
   "splunk-test:splunk-test:splunk-test"
 )
@@ -303,7 +303,7 @@ log_info "Checking namespaces created by Argo CD:"
 kubectl get ns | grep -E 'argocd|splunk' || log_warn "No lab namespaces detected yet."
 echo
 
-for ns in splunk-prod splunk-dev splunk-test; do
+for ns in splunk splunk-dev splunk-test; do
   if kubectl get ns "${ns}" >/dev/null 2>&1; then
     log_info "Resources in namespace '${ns}':"
     kubectl -n "${ns}" get all --ignore-not-found
