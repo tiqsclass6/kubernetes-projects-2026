@@ -391,7 +391,7 @@ kubectl get nodes
 
 The lab environment is automated using several scripts.
 
-### 💻 1. **`1-deployment.sh`**
+### 💻 [**`1-deployment.sh`**](/scripts/1-deployment.sh)
 
 Installs Argo CD and deploys the GitOps environment
 
@@ -438,7 +438,7 @@ https://localhost:8080
 
 ---
 
-### 💻 2. **`2-rbac.sh`**
+### 💻 [**`2-rbac.sh`**](/scripts/2-rbac.sh)
 
 ```bash
 ./scripts/2-rbac.sh
@@ -460,7 +460,7 @@ RBAC configuration script applies access control policies to Argo CD.
 
 ---
 
-### 💻 3. **`3-users.sh`**
+### 💻 [**`3-users.sh`**](/scripts/3-users.sh)
 
 Creates lab users and configures RBAC access.
 
@@ -484,7 +484,7 @@ Passwords are securely stored using **bcrypt hashes**.
 
 ---
 
-### 💻 4. **`4-lab-final-check.sh`**
+### 💻 [**`4-lab-final-check.sh`**](/scripts/4-lab-final-check.sh)
 
 Validates the entire environment.
 
@@ -508,7 +508,7 @@ Validates the entire environment.
 
 ---
 
-### 💻 5. **`5-teardown.sh`**
+### 💻 [**`5-teardown.sh`**](/scripts/5-teardown.sh)
 
 Removes all GitOps resources.
 
