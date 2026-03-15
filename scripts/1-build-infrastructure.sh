@@ -34,7 +34,7 @@ command -v terraform >/dev/null 2>&1 || log_error "terraform not found."
 
 print_header "$MAGENTA" "1. INITIALIZE TERRAFORM"
 cd "${TF_DIR}"
-terraform init
+terraform init -reconfigure
 
 print_header "$MAGENTA" "2. FORMAT AND VALIDATE"
 terraform fmt -recursive

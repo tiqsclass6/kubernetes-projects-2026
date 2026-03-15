@@ -28,26 +28,30 @@ log_info()  { printf "${GREEN}[INFO]${NC}  %s\n" "$*"; }
 log_warn()  { printf "${YELLOW}[WARN]${NC}  %s\n" "$*"; }
 log_error() { printf "${RED}[ERROR]${NC} %s\n" "$*" >&2; exit 1; }
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
 export PROJECT_ID="${PROJECT_ID:-class-6-5-tiqs}"
 export REGION="${REGION:-us-central1}"
 export CLUSTER_NAME="${CLUSTER_NAME:-demo}"
-export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/class-6-5-tiqs-095c33bf9f57.json"
 
-export TF_DIR="${TF_DIR:-./terraform}"
-export FLUX_DIR="${FLUX_DIR:-./flux}"
-export LAB_GITHUB_DIR="${LAB_GITHUB_DIR:-./flux/lab_github}"
+export TF_DIR="${TF_DIR:-${PROJECT_ROOT}/terraform}"
+export FLUX_DIR="${FLUX_DIR:-${PROJECT_ROOT}/flux}"
+export LAB_GITHUB_DIR="${LAB_GITHUB_DIR:-${PROJECT_ROOT}/flux/lab_github}"
 
 export GIT_PROVIDER="${GIT_PROVIDER:-github}"
 export GIT_OWNER="${GIT_OWNER:-tiqsclass6}"
 export GIT_REPO="${GIT_REPO:-kubernetes-projects-2026}"
 export GIT_BRANCH="${GIT_BRANCH:-project-4}"
-export FLUX_PATH="${FLUX_PATH:-clusters/dev}"
+export FLUX_PATH="${FLUX_PATH:-clusters/dev/splunk}"
 
 export FLUX_NAMESPACE="${FLUX_NAMESPACE:-flux-system}"
 export SPLUNK_NAMESPACE="${SPLUNK_NAMESPACE:-splunk-dev}"
 
 export SPLUNK_HOSTNAME="${SPLUNK_HOSTNAME:-splunk-dev.example.com}"
 export LETSENCRYPT_EMAIL="${LETSENCRYPT_EMAIL:-daquietstorm22@gmail.com}"
+
+export GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS:-${PROJECT_ROOT}/class-6-5-tiqs-095c33bf9f57.json}"
 
 print_header "$MAGENTA" "LOADING PROJECT 4 FLUX ENVIRONMENT"
 
@@ -65,3 +69,4 @@ log_info "FLUX_NAMESPACE=${FLUX_NAMESPACE}"
 log_info "SPLUNK_NAMESPACE=${SPLUNK_NAMESPACE}"
 log_info "SPLUNK_HOSTNAME=${SPLUNK_HOSTNAME}"
 log_info "LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}"
+log_info "GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}"

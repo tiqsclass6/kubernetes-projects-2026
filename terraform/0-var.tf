@@ -66,7 +66,7 @@ variable "cluster_name" {
 variable "node_machine_type" {
   description = "Machine type for GKE worker nodes"
   type        = string
-  default     = "e2-standard-2"
+  default     = "n2-standard-2"
 }
 
 variable "node_disk_size_gb" {

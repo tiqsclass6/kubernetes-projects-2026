@@ -32,6 +32,9 @@ source "$(dirname "$0")/0-env.sh" >/dev/null
 
 command -v gcloud >/dev/null 2>&1 || log_error "gcloud not found."
 command -v kubectl >/dev/null 2>&1 || log_error "kubectl not found."
+command -v gke-gcloud-auth-plugin >/dev/null 2>&1 || \
+command -v gke-gcloud-auth-plugin.exe >/dev/null 2>&1 || \
+  log_error "gke-gcloud-auth-plugin not found. Run: gcloud components install gke-gcloud-auth-plugin"
 
 print_header "$MAGENTA" "1. SET ACTIVE GCP PROJECT"
 gcloud config set project "${PROJECT_ID}"

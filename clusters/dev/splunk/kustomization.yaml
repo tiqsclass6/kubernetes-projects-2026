@@ -7,4 +7,5 @@ resources:
   - pvc.yaml
   - service.yaml
   - statefulset.yaml
-
+  - issuer.yaml
+  - ingress.yaml

@@ -38,19 +38,26 @@ kubectl -n "${FLUX_NAMESPACE}" get pods
 
 print_header "$MAGENTA" "2. FLUX GIT SOURCES"
 flux get sources git -A || true
+kubectl -n "${FLUX_NAMESPACE}" describe gitrepository github-platform || true
 
 print_header "$MAGENTA" "3. FLUX KUSTOMIZATIONS"
 flux get kustomizations -A || true
+kubectl -n "${FLUX_NAMESPACE}" describe kustomization splunk-dev || true
 
 print_header "$MAGENTA" "4. SPLUNK RESOURCES"
 kubectl -n "${SPLUNK_NAMESPACE}" get all || true
 echo
 kubectl -n "${SPLUNK_NAMESPACE}" get pvc || true
+echo
+kubectl -n "${SPLUNK_NAMESPACE}" describe pod splunk-0 || true
 
 print_header "$TEAL" "5. RECENT FLUX TROUBLESHOOTING LOGS"
-kubectl -n "${FLUX_NAMESPACE}" logs deploy/source-controller --tail=50 || true
+kubectl -n "${FLUX_NAMESPACE}" logs deploy/source-controller --tail=200 || true
 echo
-kubectl -n "${FLUX_NAMESPACE}" logs deploy/kustomize-controller --tail=50 || true
+kubectl -n "${FLUX_NAMESPACE}" logs deploy/kustomize-controller --tail=200 || true
+
+print_header "$TEAL" "6. SPLUNK TROUBLESHOOTING LOGS"
+kubectl -n "${SPLUNK_NAMESPACE}" logs splunk-0 || true
 
 print_header "$MAGENTA" "VERIFICATION COMPLETE"
 log_info "Review the output above for readiness, sync status, and errors."

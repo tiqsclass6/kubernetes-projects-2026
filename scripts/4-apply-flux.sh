@@ -53,11 +53,15 @@ case "${GIT_PROVIDER}" in
     ;;
 esac
 
-print_header "$TEAL" "2. VALIDATE FLUX SOURCES"
+print_header "$TEAL" "2. VERIFY GIT SOURCE"
 flux get sources git -A || true
-echo
+kubectl -n "${FLUX_NAMESPACE}" describe gitrepository github-platform || true
+
+print_header "$TEAL" "3. VERIFY KUSTOMIZATION"
 flux get kustomizations -A || true
+kubectl -n "${FLUX_NAMESPACE}" describe kustomization splunk-dev || true
 
 print_header "$MAGENTA" "FLUX SOURCE APPLY COMPLETE"
 log_info "Flux source manifests were applied."
+log_info "If the folder does not exist in Git yet, Flux may report an error until the repo structure is pushed."
 log_info "Next step: ./scripts/5-deploy-flux.sh"

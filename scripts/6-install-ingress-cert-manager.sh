@@ -42,9 +42,18 @@ kubectl -n cert-manager rollout status deployment/cert-manager --timeout=300s
 kubectl -n cert-manager rollout status deployment/cert-manager-webhook --timeout=300s
 kubectl -n cert-manager rollout status deployment/cert-manager-cainjector --timeout=300s
 
+echo
+echo "Verifying cert-manager CRDs:"
+kubectl get crd | grep cert-manager || true
+
 print_header "$TEAL" "3. VALIDATE OPTIONAL COMPONENTS"
+echo "Ingress controller pods:"
 kubectl -n ingress-nginx get pods
 echo
+echo "Ingress controller service:"
+kubectl -n ingress-nginx get svc
+echo
+echo "Cert-manager pods:"
 kubectl -n cert-manager get pods
 
 print_header "$MAGENTA" "INGRESS AND CERT-MANAGER INSTALL COMPLETE"
