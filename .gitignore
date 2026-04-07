@@ -39,6 +39,10 @@ terraform.rc
 # JSON files
 class-6-5*
 
+# Ignore artifacts directory
+artifacts/runs/
+# artifacts/latest/
+
 .terraform.lock.hcl
 example.kubeconfig
 *.mp4

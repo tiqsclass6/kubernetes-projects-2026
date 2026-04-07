@@ -49,4 +49,4 @@ flux check
 
 print_header "$MAGENTA" "FLUX INSTALLATION COMPLETE"
 log_info "Flux controllers are ready."
-log_info "Next step: ./scripts/4-apply-flux.sh"
+log_info "Next step: ./scripts/4-install-ingress-cert-manager.sh"

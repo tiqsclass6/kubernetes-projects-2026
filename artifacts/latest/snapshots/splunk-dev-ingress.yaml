@@ -1,0 +1,41 @@
+apiVersion: v1
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      cert-manager.io/cluster-issuer: selfsigned
+      nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    creationTimestamp: "2026-04-07T06:35:39Z"
+    generation: 1
+    labels:
+      kustomize.toolkit.fluxcd.io/name: splunk-dev
+      kustomize.toolkit.fluxcd.io/namespace: flux-system
+    name: splunk
+    namespace: splunk-dev
+    resourceVersion: "1775543784337295021"
+    uid: 63ef3f7d-c3d9-4865-ab53-989fc614bdc4
+  spec:
+    ingressClassName: nginx
+    rules:
+    - host: splunk-dev.example.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: splunk
+              port:
+                number: 8091
+          path: /
+          pathType: Prefix
+    tls:
+    - hosts:
+      - splunk-dev.example.com
+      secretName: splunk-web-tls
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 34.56.179.147
+kind: List
+metadata:
+  resourceVersion: ""

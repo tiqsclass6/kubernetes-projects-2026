@@ -1,0 +1,2 @@
+NAMESPACE  	NAME           	REVISION               	SUSPENDED	READY	MESSAGE                                                
+flux-system	github-platform	project-4@sha1:7d6bf863	False    	True 	stored artifact for revision 'project-4@sha1:7d6bf863'

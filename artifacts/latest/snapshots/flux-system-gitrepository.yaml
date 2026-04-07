@@ -1,0 +1,44 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"source.toolkit.fluxcd.io/v1","kind":"GitRepository","metadata":{"annotations":{},"name":"github-platform","namespace":"flux-system"},"spec":{"interval":"1m","ref":{"branch":"project-4"},"url":"https://github.com/tiqsclass6/kubernetes-projects-2026.git"}}
+    reconcile.fluxcd.io/requestedAt: "2026-04-06T23:42:42.9773607-07:00"
+  creationTimestamp: "2026-04-07T06:35:35Z"
+  finalizers:
+  - finalizers.fluxcd.io
+  generation: 1
+  name: github-platform
+  namespace: flux-system
+  resourceVersion: "1775544168714223019"
+  uid: 30b4ae0e-2b36-411d-a373-bd694e7fa209
+spec:
+  interval: 1m
+  ref:
+    branch: project-4
+  timeout: 60s
+  url: https://github.com/tiqsclass6/kubernetes-projects-2026.git
+status:
+  artifact:
+    digest: sha256:a7d4d682653a26540d6485455d882120ec7a98cc9bf1a2ffb3d3fe52a34d3f5e
+    lastUpdateTime: "2026-04-07T06:35:38Z"
+    path: gitrepository/flux-system/github-platform/7d6bf863be440c290979a2f8b9eeac2b2383daa7.tar.gz
+    revision: project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
+    size: 50965
+    url: http://source-controller.flux-system.svc.cluster.local./gitrepository/flux-system/github-platform/7d6bf863be440c290979a2f8b9eeac2b2383daa7.tar.gz
+  conditions:
+  - lastTransitionTime: "2026-04-07T06:35:38Z"
+    message: stored artifact for revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'
+    observedGeneration: 1
+    reason: Succeeded
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2026-04-07T06:35:38Z"
+    message: stored artifact for revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'
+    observedGeneration: 1
+    reason: Succeeded
+    status: "True"
+    type: ArtifactInStorage
+  lastHandledReconcileAt: "2026-04-06T23:42:42.9773607-07:00"
+  observedGeneration: 1

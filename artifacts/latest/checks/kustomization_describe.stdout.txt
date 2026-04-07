@@ -1,0 +1,87 @@
+Name:         splunk-dev
+Namespace:    flux-system
+Labels:       <none>
+Annotations:  reconcile.fluxcd.io/requestedAt: 2026-04-06T23:41:59.7788266-07:00
+API Version:  kustomize.toolkit.fluxcd.io/v1
+Kind:         Kustomization
+Metadata:
+  Creation Timestamp:  2026-04-07T06:35:36Z
+  Finalizers:
+    finalizers.fluxcd.io
+  Generation:        1
+  Resource Version:  1775544126002991000
+  UID:               7e2844c1-af4f-4e27-bdd5-d1e05b5baf0e
+Spec:
+  Force:     false
+  Interval:  1m
+  Path:      ./clusters/dev/splunk
+  Prune:     true
+  Source Ref:
+    Kind:   GitRepository
+    Name:   github-platform
+  Timeout:  10m
+  Wait:     true
+Status:
+  Conditions:
+    Last Transition Time:  2026-04-07T06:42:05Z
+    Message:               Applied revision: project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
+    Observed Generation:   1
+    Reason:                ReconciliationSucceeded
+    Status:                True
+    Type:                  Ready
+    Last Transition Time:  2026-04-07T06:42:05Z
+    Message:               Health check passed in 204.730144ms
+    Observed Generation:   1
+    Reason:                Succeeded
+    Status:                True
+    Type:                  Healthy
+  History:
+    Digest:                    sha256:bc414ab04bbf44f38e8531513412678c0a1550e963f44a5e2ca6c3e49e293fd3
+    First Reconciled:          2026-04-07T06:37:35Z
+    Last Reconciled:           2026-04-07T06:42:05Z
+    Last Reconciled Duration:  561.319413ms
+    Last Reconciled Status:    ReconciliationSucceeded
+    Metadata:
+      Revision:             project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
+    Total Reconciliations:  6
+  Inventory:
+    Entries:
+      Id:                     _splunk-dev__Namespace
+      V:                      v1
+      Id:                     splunk-dev_splunk-config__ConfigMap
+      V:                      v1
+      Id:                     splunk-dev_splunk-secret__Secret
+      V:                      v1
+      Id:                     splunk-dev_splunk__Service
+      V:                      v1
+      Id:                     splunk-dev_splunk_apps_StatefulSet
+      V:                      v1
+      Id:                     splunk-dev_splunk-pvc__PersistentVolumeClaim
+      V:                      v1
+      Id:                     _selfsigned_cert-manager.io_ClusterIssuer
+      V:                      v1
+      Id:                     splunk-dev_splunk_networking.k8s.io_Ingress
+      V:                      v1
+  Last Applied Revision:      project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
+  Last Attempted Revision:    project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
+  Last Handled Reconcile At:  2026-04-06T23:41:59.7788266-07:00
+  Observed Generation:        1
+Events:
+  Type    Reason       Age    From                  Message
+  ----    ------       ----   ----                  -------
+  Normal  Progressing  6m52s  kustomize-controller  Namespace/splunk-dev created
+ConfigMap/splunk-dev/splunk-config created
+Secret/splunk-dev/splunk-secret created
+Service/splunk-dev/splunk created
+StatefulSet/splunk-dev/splunk created
+PersistentVolumeClaim/splunk-dev/splunk-pvc created
+ClusterIssuer/selfsigned created
+Ingress/splunk-dev/splunk created
+  Normal  Progressing              4m57s  kustomize-controller  Health check passed in 1m55.156463345s
+  Normal  ReconciliationSucceeded  4m57s  kustomize-controller  Reconciliation finished in 1m56.01469548s, next run in 1m0s
+  Normal  ReconciliationSucceeded  4m56s  kustomize-controller  Reconciliation finished in 847.730076ms, next run in 1m0s
+  Normal  ReconciliationSucceeded  3m56s  kustomize-controller  Reconciliation finished in 664.204047ms, next run in 1m0s
+  Normal  ReconciliationSucceeded  2m55s  kustomize-controller  Reconciliation finished in 624.112926ms, next run in 1m0s
+  Normal  ReconciliationSucceeded  116s   kustomize-controller  Reconciliation finished in 630.286491ms, next run in 1m0s
+  Normal  ReconciliationSucceeded  61s    kustomize-controller  Reconciliation finished in 615.961268ms, next run in 1m0s
+  Normal  ReconciliationSucceeded  25s    kustomize-controller  Reconciliation finished in 628.642708ms, next run in 1m0s

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Script: 4-apply-flux.sh
+# Script: 5-apply-flux.sh
 # Purpose: Apply the Flux GitRepository and Kustomization manifests for the
 #          selected Git provider.
 #
-# Usage:   ./scripts/4-apply-flux.sh
+# Usage:   ./scripts/5-apply-flux.sh
 # =============================================================================
 
 set -euo pipefail
@@ -64,4 +64,4 @@ kubectl -n "${FLUX_NAMESPACE}" describe kustomization splunk-dev || true
 print_header "$MAGENTA" "FLUX SOURCE APPLY COMPLETE"
 log_info "Flux source manifests were applied."
 log_info "If the folder does not exist in Git yet, Flux may report an error until the repo structure is pushed."
-log_info "Next step: ./scripts/5-deploy-flux.sh"
+log_info "Next step: ./scripts/6-deploy-flux.sh"

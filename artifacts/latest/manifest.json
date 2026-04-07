@@ -1,0 +1,126 @@
+{
+  "run_dir": "C:\\Users\\bjett\\Documents\\TheoWAF\\class6\\AWS\\Terraform\\Kubernetes\\Theo\\theo-labs\\project-4\\artifacts\\runs\\20260407-064228",
+  "file_count": 30,
+  "files": [
+    {
+      "path": "checks\\cert_manager_crds.stdout.txt",
+      "size_bytes": 460
+    },
+    {
+      "path": "checks\\cert_manager_pods.stdout.txt",
+      "size_bytes": 312
+    },
+    {
+      "path": "checks\\cluster_issuers.stdout.txt",
+      "size_bytes": 51
+    },
+    {
+      "path": "checks\\flux_controllers.stdout.txt",
+      "size_bytes": 565
+    },
+    {
+      "path": "checks\\flux_reconcile_kustomization.stderr.txt",
+      "size_bytes": 441
+    },
+    {
+      "path": "checks\\flux_reconcile_source.stderr.txt",
+      "size_bytes": 222
+    },
+    {
+      "path": "checks\\git_source.stdout.txt",
+      "size_bytes": 247
+    },
+    {
+      "path": "checks\\git_source_describe.stdout.txt",
+      "size_bytes": 2393
+    },
+    {
+      "path": "checks\\ingress_nginx_pods.stdout.txt",
+      "size_bytes": 154
+    },
+    {
+      "path": "checks\\ingress_nginx_service.stdout.txt",
+      "size_bytes": 352
+    },
+    {
+      "path": "checks\\kustomization_describe.stdout.txt",
+      "size_bytes": 4251
+    },
+    {
+      "path": "checks\\kustomizations.stdout.txt",
+      "size_bytes": 211
+    },
+    {
+      "path": "checks\\localhost_8091.stdout.txt",
+      "size_bytes": 27
+    },
+    {
+      "path": "checks\\splunk_ingress.stdout.txt",
+      "size_bytes": 145
+    },
+    {
+      "path": "checks\\splunk_logs.stdout.txt",
+      "size_bytes": 35559
+    },
+    {
+      "path": "checks\\splunk_namespace.stdout.txt",
+      "size_bytes": 752
+    },
+    {
+      "path": "checks\\splunk_pod_describe.stdout.txt",
+      "size_bytes": 3617
+    },
+    {
+      "path": "checks\\splunk_resources.stdout.txt",
+      "size_bytes": 570
+    },
+    {
+      "path": "checks\\splunk_statefulset.stdout.txt",
+      "size_bytes": 41
+    },
+    {
+      "path": "checks\\tls_secret.stdout.txt",
+      "size_bytes": 97
+    },
+    {
+      "path": "logs\\splunk-0.log",
+      "size_bytes": 33323
+    },
+    {
+      "path": "proof-of-project.md",
+      "size_bytes": 6163
+    },
+    {
+      "path": "proof-resources.json",
+      "size_bytes": 63097
+    },
+    {
+      "path": "snapshots\\cert-manager-certificates.yaml",
+      "size_bytes": 1288
+    },
+    {
+      "path": "snapshots\\cert-manager-clusterissuers.yaml",
+      "size_bytes": 640
+    },
+    {
+      "path": "snapshots\\flux-system-gitrepository.yaml",
+      "size_bytes": 1956
+    },
+    {
+      "path": "snapshots\\flux-system-kustomization.yaml",
+      "size_bytes": 2552
+    },
+    {
+      "path": "snapshots\\splunk-dev-all.yaml",
+      "size_bytes": 8137
+    },
+    {
+      "path": "snapshots\\splunk-dev-ingress.yaml",
+      "size_bytes": 1031
+    },
+    {
+      "path": "summary.json",
+      "size_bytes": 322
+    }
+  ]
+}

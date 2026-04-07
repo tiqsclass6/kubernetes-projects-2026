@@ -1,0 +1,289 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2026-04-07T06:35:39Z"
+    generateName: splunk-
+    generation: 1
+    labels:
+      app: splunk
+      apps.kubernetes.io/pod-index: "0"
+      controller-revision-hash: splunk-57cf7fff8c
+      statefulset.kubernetes.io/pod-name: splunk-0
+      topology.kubernetes.io/region: us-central1
+      topology.kubernetes.io/zone: us-central1-b
+    name: splunk-0
+    namespace: splunk-dev
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: splunk
+      uid: cadd2129-d21d-4eb0-be63-42c6500d057f
+    resourceVersion: "1775543852447023024"
+    uid: c888f6ec-bebb-4c0f-a90b-92466394b718
+  spec:
+    containers:
+    - env:
+      - name: SPLUNK_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: SPLUNK_PASSWORD
+            name: splunk-secret
+      envFrom:
+      - configMapRef:
+          name: splunk-config
+      image: splunk/splunk:latest
+      imagePullPolicy: IfNotPresent
+      name: splunk
+      ports:
+      - containerPort: 8000
+        name: web
+        protocol: TCP
+      - containerPort: 8089
+        name: mgmt
+        protocol: TCP
+      - containerPort: 8088
+        name: hec
+        protocol: TCP
+      - containerPort: 9997
+        name: splunktcp
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/splunk/var
+        name: splunk-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dvmch
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: splunk-0
+    nodeName: gke-demo-demo-private-nodes-b2fea047-9h4k
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: splunk
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: splunk-data
+      persistentVolumeClaim:
+        claimName: splunk-pvc
+    - name: kube-api-access-dvmch
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-04-07T06:37:32Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-04-07T06:35:41Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-04-07T06:37:32Z"
+      observedGeneration: 1
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-04-07T06:37:32Z"
+      observedGeneration: 1
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-04-07T06:35:41Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://f5e699d41753076d7820f2ea609da6b16fe84a81fd59ceb6fd2fe1c62d1d1605
+      image: docker.io/splunk/splunk:latest
+      imageID: docker.io/splunk/splunk@sha256:184e80b079f149cae1134dd6330e077fd510f4ea87216a0d6ebd4399782d648c
+      lastState: {}
+      name: splunk
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-04-07T06:37:31Z"
+      user:
+        linux:
+          gid: 999
+          supplementalGroups:
+          - 999
+          - 1000
+          uid: 999
+      volumeMounts:
+      - mountPath: /opt/splunk/var
+        name: splunk-data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dvmch
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 10.100.0.5
+    hostIPs:
+    - ip: 10.100.0.5
+    observedGeneration: 1
+    phase: Running
+    podIP: 10.101.1.19
+    podIPs:
+    - ip: 10.101.1.19
+    qosClass: BestEffort
+    startTime: "2026-04-07T06:35:41Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      cloud.google.com/neg: '{"ingress":true}'
+    creationTimestamp: "2026-04-07T06:35:39Z"
+    labels:
+      kustomize.toolkit.fluxcd.io/name: splunk-dev
+      kustomize.toolkit.fluxcd.io/namespace: flux-system
+    name: splunk
+    namespace: splunk-dev
+    resourceVersion: "1775543739345151008"
+    uid: 2f42e597-d282-4762-bf33-6599714aaf8a
+  spec:
+    clusterIP: 10.102.14.196
+    clusterIPs:
+    - 10.102.14.196
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: web
+      port: 8091
+      protocol: TCP
+      targetPort: 8000
+    selector:
+      app: splunk
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    creationTimestamp: "2026-04-07T06:35:39Z"
+    generation: 1
+    labels:
+      kustomize.toolkit.fluxcd.io/name: splunk-dev
+      kustomize.toolkit.fluxcd.io/namespace: flux-system
+    name: splunk
+    namespace: splunk-dev
+    resourceVersion: "1775543852487887001"
+    uid: cadd2129-d21d-4eb0-be63-42c6500d057f
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: splunk
+    serviceName: splunk
+    template:
+      metadata:
+        labels:
+          app: splunk
+      spec:
+        containers:
+        - env:
+          - name: SPLUNK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: SPLUNK_PASSWORD
+                name: splunk-secret
+          envFrom:
+          - configMapRef:
+              name: splunk-config
+          image: splunk/splunk:latest
+          imagePullPolicy: IfNotPresent
+          name: splunk
+          ports:
+          - containerPort: 8000
+            name: web
+            protocol: TCP
+          - containerPort: 8089
+            name: mgmt
+            protocol: TCP
+          - containerPort: 8088
+            name: hec
+            protocol: TCP
+          - containerPort: 9997
+            name: splunktcp
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/splunk/var
+            name: splunk-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: splunk-data
+          persistentVolumeClaim:
+            claimName: splunk-pvc
+    updateStrategy:
+      rollingUpdate:
+        maxUnavailable: 1
+        partition: 0
+      type: RollingUpdate
+  status:
+    availableReplicas: 1
+    collisionCount: 0
+    currentReplicas: 1
+    currentRevision: splunk-57cf7fff8c
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updateRevision: splunk-57cf7fff8c
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

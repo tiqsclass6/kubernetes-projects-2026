@@ -1,0 +1,7 @@
+NAME                                           READY   STATUS    RESTARTS   AGE
+helm-controller-7d64596556-kljz5               1/1     Running   0          11m
+image-automation-controller-5744f74b66-hkm85   1/1     Running   0          11m
+image-reflector-controller-5876b5c744-8mjm6    1/1     Running   0          11m
+kustomize-controller-646d668cbc-s74gj          1/1     Running   0          11m
+notification-controller-b78f898f7-pmhjk        1/1     Running   0          11m
+source-controller-5f5c6d4776-w8rzc             1/1     Running   0          11m

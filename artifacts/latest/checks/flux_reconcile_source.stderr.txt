@@ -1,0 +1,4 @@
+► annotating GitRepository github-platform in flux-system namespace
+✔ GitRepository annotated
+◎ waiting for GitRepository reconciliation
+✔ fetched revision project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7

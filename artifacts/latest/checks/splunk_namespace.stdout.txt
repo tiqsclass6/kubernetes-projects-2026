@@ -1,0 +1,15 @@
+NAME                                STATUS   AGE
+cert-manager                        Active   9m38s
+default                             Active   28m
+flux-system                         Active   11m
+gke-managed-cim                     Active   28m
+gke-managed-networking-dra-driver   Active   27m
+gke-managed-system                  Active   28m
+gke-managed-volumepopulator         Active   27m
+gmp-public                          Active   27m
+gmp-system                          Active   27m
+ingress-nginx                       Active   10m
+kube-node-lease                     Active   28m
+kube-public                         Active   28m
+kube-system                         Active   28m
+splunk-dev                          Active   6m58s

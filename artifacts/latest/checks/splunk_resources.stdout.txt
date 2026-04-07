@@ -1,0 +1,8 @@
+NAME           READY   STATUS    RESTARTS   AGE
+pod/splunk-0   1/1     Running   0          6m59s
+
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/splunk   ClusterIP   10.102.14.196   <none>        8091/TCP   6m59s
+
+NAME                               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/splunk-pvc   Bound    pvc-b0071e13-4d3e-46f7-afff-4482994c9d5b   50Gi       RWO            standard-rwo   <unset>                 6m59s

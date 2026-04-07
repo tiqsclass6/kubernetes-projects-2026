@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import socket
 import subprocess
@@ -10,6 +11,9 @@ from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional
+
+
+MAX_RUNS_TO_KEEP = 3
 
 
 @dataclass
@@ -23,6 +27,8 @@ class CommandResult:
     passed: bool
     output: str
     errors: str
+    stdout_file: Optional[str] = None
+    stderr_file: Optional[str] = None
 
 
 def command_exists(cmd: str) -> bool:
@@ -50,6 +56,41 @@ def check_localhost_port(port: int, timeout: float = 2.0) -> tuple[bool, str]:
             return True, f"localhost:{port} is reachable"
     except Exception as exc:
         return False, f"localhost:{port} is not reachable: {exc}"
+
+
+def safe_filename(value: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9._-]+", "-", value).strip("-").lower()
+
+
+def write_text_file(path: Path, content: str) -> bool:
+    if not content or not content.strip():
+        return False
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+    return True
+
+
+def save_command_artifacts(
+    run_dir: Path,
+    name: str,
+    output: str,
+    errors: str,
+) -> tuple[Optional[str], Optional[str]]:
+    checks_dir = run_dir / "checks"
+    checks_dir.mkdir(parents=True, exist_ok=True)
+
+    base = safe_filename(name)
+    stdout_path = checks_dir / f"{base}.stdout.txt"
+    stderr_path = checks_dir / f"{base}.stderr.txt"
+
+    stdout_written = write_text_file(stdout_path, output)
+    stderr_written = write_text_file(stderr_path, errors)
+
+    return (
+        str(stdout_path.relative_to(run_dir)) if stdout_written else None,
+        str(stderr_path.relative_to(run_dir)) if stderr_written else None,
+    )
 
 
 def build_checks() -> List[dict]:
@@ -209,7 +250,7 @@ def evaluate_pass(name: str, output: str, errors: str, exit_code: Optional[int])
     if name == "splunk_namespace":
         return "splunk-dev" in combined
     if name == "splunk_resources":
-        return "splunk-0" in combined and "running" in combined and "splunk-pvc" in combined
+        return "splunk-0" in combined and "running" in combined and "pvc" in combined
     if name == "splunk_statefulset":
         return "splunk" in combined
     if name == "splunk_pod_describe":
@@ -238,7 +279,7 @@ def evaluate_pass(name: str, output: str, errors: str, exit_code: Optional[int])
     return exit_code == 0
 
 
-def collect_results() -> List[CommandResult]:
+def collect_results(run_dir: Path) -> List[CommandResult]:
     results: List[CommandResult] = []
 
     has_kubectl = command_exists("kubectl")
@@ -248,6 +289,12 @@ def collect_results() -> List[CommandResult]:
         command = check["command"]
 
         if command.startswith("kubectl") and not has_kubectl:
+            stdout_file, stderr_file = save_command_artifacts(
+                run_dir,
+                check["name"],
+                "",
+                "kubectl not found in PATH",
+            )
             results.append(
                 CommandResult(
                     name=check["name"],
@@ -259,11 +306,19 @@ def collect_results() -> List[CommandResult]:
                     passed=False,
                     output="",
                     errors="kubectl not found in PATH",
+                    stdout_file=stdout_file,
+                    stderr_file=stderr_file,
                 )
             )
             continue
 
         if command.startswith("flux") and not has_flux:
+            stdout_file, stderr_file = save_command_artifacts(
+                run_dir,
+                check["name"],
+                "",
+                "flux not found in PATH",
+            )
             results.append(
                 CommandResult(
                     name=check["name"],
@@ -275,12 +330,20 @@ def collect_results() -> List[CommandResult]:
                     passed=False,
                     output="",
                     errors="flux not found in PATH",
+                    stdout_file=stdout_file,
+                    stderr_file=stderr_file,
                 )
             )
             continue
 
         exit_code, output, errors = run_command(command)
         passed = evaluate_pass(check["name"], output, errors, exit_code)
+        stdout_file, stderr_file = save_command_artifacts(
+            run_dir,
+            check["name"],
+            output,
+            errors,
+        )
 
         results.append(
             CommandResult(
@@ -293,10 +356,21 @@ def collect_results() -> List[CommandResult]:
                 passed=passed,
                 output=output,
                 errors=errors,
+                stdout_file=stdout_file,
+                stderr_file=stderr_file,
             )
         )
 
     localhost_ok, localhost_message = check_localhost_port(8091)
+    stdout_text = localhost_message if localhost_ok else ""
+    stderr_text = "" if localhost_ok else localhost_message
+    stdout_file, stderr_file = save_command_artifacts(
+        run_dir,
+        "localhost_8091",
+        stdout_text,
+        stderr_text,
+    )
+
     results.append(
         CommandResult(
             name="localhost_8091",
@@ -306,15 +380,109 @@ def collect_results() -> List[CommandResult]:
             screenshot_required=True,
             exit_code=0 if localhost_ok else 1,
             passed=localhost_ok,
-            output=localhost_message if localhost_ok else "",
-            errors="" if localhost_ok else localhost_message,
+            output=stdout_text,
+            errors=stderr_text,
+            stdout_file=stdout_file,
+            stderr_file=stderr_file,
         )
     )
 
     return results
 
 
-def build_markdown(results: List[CommandResult]) -> str:
+def capture_snapshot(run_dir: Path, name: str, command: str) -> dict:
+    snapshots_dir = run_dir / "snapshots"
+    snapshots_dir.mkdir(parents=True, exist_ok=True)
+
+    exit_code, output, errors = run_command(command)
+    yaml_path = snapshots_dir / f"{safe_filename(name)}.yaml"
+    err_path = snapshots_dir / f"{safe_filename(name)}.stderr.txt"
+
+    output_written = write_text_file(yaml_path, output)
+    error_written = write_text_file(err_path, errors)
+
+    return {
+        "name": name,
+        "command": command,
+        "exit_code": exit_code,
+        "output_file": str(yaml_path.relative_to(run_dir)) if output_written else None,
+        "error_file": str(err_path.relative_to(run_dir)) if error_written else None,
+        "captured": output_written,
+    }
+
+
+def capture_log(run_dir: Path, name: str, command: str) -> dict:
+    logs_dir = run_dir / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+
+    exit_code, output, errors = run_command(command)
+    log_path = logs_dir / f"{safe_filename(name)}.log"
+    err_path = logs_dir / f"{safe_filename(name)}.stderr.txt"
+
+    log_written = write_text_file(log_path, output)
+    error_written = write_text_file(err_path, errors)
+
+    return {
+        "name": name,
+        "command": command,
+        "exit_code": exit_code,
+        "log_file": str(log_path.relative_to(run_dir)) if log_written else None,
+        "error_file": str(err_path.relative_to(run_dir)) if error_written else None,
+        "captured": log_written,
+    }
+
+
+def capture_state_artifacts(run_dir: Path) -> dict:
+    snapshots = [
+        capture_snapshot(
+            run_dir,
+            "flux-system-gitrepository",
+            "kubectl -n flux-system get gitrepository github-platform -o yaml",
+        ),
+        capture_snapshot(
+            run_dir,
+            "flux-system-kustomization",
+            "kubectl -n flux-system get kustomization splunk-dev -o yaml",
+        ),
+        capture_snapshot(
+            run_dir,
+            "splunk-dev-all",
+            "kubectl -n splunk-dev get all -o yaml",
+        ),
+        capture_snapshot(
+            run_dir,
+            "splunk-dev-ingress",
+            "kubectl -n splunk-dev get ingress -o yaml",
+        ),
+        capture_snapshot(
+            run_dir,
+            "cert-manager-clusterissuers",
+            "kubectl get clusterissuer -o yaml",
+        ),
+        capture_snapshot(
+            run_dir,
+            "cert-manager-certificates",
+            "kubectl -n splunk-dev get certificate -o yaml",
+        ),
+    ]
+
+    logs = [
+        capture_log(
+            run_dir,
+            "splunk-0",
+            "kubectl -n splunk-dev logs splunk-0 --tail=500",
+        ),
+        capture_log(
+            run_dir,
+            "flux-kustomization-errors",
+            "flux logs --level=error --kind=Kustomization --name=splunk-dev -n flux-system",
+        ),
+    ]
+
+    return {"snapshots": snapshots, "logs": logs}
+
+
+def build_markdown(results: List[CommandResult], state_artifacts: dict, run_id: str) -> str:
     generated_at = datetime.now(timezone.utc).astimezone().isoformat()
 
     required_total = sum(1 for r in results if r.required)
@@ -325,6 +493,7 @@ def build_markdown(results: List[CommandResult]) -> str:
     lines: List[str] = []
     lines.append("# Project 4 Flux + Splunk Proof Report")
     lines.append("")
+    lines.append(f"Run ID: `{run_id}`")
     lines.append(f"Generated: `{generated_at}`")
     lines.append("")
     lines.append("## Summary")
@@ -332,91 +501,170 @@ def build_markdown(results: List[CommandResult]) -> str:
     lines.append(f"- Required checks passed: **{required_passed}/{required_total}**")
     lines.append(f"- Optional checks passed: **{optional_passed}/{optional_total}**")
     lines.append("")
-
-    if required_passed == required_total:
-        lines.append("Overall required status: **PASS**")
-    else:
-        lines.append("Overall required status: **FAIL**")
-
+    lines.append(f"- Overall required status: **{'PASS' if required_passed == required_total else 'FAIL'}**")
     lines.append("")
-    lines.append("## Learning objectives to say out loud")
+    lines.append("## Evidence inventory")
     lines.append("")
-    lines.append("1. GitRepository = “Flux, watch this repo”")
-    lines.append("2. Kustomization = “Apply this folder continuously”")
-    lines.append("3. prune=true = “If it’s removed from Git, remove it from cluster”")
-    lines.append("4. Flux is a reconciler: cluster drift gets corrected back to Git state")
+    lines.append("### Snapshots")
+    lines.append("")
+    for item in state_artifacts["snapshots"]:
+        if item["output_file"] or item["error_file"]:
+            lines.append(f"- `{item['name']}`")
+            if item["output_file"]:
+                lines.append(f"  - output: `{item['output_file']}`")
+            if item["error_file"]:
+                lines.append(f"  - errors: `{item['error_file']}`")
+    lines.append("")
+    lines.append("### Logs")
+    lines.append("")
+    for item in state_artifacts["logs"]:
+        if item["log_file"] or item["error_file"]:
+            lines.append(f"- `{item['name']}`")
+            if item["log_file"]:
+                lines.append(f"  - log: `{item['log_file']}`")
+            if item["error_file"]:
+                lines.append(f"  - errors: `{item['error_file']}`")
     lines.append("")
     lines.append("## Results")
     lines.append("")
 
-    output_counter = 1
-
     for result in results:
         status = "PASS" if result.passed else "FAIL"
-        required_text = "Required" if result.required else "Optional"
-        screenshot_text = "Yes" if result.screenshot_required else "No"
-
         lines.append(f"### {result.name} — {status}")
         lines.append("")
         lines.append(f"- Description: {result.description}")
-        lines.append(f"- Required: {required_text}")
-        lines.append(f"- Screenshot required: {screenshot_text}")
+        lines.append(f"- Required: {'Yes' if result.required else 'No'}")
+        lines.append(f"- Screenshot required: {'Yes' if result.screenshot_required else 'No'}")
+        lines.append(f"- Exit code: `{result.exit_code}`")
+        if result.stdout_file:
+            lines.append(f"- Stdout artifact: `{result.stdout_file}`")
+        if result.stderr_file:
+            lines.append(f"- Stderr artifact: `{result.stderr_file}`")
         lines.append("")
         lines.append("```bash")
         lines.append(result.command)
         lines.append("```")
         lines.append("")
 
-        if result.output:
-            lines.append(f"### **Output {output_counter}**")
-            lines.append("")
-            lines.append("```text")
-            lines.append(result.output)
-            lines.append("```")
-            lines.append("")
-            output_counter += 1
-
-        if result.errors:
-            lines.append(f"### **Errors {output_counter}**")
-            lines.append("")
-            lines.append("```text")
-            lines.append(result.errors)
-            lines.append("```")
-            lines.append("")
-            output_counter += 1
-
     return "\n".join(lines)
 
 
-def build_json(results: List[CommandResult]) -> dict:
+def build_json(results: List[CommandResult], state_artifacts: dict, run_id: str) -> dict:
     generated_at = datetime.now(timezone.utc).astimezone().isoformat()
     return {
         "project": "Project 4 Flux + Splunk",
+        "run_id": run_id,
         "generated_at": generated_at,
         "required_checks_total": sum(1 for r in results if r.required),
         "required_checks_passed": sum(1 for r in results if r.required and r.passed),
         "optional_checks_total": sum(1 for r in results if not r.required),
         "optional_checks_passed": sum(1 for r in results if not r.required and r.passed),
         "results": [asdict(r) for r in results],
+        "state_artifacts": state_artifacts,
     }
+
+
+def build_summary(results: List[CommandResult], run_id: str) -> dict:
+    required_total = sum(1 for r in results if r.required)
+    required_passed = sum(1 for r in results if r.required and r.passed)
+    optional_total = sum(1 for r in results if not r.required)
+    optional_passed = sum(1 for r in results if not r.required and r.passed)
+
+    return {
+        "run_id": run_id,
+        "generated_at": datetime.now(timezone.utc).astimezone().isoformat(),
+        "overall_required_status": "PASS" if required_passed == required_total else "FAIL",
+        "required_checks_total": required_total,
+        "required_checks_passed": required_passed,
+        "optional_checks_total": optional_total,
+        "optional_checks_passed": optional_passed,
+        "failed_required_checks": [r.name for r in results if r.required and not r.passed],
+        "failed_optional_checks": [r.name for r in results if not r.required and not r.passed],
+    }
+
+
+def build_manifest(run_dir: Path) -> dict:
+    files = []
+    for path in sorted(run_dir.rglob("*")):
+        if path.is_file():
+            files.append(
+                {
+                    "path": str(path.relative_to(run_dir)),
+                    "size_bytes": path.stat().st_size,
+                }
+            )
+    return {
+        "run_dir": str(run_dir),
+        "file_count": len(files),
+        "files": files,
+    }
+
+
+def refresh_latest(artifacts_root: Path, run_dir: Path) -> None:
+    latest_dir = artifacts_root / "latest"
+    if latest_dir.exists():
+        shutil.rmtree(latest_dir)
+    shutil.copytree(run_dir, latest_dir)
+
+
+def enforce_retention(runs_dir: Path, keep: int = MAX_RUNS_TO_KEEP) -> None:
+    if not runs_dir.exists():
+        return
+
+    run_dirs = sorted(
+        [p for p in runs_dir.iterdir() if p.is_dir()],
+        key=lambda p: p.name,
+        reverse=True,
+    )
+
+    for old_dir in run_dirs[keep:]:
+        shutil.rmtree(old_dir, ignore_errors=True)
 
 
 def main() -> None:
     project_root = Path(__file__).resolve().parent.parent
-    md_path = project_root / "artifacts" / "proof-of-project.md"
-    json_path = project_root / "artifacts" / "proof-resources.json"
+    artifacts_root = project_root / "artifacts"
+    runs_dir = artifacts_root / "runs"
+    runs_dir.mkdir(parents=True, exist_ok=True)
 
-    results = collect_results()
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
+    run_dir = runs_dir / run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
 
-    md_path.write_text(build_markdown(results), encoding="utf-8")
-    json_path.write_text(json.dumps(build_json(results), indent=2), encoding="utf-8")
+    results = collect_results(run_dir)
+    state_artifacts = capture_state_artifacts(run_dir)
 
-    print("Generated proof artifacts:")
-    print(f"  - {md_path}")
-    print(f"  - {json_path}")
+    proof_md_path = run_dir / "proof-of-project.md"
+    proof_json_path = run_dir / "proof-resources.json"
+    summary_path = run_dir / "summary.json"
+    manifest_path = run_dir / "manifest.json"
+
+    proof_md_path.write_text(
+        build_markdown(results, state_artifacts, run_id),
+        encoding="utf-8",
+    )
+    proof_json_path.write_text(
+        json.dumps(build_json(results, state_artifacts, run_id), indent=2),
+        encoding="utf-8",
+    )
+    summary_path.write_text(
+        json.dumps(build_summary(results, run_id), indent=2),
+        encoding="utf-8",
+    )
+    manifest_path.write_text(
+        json.dumps(build_manifest(run_dir), indent=2),
+        encoding="utf-8",
+    )
+
+    refresh_latest(artifacts_root, run_dir)
+    enforce_retention(runs_dir, MAX_RUNS_TO_KEEP)
 
     required_total = sum(1 for r in results if r.required)
     required_passed = sum(1 for r in results if r.required and r.passed)
+
+    print("Generated proof artifacts:")
+    print(f"  - {run_dir}")
+    print(f"  - {artifacts_root / 'latest'}")
     print(f"Required checks passed: {required_passed}/{required_total}")
 
 

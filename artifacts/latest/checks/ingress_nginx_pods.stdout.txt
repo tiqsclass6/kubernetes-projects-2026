@@ -1,0 +1,2 @@
+NAME                                        READY   STATUS    RESTARTS   AGE
+ingress-nginx-controller-6c7cd85885-x8wqw   1/1     Running   0          10m

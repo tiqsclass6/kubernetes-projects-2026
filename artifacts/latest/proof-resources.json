@@ -1,0 +1,341 @@
+{
+  "project": "Project 4 Flux + Splunk",
+  "run_id": "20260407-064228",
+  "generated_at": "2026-04-06T23:42:53.979593-07:00",
+  "required_checks_total": 9,
+  "required_checks_passed": 9,
+  "optional_checks_total": 11,
+  "optional_checks_passed": 11,
+  "results": [
+    {
+      "name": "flux_controllers",
+      "description": "Verify Flux controllers are running in flux-system.",
+      "command": "kubectl -n flux-system get pods",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME                                           READY   STATUS    RESTARTS   AGE\nhelm-controller-7d64596556-kljz5               1/1     Running   0          11m\nimage-automation-controller-5744f74b66-hkm85   1/1     Running   0          11m\nimage-reflector-controller-5876b5c744-8mjm6    1/1     Running   0          11m\nkustomize-controller-646d668cbc-s74gj          1/1     Running   0          11m\nnotification-controller-b78f898f7-pmhjk        1/1     Running   0          11m\nsource-controller-5f5c6d4776-w8rzc             1/1     Running   0          11m",
+      "errors": "",
+      "stdout_file": "checks\\flux_controllers.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "git_source",
+      "description": "Verify Flux GitRepository source status.",
+      "command": "flux get sources git -A",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAMESPACE  \tNAME           \tREVISION               \tSUSPENDED\tREADY\tMESSAGE                                                \nflux-system\tgithub-platform\tproject-4@sha1:7d6bf863\tFalse    \tTrue \tstored artifact for revision 'project-4@sha1:7d6bf863'",
+      "errors": "",
+      "stdout_file": "checks\\git_source.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "git_source_describe",
+      "description": "Describe the GitRepository backing Flux sync.",
+      "command": "kubectl -n flux-system describe gitrepository github-platform",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "Name:         github-platform\nNamespace:    flux-system\nLabels:       <none>\nAnnotations:  reconcile.fluxcd.io/requestedAt: 2026-04-06T23:41:57.4694911-07:00\nAPI Version:  source.toolkit.fluxcd.io/v1\nKind:         GitRepository\nMetadata:\n  Creation Timestamp:  2026-04-07T06:35:35Z\n  Finalizers:\n    finalizers.fluxcd.io\n  Generation:        1\n  Resource Version:  1775544123213087019\n  UID:               30b4ae0e-2b36-411d-a373-bd694e7fa209\nSpec:\n  Interval:  1m\n  Ref:\n    Branch:  project-4\n  Timeout:   60s\n  URL:       https://github.com/tiqsclass6/kubernetes-projects-2026.git\nStatus:\n  Artifact:\n    Digest:            sha256:a7d4d682653a26540d6485455d882120ec7a98cc9bf1a2ffb3d3fe52a34d3f5e\n    Last Update Time:  2026-04-07T06:35:38Z\n    Path:              gitrepository/flux-system/github-platform/7d6bf863be440c290979a2f8b9eeac2b2383daa7.tar.gz\n    Revision:          project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7\n    Size:              50965\n    URL:               http://source-controller.flux-system.svc.cluster.local./gitrepository/flux-system/github-platform/7d6bf863be440c290979a2f8b9eeac2b2383daa7.tar.gz\n  Conditions:\n    Last Transition Time:     2026-04-07T06:35:38Z\n    Message:                  stored artifact for revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'\n    Observed Generation:      1\n    Reason:                   Succeeded\n    Status:                   True\n    Type:                     Ready\n    Last Transition Time:     2026-04-07T06:35:38Z\n    Message:                  stored artifact for revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'\n    Observed Generation:      1\n    Reason:                   Succeeded\n    Status:                   True\n    Type:                     ArtifactInStorage\n  Last Handled Reconcile At:  2026-04-06T23:41:57.4694911-07:00\n  Observed Generation:        1\nEvents:\n  Type    Reason                 Age                  From               Message\n  ----    ------                 ----                 ----               -------\n  Normal  NewArtifact            6m52s                source-controller  stored artifact for commit 'sixth commit'\n  Normal  GitOperationSucceeded  27s (x10 over 6m9s)  source-controller  no changes since last reconcilation: observed revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'",
+      "errors": "",
+      "stdout_file": "checks\\git_source_describe.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "kustomizations",
+      "description": "Verify Flux Kustomization status.",
+      "command": "flux get kustomizations -A",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAMESPACE  \tNAME      \tREVISION               \tSUSPENDED\tREADY\tMESSAGE                                   \nflux-system\tsplunk-dev\tproject-4@sha1:7d6bf863\tFalse    \tTrue \tApplied revision: project-4@sha1:7d6bf863",
+      "errors": "",
+      "stdout_file": "checks\\kustomizations.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "kustomization_describe",
+      "description": "Describe the Splunk Flux Kustomization.",
+      "command": "kubectl -n flux-system describe kustomization splunk-dev",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "Name:         splunk-dev\nNamespace:    flux-system\nLabels:       <none>\nAnnotations:  reconcile.fluxcd.io/requestedAt: 2026-04-06T23:41:59.7788266-07:00\nAPI Version:  kustomize.toolkit.fluxcd.io/v1\nKind:         Kustomization\nMetadata:\n  Creation Timestamp:  2026-04-07T06:35:36Z\n  Finalizers:\n    finalizers.fluxcd.io\n  Generation:        1\n  Resource Version:  1775544126002991000\n  UID:               7e2844c1-af4f-4e27-bdd5-d1e05b5baf0e\nSpec:\n  Force:     false\n  Interval:  1m\n  Path:      ./clusters/dev/splunk\n  Prune:     true\n  Source Ref:\n    Kind:   GitRepository\n    Name:   github-platform\n  Timeout:  10m\n  Wait:     true\nStatus:\n  Conditions:\n    Last Transition Time:  2026-04-07T06:42:05Z\n    Message:               Applied revision: project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7\n    Observed Generation:   1\n    Reason:                ReconciliationSucceeded\n    Status:                True\n    Type:                  Ready\n    Last Transition Time:  2026-04-07T06:42:05Z\n    Message:               Health check passed in 204.730144ms\n    Observed Generation:   1\n    Reason:                Succeeded\n    Status:                True\n    Type:                  Healthy\n  History:\n    Digest:                    sha256:bc414ab04bbf44f38e8531513412678c0a1550e963f44a5e2ca6c3e49e293fd3\n    First Reconciled:          2026-04-07T06:37:35Z\n    Last Reconciled:           2026-04-07T06:42:05Z\n    Last Reconciled Duration:  561.319413ms\n    Last Reconciled Status:    ReconciliationSucceeded\n    Metadata:\n      Revision:             project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7\n    Total Reconciliations:  6\n  Inventory:\n    Entries:\n      Id:                     _splunk-dev__Namespace\n      V:                      v1\n      Id:                     splunk-dev_splunk-config__ConfigMap\n      V:                      v1\n      Id:                     splunk-dev_splunk-secret__Secret\n      V:                      v1\n      Id:                     splunk-dev_splunk__Service\n      V:                      v1\n      Id:                     splunk-dev_splunk_apps_StatefulSet\n      V:                      v1\n      Id:                     splunk-dev_splunk-pvc__PersistentVolumeClaim\n      V:                      v1\n      Id:                     _selfsigned_cert-manager.io_ClusterIssuer\n      V:                      v1\n      Id:                     splunk-dev_splunk_networking.k8s.io_Ingress\n      V:                      v1\n  Last Applied Revision:      project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7\n  Last Attempted Revision:    project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7\n  Last Handled Reconcile At:  2026-04-06T23:41:59.7788266-07:00\n  Observed Generation:        1\nEvents:\n  Type    Reason       Age    From                  Message\n  ----    ------       ----   ----                  -------\n  Normal  Progressing  6m52s  kustomize-controller  Namespace/splunk-dev created\nConfigMap/splunk-dev/splunk-config created\nSecret/splunk-dev/splunk-secret created\nService/splunk-dev/splunk created\nStatefulSet/splunk-dev/splunk created\nPersistentVolumeClaim/splunk-dev/splunk-pvc created\nClusterIssuer/selfsigned created\nIngress/splunk-dev/splunk created\n  Normal  Progressing              4m57s  kustomize-controller  Health check passed in 1m55.156463345s\n  Normal  ReconciliationSucceeded  4m57s  kustomize-controller  Reconciliation finished in 1m56.01469548s, next run in 1m0s\n  Normal  ReconciliationSucceeded  4m56s  kustomize-controller  Reconciliation finished in 847.730076ms, next run in 1m0s\n  Normal  ReconciliationSucceeded  3m56s  kustomize-controller  Reconciliation finished in 664.204047ms, next run in 1m0s\n  Normal  ReconciliationSucceeded  2m55s  kustomize-controller  Reconciliation finished in 624.112926ms, next run in 1m0s\n  Normal  ReconciliationSucceeded  116s   kustomize-controller  Reconciliation finished in 630.286491ms, next run in 1m0s\n  Normal  ReconciliationSucceeded  61s    kustomize-controller  Reconciliation finished in 615.961268ms, next run in 1m0s\n  Normal  ReconciliationSucceeded  25s    kustomize-controller  Reconciliation finished in 628.642708ms, next run in 1m0s",
+      "errors": "",
+      "stdout_file": "checks\\kustomization_describe.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "splunk_namespace",
+      "description": "Verify the Flux-managed namespace exists.",
+      "command": "kubectl get ns",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME                                STATUS   AGE\ncert-manager                        Active   9m38s\ndefault                             Active   28m\nflux-system                         Active   11m\ngke-managed-cim                     Active   28m\ngke-managed-networking-dra-driver   Active   27m\ngke-managed-system                  Active   28m\ngke-managed-volumepopulator         Active   27m\ngmp-public                          Active   27m\ngmp-system                          Active   27m\ningress-nginx                       Active   10m\nkube-node-lease                     Active   28m\nkube-public                         Active   28m\nkube-system                         Active   28m\nsplunk-dev                          Active   6m58s",
+      "errors": "",
+      "stdout_file": "checks\\splunk_namespace.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "splunk_resources",
+      "description": "Verify Splunk pod, service, and PVC.",
+      "command": "kubectl -n splunk-dev get pods,svc,pvc",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME           READY   STATUS    RESTARTS   AGE\npod/splunk-0   1/1     Running   0          6m59s\n\nNAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE\nservice/splunk   ClusterIP   10.102.14.196   <none>        8091/TCP   6m59s\n\nNAME                               STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE\npersistentvolumeclaim/splunk-pvc   Bound    pvc-b0071e13-4d3e-46f7-afff-4482994c9d5b   50Gi       RWO            standard-rwo   <unset>                 6m59s",
+      "errors": "",
+      "stdout_file": "checks\\splunk_resources.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "splunk_statefulset",
+      "description": "Verify Splunk StatefulSet.",
+      "command": "kubectl -n splunk-dev get statefulset",
+      "required": true,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME     READY   AGE\nsplunk   1/1     7m",
+      "errors": "",
+      "stdout_file": "checks\\splunk_statefulset.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "splunk_pod_describe",
+      "description": "Describe the Splunk pod for proof/troubleshooting.",
+      "command": "kubectl -n splunk-dev describe pod splunk-0",
+      "required": true,
+      "screenshot_required": false,
+      "exit_code": 0,
+      "passed": true,
+      "output": "Name:             splunk-0\nNamespace:        splunk-dev\nPriority:         0\nService Account:  default\nNode:             gke-demo-demo-private-nodes-b2fea047-9h4k/10.100.0.5\nStart Time:       Mon, 06 Apr 2026 23:35:41 -0700\nLabels:           app=splunk\n                  apps.kubernetes.io/pod-index=0\n                  controller-revision-hash=splunk-57cf7fff8c\n                  statefulset.kubernetes.io/pod-name=splunk-0\n                  topology.kubernetes.io/region=us-central1\n                  topology.kubernetes.io/zone=us-central1-b\nAnnotations:      <none>\nStatus:           Running\nIP:               10.101.1.19\nIPs:\n  IP:           10.101.1.19\nControlled By:  StatefulSet/splunk\nContainers:\n  splunk:\n    Container ID:   containerd://f5e699d41753076d7820f2ea609da6b16fe84a81fd59ceb6fd2fe1c62d1d1605\n    Image:          splunk/splunk:latest\n    Image ID:       docker.io/splunk/splunk@sha256:184e80b079f149cae1134dd6330e077fd510f4ea87216a0d6ebd4399782d648c\n    Ports:          8000/TCP (web), 8089/TCP (mgmt), 8088/TCP (hec), 9997/TCP (splunktcp)\n    Host Ports:     0/TCP (web), 0/TCP (mgmt), 0/TCP (hec), 0/TCP (splunktcp)\n    State:          Running\n      Started:      Mon, 06 Apr 2026 23:37:31 -0700\n    Ready:          True\n    Restart Count:  0\n    Environment Variables from:\n      splunk-config  ConfigMap  Optional: false\n    Environment:\n      SPLUNK_PASSWORD:  <set to the key 'SPLUNK_PASSWORD' in secret 'splunk-secret'>  Optional: false\n    Mounts:\n      /opt/splunk/var from splunk-data (rw)\n      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-dvmch (ro)\nConditions:\n  Type                        Status\n  PodReadyToStartContainers   True \n  Initialized                 True \n  Ready                       True \n  ContainersReady             True \n  PodScheduled                True \nVolumes:\n  splunk-data:\n    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)\n    ClaimName:  splunk-pvc\n    ReadOnly:   false\n  kube-api-access-dvmch:\n    Type:                    Projected (a volume that contains injected data from multiple sources)\n    TokenExpirationSeconds:  3607\n    ConfigMapName:           kube-root-ca.crt\n    Optional:                false\n    DownwardAPI:             true\nQoS Class:                   BestEffort\nNode-Selectors:              <none>\nTolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s\n                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s\nEvents:\n  Type    Reason                  Age    From                     Message\n  ----    ------                  ----   ----                     -------\n  Normal  Scheduled               6m53s  default-scheduler        Successfully assigned splunk-dev/splunk-0 to gke-demo-demo-private-nodes-b2fea047-9h4k\n  Normal  SuccessfulAttachVolume  6m48s  attachdetach-controller  AttachVolume.Attach succeeded for volume \"pvc-b0071e13-4d3e-46f7-afff-4482994c9d5b\"\n  Normal  Pulling                 6m42s  kubelet                  spec.containers{splunk}: Pulling image \"splunk/splunk:latest\"\n  Normal  Pulled                  5m3s   kubelet                  spec.containers{splunk}: Successfully pulled image \"splunk/splunk:latest\" in 1m38.944s (1m38.944s including waiting). Image size: 1879065946 bytes.\n  Normal  Created                 5m3s   kubelet                  spec.containers{splunk}: Container created\n  Normal  Started                 5m3s   kubelet                  spec.containers{splunk}: Container started",
+      "errors": "",
+      "stdout_file": "checks\\splunk_pod_describe.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "splunk_logs",
+      "description": "Collect Splunk logs.",
+      "command": "kubectl -n splunk-dev logs splunk-0",
+      "required": false,
+      "screenshot_required": false,
+      "exit_code": 0,
+      "passed": true,
+      "output": "PLAY [Run default Splunk provisioning] *****************************************\nTuesday 07 April 2026  06:37:38 +0000 (0:00:00.420)       0:00:00.420 ********* \n\nTASK [Gathering Facts] *********************************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:41 +0000 (0:00:02.715)       0:00:03.136 ********* \nTuesday 07 April 2026  06:37:41 +0000 (0:00:00.030)       0:00:03.166 ********* \n\nTASK [Provision role] **********************************************************\n\u001b[0;36mincluded: splunk_standalone for localhost\u001b[0m\nTuesday 07 April 2026  06:37:41 +0000 (0:00:00.155)       0:00:03.322 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/get_facts.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:37:41 +0000 (0:00:00.094)       0:00:03.416 ********* \n\nTASK [splunk_common : Set privilege escalation user] ***************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:41 +0000 (0:00:00.106)       0:00:03.522 ********* \n\u001b[1;35m[WARNING]: Using world-readable permissions for temporary files Ansible needs\u001b[0m\n\u001b[1;35mto create when becoming an unprivileged user. This may be insecure. For\u001b[0m\n\u001b[1;35minformation on securing this, see https://docs.ansible.com/ansible-\u001b[0m\n\u001b[1;35mcore/2.18/playbook_guide/playbooks_privilege_escalation.html#risks-of-becoming-\u001b[0m\n\u001b[1;35man-unprivileged-user\u001b[0m\n\nTASK [splunk_common : Check for scloud] ****************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:42 +0000 (0:00:00.819)       0:00:04.342 ********* \nTuesday 07 April 2026  06:37:42 +0000 (0:00:00.075)       0:00:04.418 ********* \nTuesday 07 April 2026  06:37:42 +0000 (0:00:00.043)       0:00:04.461 ********* \n\nTASK [splunk_common : Check for existing installation] *************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:43 +0000 (0:00:00.629)       0:00:05.091 ********* \n\nTASK [splunk_common : Set splunk install fact] *********************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:43 +0000 (0:00:00.190)       0:00:05.281 ********* \n\nTASK [splunk_common : Check for existing splunk secret] ************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:43 +0000 (0:00:00.607)       0:00:05.888 ********* \n\nTASK [splunk_common : Set first run fact] **************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:43 +0000 (0:00:00.086)       0:00:05.975 ********* \n\nTASK [splunk_common : Set splunk_build_type fact] ******************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/get_facts_build_type.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.064)       0:00:06.039 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.037)       0:00:06.077 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.084)       0:00:06.161 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.068)       0:00:06.230 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.067)       0:00:06.297 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.071)       0:00:06.369 ********* \n\nTASK [splunk_common : Set target version fact] *********************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/get_facts_target_version.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.094)       0:00:06.464 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.066)       0:00:06.531 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.060)       0:00:06.592 ********* \nTuesday 07 April 2026  06:37:44 +0000 (0:00:00.061)       0:00:06.653 ********* \n\nTASK [splunk_common : Find manifests] ******************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:45 +0000 (0:00:00.930)       0:00:07.583 ********* \n\nTASK [splunk_common : Set current version fact] ********************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:45 +0000 (0:00:00.098)       0:00:07.682 ********* \nTuesday 07 April 2026  06:37:45 +0000 (0:00:00.102)       0:00:07.785 ********* \n\nTASK [splunk_common : Setting upgrade fact] ************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:45 +0000 (0:00:00.092)       0:00:07.878 ********* \n\nTASK [splunk_common : Setting indexer cluster fact from config] ****************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:45 +0000 (0:00:00.091)       0:00:07.970 ********* \n\nTASK [splunk_common : Setting search head cluster fact from config] ************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.101)       0:00:08.071 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.038)       0:00:08.109 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.058)       0:00:08.168 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.071)       0:00:08.240 ********* \n\nTASK [splunk_common : Detect service name] *************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/get_facts_service_name.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.070)       0:00:08.310 ********* \n\nTASK [splunk_common : Setting service_name fact from config] *******************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.089)       0:00:08.400 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.064)       0:00:08.465 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.060)       0:00:08.525 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.071)       0:00:08.597 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.060)       0:00:08.658 ********* \nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.067)       0:00:08.726 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/install_python_requirements.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:37:46 +0000 (0:00:00.085)       0:00:08.811 ********* \n\nTASK [splunk_common : Check if requests_unixsocket exists] *********************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:49 +0000 (0:00:02.509)       0:00:11.320 ********* \nTuesday 07 April 2026  06:37:49 +0000 (0:00:00.053)       0:00:11.374 ********* \nTuesday 07 April 2026  06:37:49 +0000 (0:00:00.070)       0:00:11.444 ********* \nTuesday 07 April 2026  06:37:49 +0000 (0:00:00.089)       0:00:11.534 ********* \nTuesday 07 April 2026  06:37:49 +0000 (0:00:00.066)       0:00:11.600 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/change_splunk_directory_owner.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:37:49 +0000 (0:00:00.130)       0:00:11.731 ********* \n\nTASK [splunk_common : Update Splunk directory owner] ***************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:54 +0000 (0:00:04.391)       0:00:16.123 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/update_etc.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:37:54 +0000 (0:00:00.119)       0:00:16.242 ********* \n\nTASK [splunk_common : Check if /sbin/updateetc.sh exists] **********************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:37:54 +0000 (0:00:00.596)       0:00:16.838 ********* \n\nTASK [splunk_common : Update /opt/splunk/etc] **********************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:00 +0000 (0:00:05.559)       0:00:22.397 ********* \nTuesday 07 April 2026  06:38:00 +0000 (0:00:00.085)       0:00:22.483 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 26:7 was of type 'NoneType'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m False. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:00 +0000 (0:00:00.090)       0:00:22.574 ********* \nTuesday 07 April 2026  06:38:00 +0000 (0:00:00.042)       0:00:22.616 ********* \nTuesday 07 April 2026  06:38:00 +0000 (0:00:00.082)       0:00:22.699 ********* \nTuesday 07 April 2026  06:38:00 +0000 (0:00:00.081)       0:00:22.780 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/remove_first_login.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:01 +0000 (0:00:00.230)       0:00:23.010 ********* \n\nTASK [splunk_common : Create .ui_login] ****************************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:01 +0000 (0:00:00.817)       0:00:23.828 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 48:7 was of type 'NoneType'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m False. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:01 +0000 (0:00:00.102)       0:00:23.930 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/set_splunk_secret.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:02 +0000 (0:00:00.148)       0:00:24.079 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/set_splunk_secret.yml 11:7 was of type \u001b[0m\n\u001b[0;35m'NoneType'. Conditional results should only be True or False. The result was \u001b[0m\n\u001b[0;35minterpreted as False. This feature will be removed in version 2.19. Deprecation\u001b[0m\n\u001b[0;35m warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:02 +0000 (0:00:00.135)       0:00:24.214 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/set_splunk_secret.yml 24:7 was of type \u001b[0m\n\u001b[0;35m'NoneType'. Conditional results should only be True or False. The result was \u001b[0m\n\u001b[0;35minterpreted as False. This feature will be removed in version 2.19. Deprecation\u001b[0m\n\u001b[0;35m warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:02 +0000 (0:00:00.083)       0:00:24.298 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 54:9 was of type 'NoneType'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m False. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:02 +0000 (0:00:00.078)       0:00:24.376 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/enable_admin_auth.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:02 +0000 (0:00:00.121)       0:00:24.498 ********* \n\nTASK [splunk_common : Hash the password] ***************************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:04 +0000 (0:00:01.865)       0:00:26.363 ********* \n\nTASK [splunk_common : Generate user-seed.conf (Linux)] *************************\n\u001b[0;33mchanged: [localhost] => (item=USERNAME)\u001b[0m\n\u001b[0;33mchanged: [localhost] => (item=HASHED_PASSWORD)\u001b[0m\nTuesday 07 April 2026  06:38:05 +0000 (0:00:01.477)       0:00:27.841 ********* \nTuesday 07 April 2026  06:38:05 +0000 (0:00:00.098)       0:00:27.939 ********* \nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.134)       0:00:28.074 ********* \nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.081)       0:00:28.155 ********* \nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.078)       0:00:28.234 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/configure_mgmt_port.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.106)       0:00:28.340 ********* \n\nTASK [splunk_common : set version fact] ****************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.110)       0:00:28.451 ********* \nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.041)       0:00:28.493 ********* \nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.040)       0:00:28.533 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 62:7 was of type 'dict'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m False. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.051)       0:00:28.585 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/pre_splunk_start_commands.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.133)       0:00:28.718 ********* \nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.067)       0:00:28.786 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 70:7 was of type 'int'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m True. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/enable_s2s.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.104)       0:00:28.891 ********* \nTuesday 07 April 2026  06:38:06 +0000 (0:00:00.078)       0:00:28.969 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/s2s/configure_splunktcp.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:07 +0000 (0:00:00.105)       0:00:29.074 ********* \n\nTASK [splunk_common : Enable splunktcp input] **********************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:07 +0000 (0:00:00.639)       0:00:29.714 ********* \n\nTASK [splunk_common : Remove splunktcp-ssl input] ******************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:08 +0000 (0:00:00.714)       0:00:30.428 ********* \n\nTASK [splunk_common : Remove input SSL settings] *******************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:09 +0000 (0:00:00.671)       0:00:31.100 ********* \n\nTASK [splunk_common : Reset root CA] *******************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:09 +0000 (0:00:00.673)       0:00:31.773 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/trigger_restart.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:09 +0000 (0:00:00.078)       0:00:31.852 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/get_splunk_status.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:09 +0000 (0:00:00.055)       0:00:31.908 ********* \n\nTASK [splunk_common : Restrict permissions on splunk.key for Status] ***********\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/restrict_permissions.yml for localhost => (item=/opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key)\u001b[0m\nTuesday 07 April 2026  06:38:09 +0000 (0:00:00.068)       0:00:31.976 ********* \n\nTASK [splunk_common : Check if /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key exists] ***\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:10 +0000 (0:00:00.661)       0:00:32.638 ********* \nTuesday 07 April 2026  06:38:10 +0000 (0:00:00.037)       0:00:32.675 ********* \n\nTASK [splunk_common : Get Splunk status] ***************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:14 +0000 (0:00:04.163)       0:00:36.839 ********* \n\nTASK [splunk_common : Trigger restart] *****************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:15 +0000 (0:00:00.630)       0:00:37.470 ********* \nTuesday 07 April 2026  06:38:15 +0000 (0:00:00.096)       0:00:37.566 ********* \nTuesday 07 April 2026  06:38:15 +0000 (0:00:00.072)       0:00:37.638 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/set_mgmt_port.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:15 +0000 (0:00:00.100)       0:00:37.739 ********* \n\nTASK [splunk_common : Set localhost address for mgmt port] *********************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:15 +0000 (0:00:00.080)       0:00:37.819 ********* \n\nTASK [splunk_common : Set mgmt port] *******************************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:16 +0000 (0:00:00.653)       0:00:38.473 ********* \nTuesday 07 April 2026  06:38:16 +0000 (0:00:00.055)       0:00:38.528 ********* \nTuesday 07 April 2026  06:38:16 +0000 (0:00:00.054)       0:00:38.583 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 85:9 was of type 'NoneType'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m False. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:16 +0000 (0:00:00.045)       0:00:38.628 ********* \nTuesday 07 April 2026  06:38:16 +0000 (0:00:00.072)       0:00:38.701 ********* \nTuesday 07 April 2026  06:38:16 +0000 (0:00:00.074)       0:00:38.776 ********* \nTuesday 07 April 2026  06:38:16 +0000 (0:00:00.119)       0:00:38.895 ********* \nTuesday 07 April 2026  06:38:17 +0000 (0:00:00.167)       0:00:39.063 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 109:9 was of type 'dict'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m True. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/enable_splunkd_ssl.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:17 +0000 (0:00:00.109)       0:00:39.172 ********* \n\nTASK [splunk_common : Enable Splunkd SSL] **************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:17 +0000 (0:00:00.611)       0:00:39.783 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/enable_splunkd_ssl.yml 26:9 was of type \u001b[0m\n\u001b[0;35m'NoneType'. Conditional results should only be True or False. The result was \u001b[0m\n\u001b[0;35minterpreted as False. This feature will be removed in version 2.19. Deprecation\u001b[0m\n\u001b[0;35m warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:17 +0000 (0:00:00.039)       0:00:39.823 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/enable_splunkd_ssl.yml 38:9 was of type \u001b[0m\n\u001b[0;35m'NoneType'. Conditional results should only be True or False. The result was \u001b[0m\n\u001b[0;35minterpreted as False. This feature will be removed in version 2.19. Deprecation\u001b[0m\n\u001b[0;35m warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:17 +0000 (0:00:00.044)       0:00:39.867 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/enable_splunkd_ssl.yml 50:9 was of type \u001b[0m\n\u001b[0;35m'NoneType'. Conditional results should only be True or False. The result was \u001b[0m\n\u001b[0;35minterpreted as False. This feature will be removed in version 2.19. Deprecation\u001b[0m\n\u001b[0;35m warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:17 +0000 (0:00:00.048)       0:00:39.916 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/main.yml 113:7 was of type 'int'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m False. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:38:17 +0000 (0:00:00.040)       0:00:39.956 ********* \nTuesday 07 April 2026  06:38:18 +0000 (0:00:00.086)       0:00:40.043 ********* \nTuesday 07 April 2026  06:38:18 +0000 (0:00:00.094)       0:00:40.138 ********* \nTuesday 07 April 2026  06:38:18 +0000 (0:00:00.042)       0:00:40.180 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/start_splunk.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:18 +0000 (0:00:00.118)       0:00:40.299 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/get_splunk_status.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:38:18 +0000 (0:00:00.055)       0:00:40.355 ********* \n\nTASK [splunk_common : Restrict permissions on splunk.key for Status] ***********\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/restrict_permissions.yml for localhost => (item=/opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key)\u001b[0m\nTuesday 07 April 2026  06:38:18 +0000 (0:00:00.075)       0:00:40.430 ********* \n\nTASK [splunk_common : Check if /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key exists] ***\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:19 +0000 (0:00:00.599)       0:00:41.030 ********* \nTuesday 07 April 2026  06:38:19 +0000 (0:00:00.040)       0:00:41.071 ********* \n\nTASK [splunk_common : Get Splunk status] ***************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:19 +0000 (0:00:00.631)       0:00:41.703 ********* \n\nTASK [splunk_common : Cleanup Splunk runtime files] ****************************\n\u001b[0;32mok: [localhost] => (item=/opt/splunk/var/run/splunk/splunkd.pid)\u001b[0m\n\u001b[0;32mok: [localhost] => (item=/opt/splunk/var/lib/splunk/kvstore/mongo/mongod.lock)\u001b[0m\nTuesday 07 April 2026  06:38:20 +0000 (0:00:01.179)       0:00:42.883 ********* \n\nTASK [splunk_common : Restrict permissions on splunk.key] **********************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/restrict_permissions.yml for localhost => (item=/opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key)\u001b[0m\nTuesday 07 April 2026  06:38:20 +0000 (0:00:00.061)       0:00:42.944 ********* \n\nTASK [splunk_common : Check if /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key exists] ***\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:38:21 +0000 (0:00:00.599)       0:00:43.543 ********* \nTuesday 07 April 2026  06:38:21 +0000 (0:00:00.050)       0:00:43.594 ********* \n\nTASK [splunk_common : Start Splunk via CLI] ************************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:32 +0000 (0:01:11.207)       0:01:54.802 ********* \nTuesday 07 April 2026  06:39:32 +0000 (0:00:00.146)       0:01:54.948 ********* \nTuesday 07 April 2026  06:39:33 +0000 (0:00:00.165)       0:01:55.114 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/check_uds_file.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:39:33 +0000 (0:00:00.206)       0:01:55.321 ********* \n\nTASK [splunk_common : Check if UDS file exists] ********************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:34 +0000 (0:00:01.516)       0:01:56.838 ********* \n\nTASK [splunk_common : Set UDS enabled/disabled] ********************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:34 +0000 (0:00:00.127)       0:01:56.966 ********* \n\nTASK [splunk_common : Wait for splunkd management port] ************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:35 +0000 (0:00:00.916)       0:01:57.883 ********* \nTuesday 07 April 2026  06:39:35 +0000 (0:00:00.008)       0:01:57.892 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/set_certificate_prefix.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:39:36 +0000 (0:00:00.242)       0:01:58.135 ********* \n\nTASK [splunk_common : Test basic https endpoint] *******************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:38 +0000 (0:00:02.506)       0:02:00.641 ********* \n\nTASK [splunk_common : Set url prefix for future REST calls] ********************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:38 +0000 (0:00:00.076)       0:02:00.718 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/clean_user_seed.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:39:38 +0000 (0:00:00.135)       0:02:00.854 ********* \n\nTASK [splunk_common : Remove user-seed.conf] ***********************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:39 +0000 (0:00:00.826)       0:02:01.680 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/add_splunk_license.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:39:39 +0000 (0:00:00.114)       0:02:01.795 ********* \n\nTASK [splunk_common : Initialize licenses array] *******************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:39 +0000 (0:00:00.079)       0:02:01.874 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/add_splunk_license.yml 10:9 was of type \u001b[0m\n\u001b[0;35m'str'. Conditional results should only be True or False. The result was \u001b[0m\n\u001b[0;35minterpreted as True. This feature will be removed in version 2.19. Deprecation \u001b[0m\n\u001b[0;35mwarnings can be disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\n\nTASK [splunk_common : Determine available licenses] ****************************\n\u001b[0;32mok: [localhost] => (item=splunk.lic)\u001b[0m\nTuesday 07 April 2026  06:39:40 +0000 (0:00:00.139)       0:02:02.014 ********* \n\nTASK [splunk_common : Apply licenses] ******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/apply_licenses.yml for localhost => (item=splunk.lic)\u001b[0m\nTuesday 07 April 2026  06:39:40 +0000 (0:00:00.211)       0:02:02.225 ********* \nTuesday 07 April 2026  06:39:40 +0000 (0:00:00.165)       0:02:02.390 ********* \nTuesday 07 April 2026  06:39:40 +0000 (0:00:00.202)       0:02:02.593 ********* \nTuesday 07 April 2026  06:39:40 +0000 (0:00:00.134)       0:02:02.727 ********* \n\nTASK [splunk_common : include_tasks] *******************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/licenses/add_license.yml for localhost => (item=(censored due to no_log))\u001b[0m\nTuesday 07 April 2026  06:39:40 +0000 (0:00:00.235)       0:02:02.963 ********* \nTuesday 07 April 2026  06:39:41 +0000 (0:00:00.160)       0:02:03.124 ********* \n\nTASK [splunk_common : Ensure license path] *************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:42 +0000 (0:00:01.060)       0:02:04.185 ********* \nTuesday 07 April 2026  06:39:42 +0000 (0:00:00.074)       0:02:04.259 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_common/tasks/add_splunk_license.yml 25:7 was of type \u001b[0m\n\u001b[0;35m'str'. Conditional results should only be True or False. The result was \u001b[0m\n\u001b[0;35minterpreted as False. This feature will be removed in version 2.19. Deprecation\u001b[0m\n\u001b[0;35m warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:39:42 +0000 (0:00:00.073)       0:02:04.332 ********* \nTuesday 07 April 2026  06:39:42 +0000 (0:00:00.013)       0:02:04.346 ********* \nTuesday 07 April 2026  06:39:42 +0000 (0:00:00.101)       0:02:04.448 ********* \nTuesday 07 April 2026  06:39:42 +0000 (0:00:00.037)       0:02:04.486 ********* \nTuesday 07 April 2026  06:39:42 +0000 (0:00:00.088)       0:02:04.574 ********* \n\nTASK [splunk_standalone : include_tasks] ***************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_standalone/tasks/../../splunk_common/tasks/set_as_hec_receiver.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:39:42 +0000 (0:00:00.085)       0:02:04.660 ********* \n\nTASK [splunk_standalone : Get existing HEC token] ******************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:45 +0000 (0:00:02.994)       0:02:07.654 ********* \n\nTASK [splunk_standalone : Attempt] *********************************************\n\u001b[0;32mok: [localhost] => {}\u001b[0m\n\u001b[0;32m\u001b[0m\n\u001b[0;32mMSG:\u001b[0m\n\u001b[0;32m\u001b[0m\n\u001b[0;32m404\u001b[0m\nTuesday 07 April 2026  06:39:45 +0000 (0:00:00.143)       0:02:07.798 ********* \nTuesday 07 April 2026  06:39:45 +0000 (0:00:00.110)       0:02:07.908 ********* \nTuesday 07 April 2026  06:39:45 +0000 (0:00:00.062)       0:02:07.971 ********* \n\nTASK [splunk_standalone : Setup global HEC] ************************************\n\u001b[0;33mchanged: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:48 +0000 (0:00:02.701)       0:02:10.672 ********* \nTuesday 07 April 2026  06:39:48 +0000 (0:00:00.083)       0:02:10.756 ********* \nTuesday 07 April 2026  06:39:48 +0000 (0:00:00.075)       0:02:10.832 ********* \nTuesday 07 April 2026  06:39:48 +0000 (0:00:00.129)       0:02:10.962 ********* \nTuesday 07 April 2026  06:39:49 +0000 (0:00:00.102)       0:02:11.064 ********* \nTuesday 07 April 2026  06:39:49 +0000 (0:00:00.162)       0:02:11.227 ********* \n\u001b[0;35m[DEPRECATION WARNING]: Conditional result at location \u001b[0m\n\u001b[0;35m/opt/ansible/roles/splunk_standalone/tasks/main.yml 39:7 was of type 'list'. \u001b[0m\n\u001b[0;35mConditional results should only be True or False. The result was interpreted as\u001b[0m\n\u001b[0;35m False. This feature will be removed in version 2.19. Deprecation warnings can \u001b[0m\n\u001b[0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.\u001b[0m\nTuesday 07 April 2026  06:39:49 +0000 (0:00:00.056)       0:02:11.284 ********* \nTuesday 07 April 2026  06:39:49 +0000 (0:00:00.068)       0:02:11.353 ********* \nTuesday 07 April 2026  06:39:49 +0000 (0:00:00.126)       0:02:11.479 ********* \n\nTASK [splunk_standalone : include_tasks] ***************************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_standalone/tasks/../../splunk_common/tasks/check_for_required_restarts.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:39:49 +0000 (0:00:00.089)       0:02:11.569 ********* \n\nTASK [splunk_standalone : Check for required restarts] *************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:51 +0000 (0:00:01.789)       0:02:13.358 ********* \nTuesday 07 April 2026  06:39:51 +0000 (0:00:00.057)       0:02:13.416 ********* \n\nTASK [Check all instances for required restarts] *******************************\n\u001b[0;36mincluded: /opt/ansible/roles/splunk_common/tasks/check_for_required_restarts.yml for localhost\u001b[0m\nTuesday 07 April 2026  06:39:51 +0000 (0:00:00.112)       0:02:13.528 ********* \n\nTASK [Check for required restarts] *********************************************\n\u001b[0;32mok: [localhost]\u001b[0m\nTuesday 07 April 2026  06:39:55 +0000 (0:00:03.500)       0:02:17.028 ********* \n\nPLAY RECAP *********************************************************************\n\u001b[0;33mlocalhost\u001b[0m                  : \u001b[0;32mok=83  \u001b[0m \u001b[0;33mchanged=11  \u001b[0m unreachable=0    failed=0    \u001b[0;36mskipped=83  \u001b[0m rescued=0    ignored=0   \n\nTuesday 07 April 2026  06:39:55 +0000 (0:00:00.004)       0:02:17.033 ********* \n=============================================================================== \nsplunk_common : Start Splunk via CLI ----------------------------------- 71.21s\nsplunk_common : Update /opt/splunk/etc ---------------------------------- 5.56s\nsplunk_common : Update Splunk directory owner --------------------------- 4.39s\nsplunk_common : Get Splunk status --------------------------------------- 4.16s\nCheck for required restarts --------------------------------------------- 3.50s\nsplunk_standalone : Get existing HEC token ------------------------------ 2.99s\nGathering Facts --------------------------------------------------------- 2.72s\nsplunk_standalone : Setup global HEC ------------------------------------ 2.70s\nsplunk_common : Check if requests_unixsocket exists --------------------- 2.51s\nsplunk_common : Test basic https endpoint ------------------------------- 2.51s\nsplunk_standalone : Check for required restarts ------------------------- 1.79s\nsplunk_common : Hash the password --------------------------------------- 1.71s\nsplunk_common : Check if UDS file exists -------------------------------- 1.52s\nsplunk_common : Generate user-seed.conf (Linux) ------------------------- 1.48s\nsplunk_common : Cleanup Splunk runtime files ---------------------------- 1.18s\nsplunk_common : Ensure license path ------------------------------------- 1.06s\nsplunk_common : Find manifests ------------------------------------------ 0.93s\nsplunk_common : Wait for splunkd management port ------------------------ 0.92s\nsplunk_common : Remove user-seed.conf ----------------------------------- 0.83s\nsplunk_common : Check for scloud ---------------------------------------- 0.82s\n===============================================================================\n\nAnsible playbook complete, will begin streaming splunkd_stderr.log",
+      "errors": "",
+      "stdout_file": "checks\\splunk_logs.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "ingress_nginx_pods",
+      "description": "Verify ingress-nginx controller pods.",
+      "command": "kubectl -n ingress-nginx get pods",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME                                        READY   STATUS    RESTARTS   AGE\ningress-nginx-controller-6c7cd85885-x8wqw   1/1     Running   0          10m",
+      "errors": "",
+      "stdout_file": "checks\\ingress_nginx_pods.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "ingress_nginx_service",
+      "description": "Verify ingress-nginx controller service.",
+      "command": "kubectl -n ingress-nginx get svc",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME                                 TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                      AGE\ningress-nginx-controller             LoadBalancer   10.102.10.212   34.56.179.147   80:30132/TCP,443:31613/TCP   10m\ningress-nginx-controller-admission   ClusterIP      10.102.13.64    <none>          443/TCP                      10m",
+      "errors": "",
+      "stdout_file": "checks\\ingress_nginx_service.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "cert_manager_pods",
+      "description": "Verify cert-manager pods.",
+      "command": "kubectl -n cert-manager get pods",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME                                       READY   STATUS    RESTARTS   AGE\ncert-manager-cainjector-7fc5bf87cd-rcbj4   1/1     Running   0          9m38s\ncert-manager-fb659bc9b-ndbkw               1/1     Running   0          9m38s\ncert-manager-webhook-55b4ff9fbf-bj97h      1/1     Running   0          9m38s",
+      "errors": "",
+      "stdout_file": "checks\\cert_manager_pods.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "cert_manager_crds",
+      "description": "Verify cert-manager CRDs are installed.",
+      "command": "kubectl get crd | grep cert-manager",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "certificaterequests.cert-manager.io                    2026-04-07T06:33:00Z\ncertificates.cert-manager.io                           2026-04-07T06:33:00Z\nchallenges.acme.cert-manager.io                        2026-04-07T06:33:00Z\nclusterissuers.cert-manager.io                         2026-04-07T06:33:01Z\nissuers.cert-manager.io                                2026-04-07T06:33:01Z\norders.acme.cert-manager.io                            2026-04-07T06:33:00Z",
+      "errors": "",
+      "stdout_file": "checks\\cert_manager_crds.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "splunk_ingress",
+      "description": "Verify Splunk ingress object.",
+      "command": "kubectl -n splunk-dev get ingress",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME     CLASS   HOSTS                    ADDRESS         PORTS     AGE\nsplunk   nginx   splunk-dev.example.com   34.56.179.147   80, 443   7m4s",
+      "errors": "",
+      "stdout_file": "checks\\splunk_ingress.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "cluster_issuers",
+      "description": "Verify ClusterIssuer resources.",
+      "command": "kubectl get clusterissuer",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME         READY   AGE\nselfsigned   True    7m4s",
+      "errors": "",
+      "stdout_file": "checks\\cluster_issuers.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "tls_secret",
+      "description": "Verify TLS secret exists.",
+      "command": "kubectl -n splunk-dev get secret splunk-web-tls",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "NAME             TYPE                DATA   AGE\nsplunk-web-tls   kubernetes.io/tls   3      7m4s",
+      "errors": "",
+      "stdout_file": "checks\\tls_secret.stdout.txt",
+      "stderr_file": null
+    },
+    {
+      "name": "flux_reconcile_source",
+      "description": "Force Flux Git source reconciliation.",
+      "command": "flux reconcile source git github-platform -n flux-system",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "",
+      "errors": "\u25ba annotating GitRepository github-platform in flux-system namespace\n\u2714 GitRepository annotated\n\u25ce waiting for GitRepository reconciliation\n\u2714 fetched revision project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7",
+      "stdout_file": null,
+      "stderr_file": "checks\\flux_reconcile_source.stderr.txt"
+    },
+    {
+      "name": "flux_reconcile_kustomization",
+      "description": "Force Flux Kustomization reconciliation.",
+      "command": "flux reconcile kustomization splunk-dev -n flux-system --with-source",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "",
+      "errors": "\u25ba annotating GitRepository github-platform in flux-system namespace\n\u2714 GitRepository annotated\n\u25ce waiting for GitRepository reconciliation\n\u2714 fetched revision project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7\n\u25ba annotating Kustomization splunk-dev in flux-system namespace\n\u2714 Kustomization annotated\n\u25ce waiting for Kustomization reconciliation\n\u2714 applied revision project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7",
+      "stdout_file": null,
+      "stderr_file": "checks\\flux_reconcile_kustomization.stderr.txt"
+    },
+    {
+      "name": "localhost_8091",
+      "description": "Check whether localhost:8091 is reachable for Splunk UI.",
+      "command": "socket check to 127.0.0.1:8091",
+      "required": false,
+      "screenshot_required": true,
+      "exit_code": 0,
+      "passed": true,
+      "output": "localhost:8091 is reachable",
+      "errors": "",
+      "stdout_file": "checks\\localhost_8091.stdout.txt",
+      "stderr_file": null
+    }
+  ],
+  "state_artifacts": {
+    "snapshots": [
+      {
+        "name": "flux-system-gitrepository",
+        "command": "kubectl -n flux-system get gitrepository github-platform -o yaml",
+        "exit_code": 0,
+        "output_file": "snapshots\\flux-system-gitrepository.yaml",
+        "error_file": null,
+        "captured": true
+      },
+      {
+        "name": "flux-system-kustomization",
+        "command": "kubectl -n flux-system get kustomization splunk-dev -o yaml",
+        "exit_code": 0,
+        "output_file": "snapshots\\flux-system-kustomization.yaml",
+        "error_file": null,
+        "captured": true
+      },
+      {
+        "name": "splunk-dev-all",
+        "command": "kubectl -n splunk-dev get all -o yaml",
+        "exit_code": 0,
+        "output_file": "snapshots\\splunk-dev-all.yaml",
+        "error_file": null,
+        "captured": true
+      },
+      {
+        "name": "splunk-dev-ingress",
+        "command": "kubectl -n splunk-dev get ingress -o yaml",
+        "exit_code": 0,
+        "output_file": "snapshots\\splunk-dev-ingress.yaml",
+        "error_file": null,
+        "captured": true
+      },
+      {
+        "name": "cert-manager-clusterissuers",
+        "command": "kubectl get clusterissuer -o yaml",
+        "exit_code": 0,
+        "output_file": "snapshots\\cert-manager-clusterissuers.yaml",
+        "error_file": null,
+        "captured": true
+      },
+      {
+        "name": "cert-manager-certificates",
+        "command": "kubectl -n splunk-dev get certificate -o yaml",
+        "exit_code": 0,
+        "output_file": "snapshots\\cert-manager-certificates.yaml",
+        "error_file": null,
+        "captured": true
+      }
+    ],
+    "logs": [
+      {
+        "name": "splunk-0",
+        "command": "kubectl -n splunk-dev logs splunk-0 --tail=500",
+        "exit_code": 0,
+        "log_file": "logs\\splunk-0.log",
+        "error_file": null,
+        "captured": true
+      },
+      {
+        "name": "flux-kustomization-errors",
+        "command": "flux logs --level=error --kind=Kustomization --name=splunk-dev -n flux-system",
+        "exit_code": 0,
+        "log_file": null,
+        "error_file": null,
+        "captured": false
+      }
+    ]
+  }
+}
