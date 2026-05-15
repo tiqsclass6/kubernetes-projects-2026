@@ -68,9 +68,9 @@ Students will:
 
 ## 📹 **Project Demos**
 
-- <https://github.com/user-attachments/assets/1037117a-056d-4a09-8031-88261c92d3c0>
-- <https://github.com/user-attachments/assets/eb2e6b23-e39f-4177-ae2f-7ba8472e9a67>
-- <https://github.com/user-attachments/assets/1cc98e8c-1eb6-448a-bed6-3942a0dc932e>
+<https://github.com/user-attachments/assets/1037117a-056d-4a09-8031-88261c92d3c0>
+<https://github.com/user-attachments/assets/eb2e6b23-e39f-4177-ae2f-7ba8472e9a67>
+<https://github.com/user-attachments/assets/1cc98e8c-1eb6-448a-bed6-3942a0dc932e>
 
 ---
 
