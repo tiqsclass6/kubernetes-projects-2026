@@ -1,0 +1,153 @@
+$ kubectl logs -n kong $(kubectl get pods -n kong -o name | grep controller | head -n 1)
+2026-05-15T05:29:31Z    info    Found configuration option for gated feature    {"v": 0, "feature": "RewriteURIs", "enabled": false}
+2026-05-15T05:29:31Z    info    Found configuration option for gated feature    {"v": 0, "feature": "KongServiceFacade", "enabled": false}
+2026-05-15T05:29:31Z    info    Found configuration option for gated feature    {"v": 0, "feature": "SanitizeKonnectConfigDumps", "enabled": true}
+2026-05-15T05:29:31Z    info    Found configuration option for gated feature    {"v": 0, "feature": "FallbackConfiguration", "enabled": false}
+2026-05-15T05:29:31Z    info    Found configuration option for gated feature    {"v": 0, "feature": "KongCustomEntity", "enabled": true}
+2026-05-15T05:29:31Z    info    Found configuration option for gated feature    {"v": 0, "feature": "GatewayAlpha", "enabled": false}
+2026-05-15T05:29:31Z    info    Found configuration option for gated feature    {"v": 0, "feature": "FillIDs", "enabled": true}
+2026-05-15T05:29:31Z    info    Diagnostics disabled    {"v": 0}
+2026-05-15T05:29:31Z    info    setup   Starting controller manager     {"v": 0, "release": "3.5.7", "repo": "https://github.com/Kong/kubernetes-ingress-controller.git", "commit": "18b72cd4fb499148f62e42f10e4bae53937ff42c"}
+2026-05-15T05:29:31Z    info    setup   The ingress class name has been set     {"v": 0, "value": "kong"}
+2026-05-15T05:29:31Z    info    setup   Getting the Kubernetes client configuration     {"v": 0}
+2026-05-15T05:29:31Z    info    setup   Using Kubeconfig based on fields from configuration     {"v": 0}
+W0515 05:29:31.669213       1 client_config.go:667] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+2026-05-15T05:29:31Z    info    setup   Getting the kong admin api client configuration {"v": 0}
+W0515 05:29:31.669550       1 client_config.go:667] Neither --kubeconfig nor --master was specified.  Using the inClusterConfig.  This might not work.
+2026-05-15T05:29:31Z    error   setup.initialize-kong-clients   Failed to create kong client(s), retrying...    {"delay": 1, "error": "no endpoints for service: \"kong/kong-gateway-admin\""}
+2026-05-15T05:29:32Z    error   setup.initialize-kong-clients   Failed to create kong client(s), retrying...    {"delay": 1, "error": "no endpoints for service: \"kong/kong-gateway-admin\""}
+2026-05-15T05:29:33Z    error   setup.initialize-kong-clients   Failed to create kong client(s), retrying...    {"delay": 1, "error": "no endpoints for service: \"kong/kong-gateway-admin\""}
+2026-05-15T05:29:34Z    error   setup.initialize-kong-clients   Failed to create kong client(s), retrying...    {"delay": 1, "error": "no endpoints for service: \"kong/kong-gateway-admin\""}
+2026-05-15T05:29:35Z    error   setup.initialize-kong-clients   Failed to create kong client(s), retrying...    {"delay": 1, "error": "no endpoints for service: \"kong/kong-gateway-admin\""}
+2026-05-15T05:29:36Z    error   setup.initialize-kong-clients   Failed to create kong client(s), retrying...    {"delay": 1, "error": "no endpoints for service: \"kong/kong-gateway-admin\""}
+2026-05-15T05:29:40Z    info    setup   Configuring and building the controller manager {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Building the manager runtime scheme and loading apis into the scheme    {"v": 0}
+2026-05-15T05:29:40Z    info    setup   DB-less mode detected with service detection, enabling leader election  {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Initializing Dataplane Client   {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Emitting Kubernetes events enabled, creating an event recorder for kong-client  {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Setting up admission server     {"v": 0}
+2026-05-15T05:29:40Z    info    controller-runtime.certwatcher  Updated current TLS certificate {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Initializing Dataplane Synchronizer     {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Starting Status Updater {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Initializing Dataplane address Discovery        {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Falling back to a default address finder for UDP        {"v": 0, "reason": "no publish status address or publish service were provided"}
+2026-05-15T05:29:40Z    info    setup   Starting Enabled Controllers    {"v": 0}
+2026-05-15T05:29:40Z    info    controllers.Dynamic/Gateway     Required CustomResourceDefinitions are not installed, setting up a watch for them in case they are installed afterward  {"v": 0}
+2026-05-15T05:29:40Z    info    controllers.Dynamic/HTTPRoute   Required CustomResourceDefinitions are not installed, setting up a watch for them in case they are installed afterward  {"v": 0}
+2026-05-15T05:29:40Z    info    controllers.Dynamic/ReferenceGrant      Required CustomResourceDefinitions are not installed, setting up a watch for them in case they are installed afterward  {"v": 0}
+2026-05-15T05:29:40Z    info    controllers.Dynamic/GRPCRoute   Required CustomResourceDefinitions are not installed, setting up a watch for them in case they are installed afterward  {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Starting KongLicense controller {"v": 0}
+2026-05-15T05:29:40Z    info    setup   Inject license getter to config translator      {"v": 0, "license_getter_type": "*license.KongV1Alpha1KongLicenseReconciler"}
+2026-05-15T05:29:40Z    info    setup   Finished setting up the controller manager      {"v": 0}
+2026-05-15T05:29:40Z    info    Starting standalone health check server {"v": 0}
+2026-05-15T05:29:40Z    info    telemetry       starting telemetry manager      {"v": 0}
+2026-05-15T05:29:40Z    info    Starting manager        {"v": 0}
+2026-05-15T05:29:40Z    info    Starting AdminAPIClientsManager loop    {"v": 0}
+2026-05-15T05:29:40Z    info    controller-runtime.metrics      Starting metrics server {"v": 0}
+2026-05-15T05:29:40Z    info    Starting admission server       {"v": 0}
+2026-05-15T05:29:40Z    info    controller-runtime.certwatcher  Starting certificate poll+watcher       {"v": 0, "interval": 10}
+2026-05-15T05:29:40Z    info    controller-runtime.metrics      Serving metrics server  {"v": 0, "bindAddress": ":10255", "secure": false}
+I0515 05:29:41.034985       1 leaderelection.go:257] attempting to acquire leader lease kong/kong-ingress-controller-leader-kong...
+2026-05-15T05:29:41Z    info    controllers.KongAdminAPIService Starting EventSource    {"source": "kind source: *v1.EndpointSlice", "v": 0}
+I0515 05:29:41.050628       1 leaderelection.go:271] successfully acquired lease kong/kong-ingress-controller-leader-kong
+2026-05-15T05:29:41Z    info    controllers.Ingress.netv1       Starting EventSource    {"source": "channel source: 0xc0002c3500", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.IngressClass.netv1  Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.EndpointSlice       Starting EventSource    {"source": "kind source: *v1.EndpointSlice", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Ingress.netv1       Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Ingress.netv1       Starting EventSource    {"source": "kind source: *v1.Ingress", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Service     Starting EventSource    {"source": "kind source: *v1.Service", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.configmaps  Starting EventSource    {"source": "kind source: *v1.ConfigMap", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Secrets     Starting EventSource    {"source": "kind source: *v1.Secret", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.TCPIngress  Starting EventSource    {"source": "channel source: 0xc0002c37a0", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.UDPIngress  Starting EventSource    {"source": "channel source: 0xc0002c3650", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.IngressClassParameters      Starting EventSource    {"source": "kind source: *v1alpha1.IngressClassParameters", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.TCPIngress  Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.TCPIngress  Starting EventSource    {"source": "kind source: *v1beta1.TCPIngress", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.UDPIngress  Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.UDPIngress  Starting EventSource    {"source": "kind source: *v1beta1.UDPIngress", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongIngress Starting EventSource    {"source": "kind source: *v1.KongIngress", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumer        Starting EventSource    {"source": "channel source: 0xc0002c3880", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongPlugin  Starting EventSource    {"source": "kind source: *v1.KongPlugin", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongClusterPlugin   Starting EventSource    {"source": "kind source: *v1.KongClusterPlugin", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumer        Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumer        Starting EventSource    {"source": "kind source: *v1.KongConsumer", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumerGroup   Starting EventSource    {"source": "channel source: 0xc0002c3960", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongVault   Starting EventSource    {"source": "channel source: 0xc0002d0230", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongClusterPlugin   Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumerGroup   Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumerGroup   Starting EventSource    {"source": "kind source: *v1beta1.KongConsumerGroup", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongUpstreamPolicy  Starting EventSource    {"source": "channel source: 0xc0002d0150", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/Gateway     Starting EventSource    {"source": "kind source: *v1.CustomResourceDefinition", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongVault   Starting EventSource    {"source": "kind source: *v1.IngressClass", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongVault   Starting EventSource    {"source": "kind source: *v1alpha1.KongVault", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongUpstreamPolicy  Starting EventSource    {"source": "kind source: *v1beta1.KongUpstreamPolicy", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongUpstreamPolicy  Starting EventSource    {"source": "kind source: *v1.Service", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongUpstreamPolicy  Starting EventSource    {"source": "kind source: *v1.Ingress", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongUpstreamPolicy  Starting EventSource    {"source": "channel source: 0xc0002d0000", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongCustomEntity    Starting EventSource    {"source": "channel source: 0xc0002d0310", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/ReferenceGrant      Starting EventSource    {"source": "kind source: *v1.CustomResourceDefinition", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongCustomEntity    Starting EventSource    {"source": "kind source: *v1alpha1.KongCustomEntity", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/HTTPRoute   Starting EventSource    {"source": "kind source: *v1.CustomResourceDefinition", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongLicense Starting EventSource    {"source": "channel source: 0xc0003b8770", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/GRPCRoute   Starting EventSource    {"source": "kind source: *v1.CustomResourceDefinition", "v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongLicense Starting EventSource    {"source": "kind source: *v1alpha1.KongLicense", "v": 0}
+2026-05-15T05:29:41Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1beta1 TCPIngress is deprecated      {"v": 0}
+2026-05-15T05:29:41Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1 KongIngress is deprecated  {"v": 0}
+2026-05-15T05:29:41Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1beta1 UDPIngress is deprecated      {"v": 0}
+2026-05-15T05:29:41Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1beta1 TCPIngress is deprecated      {"v": 0}
+2026-05-15T05:29:41Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1beta1 UDPIngress is deprecated      {"v": 0}
+2026-05-15T05:29:41Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1 KongIngress is deprecated  {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongAdminAPIService Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongAdminAPIService Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongAdminAPIService Reconciling Admin API EndpointSlice     {"v": 0, "namespace": "kong", "name": "kong-gateway-admin-pqpw5"}
+2026-05-15T05:29:41Z    info    controllers.IngressClass.netv1  Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.IngressClass.netv1  Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.EndpointSlice       Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.EndpointSlice       Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.Ingress.netv1       Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.Ingress.netv1       Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.Service     Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.Service     Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.configmaps  Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.configmaps  Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.Secrets     Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.Secrets     Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.IngressClassParameters      Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.IngressClassParameters      Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.UDPIngress  Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.UDPIngress  Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.TCPIngress  Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.TCPIngress  Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongIngress Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongIngress Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongConsumer        Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumer        Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongConsumerGroup   Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongConsumerGroup   Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/Gateway     Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/Gateway     Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongVault   Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongVault   Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongClusterPlugin   Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongClusterPlugin   Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongPlugin  Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongPlugin  Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/ReferenceGrant      Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/ReferenceGrant      Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongUpstreamPolicy  Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongUpstreamPolicy  Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongCustomEntity    Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongCustomEntity    Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/HTTPRoute   Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/HTTPRoute   Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/GRPCRoute   Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.Dynamic/GRPCRoute   Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:41Z    info    controllers.KongLicense Starting Controller     {"v": 0}
+2026-05-15T05:29:41Z    info    controllers.KongLicense Starting workers        {"v": 0, "worker count": 1}
+2026-05-15T05:29:49Z    info    Successfully synced configuration to Kong       {"url": "https://10.100.40.112:8444", "update_strategy": "InMemory", "v": 0, "duration": "14ms"}
+2026-05-15T05:29:50Z    info    controllers.KongAdminAPIService Reconciling Admin API EndpointSlice     {"v": 0, "namespace": "kong", "name": "kong-gateway-admin-pqpw5"}
+2026-05-15T05:30:04Z    info    Successfully synced configuration to Kong       {"url": "https://10.100.40.112:8444", "update_strategy": "InMemory", "v": 0, "duration": "23ms"}
+2026-05-15T05:37:56Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1 KongIngress is deprecated  {"v": 0}
+2026-05-15T05:38:11Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1beta1 UDPIngress is deprecated      {"v": 0}
+2026-05-15T05:39:18Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1beta1 TCPIngress is deprecated      {"v": 0}
+2026-05-15T05:43:17Z    info    controller-runtime.cache        Warning: configuration.konghq.com/v1beta1 UDPIngress is deprecated      {"v": 0}
