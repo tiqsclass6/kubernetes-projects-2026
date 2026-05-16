@@ -62,8 +62,6 @@ Students will:
 
 ![Kong Ingress Lab Architecture](images/diagram.png)
 
-### This is a placeholder until I can create a custom diagram
-
 ---
 
 ## 📹 **Project Demos**
@@ -726,8 +724,6 @@ The following documentation was used to design, deploy, validate, and troublesho
 - [**Kong Gateway Documentation**](https://developer.konghq.com/gateway/)  
 - [**Kong Gateway DB-less Mode**](https://developer.konghq.com/gateway/db-less-mode/)  
 - [**Kong Ingress Controller Upgrade Guidance**](https://developer.konghq.com/kubernetes-ingress-controller/faq/upgrading-ingress-controller/)  
-
----
 
 ### ☸️ **Kubernetes Documentation**
 
