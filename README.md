@@ -1,4 +1,4 @@
-# 🚀 **Lab 5 – Kong Ingress (Hello App)**
+# 🚀 **Project 5 – Kong Ingress (Hello App) on EKS**
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-EKS%20Cluster-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Amazon EKS](https://img.shields.io/badge/Amazon%20EKS-Managed%20Kubernetes-FF9900?style=for-the-badge&logo=amazoneks&logoColor=white)
