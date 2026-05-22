@@ -1,21 +1,28 @@
-# 📽 **Project 2 - Argo CD GitOps Security Lab (Splunk Multi-Environment Deployment)**
+# 📽 **Project 2 - Argo CD GitOps Security (Splunk Multi-Environment Deployment)**
 
-![Kubernetes](https://img.shields.io/badge/Kubernetes-EKS-blue?logo=kubernetes)
-![GitOps](https://img.shields.io/badge/Deployment-GitOps-orange)
-![License](https://img.shields.io/badge/License-MIT-blue)
-![Terraform](https://img.shields.io/badge/IaC-Terraform-purple?logo=terraform)
-![AWS](https://img.shields.io/badge/Cloud-AWS-black?logo=amazonaws)
-![Security](https://img.shields.io/badge/Security-RBAC-green)
-![Argo CD](https://img.shields.io/badge/ArgoCD-v2.12+-blue)
-![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github)
+![AWS](https://img.shields.io/badge/AWS-Cloud-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Amazon EKS](https://img.shields.io/badge/Amazon_EKS-Kubernetes-FF9900?style=for-the-badge&logo=amazoneks&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Argo CD](https://img.shields.io/badge/Argo_CD-v2.12+-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![GitOps](https://img.shields.io/badge/GitOps-Continuous_Delivery-7B42BC?style=for-the-badge&logo=git&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
+![RBAC](https://img.shields.io/badge/Security-RBAC-2E7D32?style=for-the-badge&logo=auth0&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-0A66C2?style=for-the-badge)
 
 ---
 
-## 🥼 **Lab Overview**
+## 🧑‍🏫 **Network Architecture Diagram**
+
+![diagram.png](/Screenshots/diagram.png)
+
+---
+
+## 🥼 **Project Overview**
 
 This project demonstrates a **secure GitOps deployment model using Argo CD** on a Kubernetes cluster.
 
-The lab simulates a real-world DevOps environment where:
+The project simulates a real-world DevOps environment where:
 
 - Multiple environments are deployed
 - Access is restricted using RBAC
@@ -38,7 +45,7 @@ Access policies enforce **environment isolation**:
 | **student1** | `dev/test operator` | `dev + test only`   |
 | **student2** | `dev/test operator` | `dev + test only`   |
 
-This lab demonstrates:
+This project demonstrates:
 
 - GitOps application lifecycle
 - RBAC security enforcement
@@ -50,7 +57,7 @@ This lab demonstrates:
 
 ## 🥼 **DevOps Skills Demonstrated**
 
-This lab demonstrates the following DevOps capabilities:
+This project demonstrates the following DevOps capabilities:
 
 - **Infrastructure as Code** ➡ *Terraform*  
 - **Cloud Platform** ➡ *AWS EKS*  
@@ -59,13 +66,13 @@ This lab demonstrates the following DevOps capabilities:
 - **Security Enforcement** ➡ *RBAC Policies*  
 - **Environment Isolation** ➡ *Kubernetes Namespaces*  
 - **Automation** ➡ *Bash scripting*  
-- **Operational Validation** ➡ *automated lab status checks*
+- **Operational Validation** ➡ *automated project status checks*
 
 ---
 
-## 🛠️ **Lab Requirements**
+## 🛠️ **Project Requirements**
 
-Before running the lab, the following tools must be installed:
+Before running the project, the following tools must be installed:
 
 | **Tool**        | **Version**            |
 |-----------------|------------------------|
@@ -76,7 +83,7 @@ Before running the lab, the following tools must be installed:
 | **Argo CD CLI** | `v2.12+`               |
 | **Bash**        | `Linux/macOS/Git Bash` |
 
-The cluster used for this lab is:
+The cluster used for this project is:
 
 ```text
 AWS EKS
@@ -91,119 +98,7 @@ kubectl cluster-info
 kubectl get nodes
 ```
 
-![lab-requirements.jpg](/Screenshots/lab-requirements.jpg)
-
----
-
-## 🧑‍🏫 **Network Architecture Diagram**
-
-```mermaid
-flowchart TB
-
-%% ===============================
-%% USERS
-%% ===============================
-
-subgraph Users
-A[👤 admin1<br>Admin Role]
-B[👤 student1<br>Dev/Test Operator]
-C[👤 student2<br>Dev/Test Operator]
-end
-
-%% ===============================
-%% GITOPS SOURCE
-%% ===============================
-
-subgraph GitOps
-D[🐙 GitHub Repository<br>Application Manifests]
-end
-
-%% ===============================
-%% INFRASTRUCTURE
-%% ===============================
-
-subgraph Infrastructure
-E[🟪 Terraform Infrastructure Code]
-F[☁ AWS EKS Cluster]
-end
-
-%% ===============================
-%% ARGOCD
-%% ===============================
-
-subgraph ArgoCD
-G[🔶 Argo CD Controller]
-H[🔐 Argo CD RBAC Policies]
-end
-
-%% ===============================
-%% KUBERNETES
-%% ===============================
-
-subgraph Kubernetes
-I[☸ splunk-dev Namespace]
-J[☸ splunk-test Namespace]
-K[☸ splunk-prod Namespace]
-end
-
-%% ===============================
-%% APPLICATIONS
-%% ===============================
-
-subgraph Applications
-L[📊 Splunk Dev Application]
-M[📊 Splunk Test Application]
-N[📊 Splunk Production Application]
-end
-
-%% ===============================
-%% USER ACCESS FLOW
-%% ===============================
-
-A -->|Admin Access| G
-B -->|Dev/Test Access| G
-C -->|Dev/Test Access| G
-
-%% ===============================
-%% GITOPS FLOW
-%% ===============================
-
-D -->|GitOps Sync| G
-
-%% ===============================
-%% INFRASTRUCTURE FLOW
-%% ===============================
-
-E -->|Infrastructure Provisioning| F
-
-%% ===============================
-%% CLUSTER CONTROL
-%% ===============================
-
-F -->|Cluster Connection| G
-
-%% ===============================
-%% RBAC ENFORCEMENT
-%% ===============================
-
-G -->|Access Control Policies| H
-
-%% ===============================
-%% NAMESPACE DEPLOYMENT
-%% ===============================
-
-F --> I
-F --> J
-F --> K
-
-%% ===============================
-%% APPLICATION DEPLOYMENT
-%% ===============================
-
-I --> L
-J --> M
-K --> N
-```
+![project-requirements.jpg](/Screenshots/project-requirements.jpg)
 
 ---
 
@@ -227,7 +122,7 @@ In enterprise environments this pattern enables teams to deploy software faster 
 
 ### **DevOps / Technical Explanation**
 
-This lab implements a **GitOps workflow with Argo CD**.
+This project implements a **GitOps workflow with Argo CD**.
 
 Key components include:
 
@@ -284,7 +179,7 @@ project-2/
 │   ├── splunk-prod-app.yaml
 │   └── splunk-test-app.yaml
 |
-├── Screenshots/                                 # Screenshots of lab steps and results
+├── Screenshots/                                 # Screenshots of project steps and results
 |   ├── argocd-apps-sync.jpg
 |   ├── argocd-cluster-state.jpg
 |   ├── deploy-script-port-fwd.jpg
@@ -295,11 +190,11 @@ project-2/
 |   ├── deploy-script-pt5.jpg
 |   ├── get-secret-command.jpg
 |   ├── kubeconfig-get-nodes.jpg
-|   ├── lab-final-check-pt1.jpg
-|   ├── lab-final-check-pt2.jpg
-|   ├── lab-final-check-pt3.jpg
-|   ├── lab-final-check-pt4.jpg
-|   ├── lab-requirements.jpg
+|   ├── project-final-check-pt1.jpg
+|   ├── project-final-check-pt2.jpg
+|   ├── project-final-check-pt3.jpg
+|   ├── project-final-check-pt4.jpg
+|   ├── project-requirements.jpg
 |   ├── rbac-pt1.jpg
 |   ├── rbac-pt2.jpg
 |   ├── rbac-pt3.jpg
@@ -324,11 +219,11 @@ project-2/
 |   ├── users-pt2.jpg
 |   └── users-pt3.jpg
 |
-├── scripts/                                     # Automation scripts for lab operations
+├── scripts/                                     # Automation scripts for project operations
 │   ├── 1-deployment.sh
 │   ├── 2-rbac.sh
 │   ├── 3-users.sh
-│   ├── 4-lab-final-check.sh
+│   ├── 4-project-final-check.sh
 │   └── 5-teardown.sh
 │
 ├── .gitignore                                   # Git ignore file
@@ -355,7 +250,7 @@ project-2/
 
 Provision infrastructure using Terraform.
 
-> Terraform provisions the AWS infrastructure required for the lab, including VPC networking, EKS cluster, node groups, IAM roles, and Kubernetes runtime components.
+> Terraform provisions the AWS infrastructure required for the project, including VPC networking, EKS cluster, node groups, IAM roles, and Kubernetes runtime components.
 
 ```bash
 terraform init
@@ -389,7 +284,7 @@ kubectl get nodes
 
 ## 📝 **Shell Scripts**
 
-The lab environment is automated using several scripts.
+The project environment is automated using several scripts.
 
 ### 💻 [**`1-deployment.sh`**](/scripts/1-deployment.sh)
 
@@ -462,7 +357,7 @@ RBAC configuration script applies access control policies to Argo CD.
 
 ### 💻 [**`3-users.sh`**](/scripts/3-users.sh)
 
-Creates lab users and configures RBAC access.
+Creates project users and configures RBAC access.
 
 ```bash
 ./scripts/3-users.sh
@@ -492,10 +387,10 @@ Validates the entire environment.
 ./scripts/4-lab-final-check.sh
 ```
 
-![lab-final-check-pt1.jpg](/Screenshots/lab-final-check-pt1.jpg)
-![lab-final-check-pt2.jpg](/Screenshots/lab-final-check-pt2.jpg)
-![lab-final-check-pt3.jpg](/Screenshots/lab-final-check-pt3.jpg)
-![lab-final-check-pt4.jpg](/Screenshots/lab-final-check-pt4.jpg)
+![project-final-check-pt1.jpg](/Screenshots/project-final-check-pt1.jpg)
+![project-final-check-pt2.jpg](/Screenshots/project-final-check-pt2.jpg)
+![project-final-check-pt3.jpg](/Screenshots/project-final-check-pt3.jpg)
+![project-final-check-pt4.jpg](/Screenshots/project-final-check-pt4.jpg)
 
 #### **Checks**
 
@@ -585,9 +480,9 @@ This removes:
 
 ---
 
-## 📝 **Lab Outcome**
+## 📝 **Project Outcome**
 
-After completing this lab the environment contains:
+After completing this project the environment contains:
 
 - AWS EKS Kubernetes cluster
 - Argo CD GitOps controller
@@ -623,10 +518,25 @@ terraform destroy
 
 ## 📚 **References**
 
-- [**Argo CD Documentation**](https://argo-cd.readthedocs.io)
-- [**AWS EKS Documentation**](https://docs.aws.amazon.com/eks/)
-- [**Kubernetes Documentation**](https://kubernetes.io/docs)
-- [**Terraform Documentation**](https://developer.hashicorp.com/terraform)
+The following official resources were used to design, build, validate, and document **Project 2: Argo CD GitOps Security project on AWS EKS**.
+
+- [**Argo CD Documentation:**](https://argo-cd.readthedocs.io) Used to understand and configure Argo CD application management, GitOps synchronization, AppProjects, RBAC behavior, and Kubernetes-based Argo CD deployment patterns. This directly supports the Project 2 implementation of Argo CD Applications, AppProjects for `splunk-dev`, `splunk-test`, and `splunk-prod`, and RBAC-based access control.
+
+- [**Argo CD RBAC Configuration Documentation:**](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/) Used specifically for configuring Argo CD role-based access control through the `argocd-rbac-cm` ConfigMap and Casbin policy syntax. This supports the project requirement where `admin1` has access to all environments while `student1` and `student2` are limited to dev/test access.
+
+- [**AWS EKS Documentation:**](https://docs.aws.amazon.com/eks/) Used to understand the AWS-managed Kubernetes control plane, EKS cluster provisioning, node groups, cluster access, and operational requirements for running Kubernetes workloads on AWS. This supports the Project 2 AWS EKS infrastructure created through Terraform in the `us-east-1` region.
+
+- [**Amazon EKS IAM and Access Documentation:**](https://docs.aws.amazon.com/eks/latest/userguide/security-iam.html) Used to understand IAM integration with Amazon EKS, including cluster permissions, AWS authentication, node role permissions, and secure access patterns. This supports the Terraform files responsible for EKS authentication, IAM roles, node group permissions, and OIDC-related configuration.
+
+- [**Kubernetes Documentation:**](https://kubernetes.io/docs) Used to understand Kubernetes namespaces, deployments, services, RBAC concepts, workload lifecycle, and validation commands. This supports the Project 2 deployment of isolated namespaces for `splunk-dev`, `splunk-test`, and `splunk-prod`, along with Kubernetes resources used to run the Splunk applications.
+
+- [**Kubernetes RBAC Documentation:**](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) Used as a reference for general Kubernetes role-based access control concepts. Although Project 2 focuses on Argo CD RBAC, Kubernetes RBAC concepts help explain how access control, permissions, and authorization are commonly enforced in Kubernetes environments.
+
+- [**Terraform Documentation:**](https://developer.hashicorp.com/terraform) Used to build and validate the Infrastructure as Code workflow for AWS resources. This supports the modular Terraform design used in Project 2, including files for variables, providers, VPC, subnets, internet gateway, NAT gateway, route tables, EKS cluster, node group, OIDC, storage IAM, Helm storage, and outputs.
+
+- [**Terraform AWS Provider Documentation:**](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) Used to reference AWS resource syntax and configuration patterns for Terraform-managed infrastructure. This supports the AWS resources created in Project 2, including VPC networking, EKS, IAM, node groups, and related infrastructure components.
+
+- [**Project 2 GitHub Repository:**](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-2) Used as the source repository for the project implementation, project structure, Terraform files, Kubernetes manifests, automation scripts, screenshots, and README documentation. The Project 2 branch contains the Argo CD GitOps Security Project with Splunk multi-environment deployment, RBAC enforcement, and AWS EKS infrastructure.
 
 ---
 
@@ -678,9 +588,12 @@ kubectl -n argocd get cm argocd-rbac-cm -o yaml
 
 ---
 
-## 👥 **Authors**
+## 👥 **Author**
 
-- **Author:** T.I.Q.S. DevSecOps
-  - **GitHub:** <https://github.com/tiqsclass6>
-
-- **Lab Team Lead:** John Sweeney
+| **Field**        | **Value**                                  |
+| ---------------- | ------------------------------------------ |
+| **Author**       | `T.I.Q.S.`                                 |
+| **Group Leader** | `John Sweeney`                             |
+| **Group Name**   | `The Brotherhood of jerMutants - Wolfpack` |
+| **Version**      | `v1.4`                                     |
+| **Date**         | `March 12, 2026`                           |
