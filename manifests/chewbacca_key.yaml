@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: chewbacca-key
+  namespace: chewbacca
+  labels:
+    konghq.com/credential: key-auth
+type: Opaque
+stringData:
+  kongCredType: key-auth
+  key: super-secret-key

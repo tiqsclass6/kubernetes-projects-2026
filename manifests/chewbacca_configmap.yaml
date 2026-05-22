@@ -1,0 +1,168 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chewbacca-html
+  namespace: chewbacca
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PROJECT 6 // KONG GATEWAY // EKS</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap');
+
+            :root {
+                --neon-cyan: #00f5ff;
+                --neon-purple: #c300ff;
+                --neon-red: #ff1a1a;
+            }
+
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+
+            body {
+                font-family: 'Roboto Mono', monospace;
+                background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), 
+                            url('https://wallpapercave.com/wp/YeoPqhy.jpg') center/cover no-repeat fixed;
+                color: #e0e0e0;
+                min-height: 100vh;
+            }
+
+            .header {
+                background: rgba(10, 10, 20, 0.95);
+                border-bottom: 2px solid var(--neon-cyan);
+                padding: 20px 40px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .title { font-family: 'Orbitron', sans-serif; font-size: 2.3rem; color: var(--neon-cyan); text-shadow: 0 0 15px var(--neon-cyan); letter-spacing: 4px; }
+
+            .logos { display: flex; gap: 25px; align-items: center; }
+
+            .logo { height: 60px; filter: drop-shadow(0 0 12px currentColor); }
+            .k8s-logo { height: 55px; filter: drop-shadow(0 0 15px #00f5ff) drop-shadow(0 0 25px #00f5ff); }
+
+            .container { max-width: 1300px; margin: 40px auto; padding: 0 20px; }
+
+            .section {
+                background: rgba(15, 15, 35, 0.9);
+                border: 1px solid var(--neon-purple);
+                border-radius: 8px;
+                margin-bottom: 30px;
+                padding: 25px;
+            }
+
+            h1, h2 { color: var(--neon-cyan); font-family: 'Orbitron', sans-serif; text-shadow: 0 0 10px var(--neon-cyan); }
+
+            pre {
+                background: #0a0a0f;
+                padding: 18px;
+                border-radius: 6px;
+                border-left: 4px solid var(--neon-cyan);
+                overflow-x: auto;
+                color: #a0ffa0;
+            }
+
+            .diagram {
+                background: #0a0a0f;
+                padding: 30px;
+                border-radius: 12px;
+                border: 2px solid var(--neon-cyan);
+            }
+
+            .flow { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+
+            .box {
+                background: rgba(20, 20, 50, 0.9);
+                border: 2px solid var(--neon-purple);
+                border-radius: 8px;
+                padding: 20px;
+                width: 180px;
+                text-align: center;
+            }
+
+            .arrow { font-size: 2rem; color: var(--neon-cyan); }
+
+            .status { color: #00ff9d; font-weight: bold; }
+
+            .footer { 
+                text-align: center; 
+                padding: 40px 20px; 
+                font-size: 1.1rem; 
+                font-weight: bold; 
+            }
+
+            .glow-text {
+                animation: colorCycle 15s infinite linear;
+                text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+                font-family: 'Orbitron', sans-serif;
+            }
+
+            @keyframes colorCycle {
+                0% { color: #c300ff; }
+                33% { color: #00f5ff; }
+                66% { color: #ff1a1a; }
+                100% { color: #c300ff; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="title">PROJECT 06 // THE FORCE AWAKENS</div>
+            <div class="logos">
+                <img src="https://icon.icepanel.io/Technology/svg/HashiCorp-Terraform.svg" alt="Terraform" class="logo" style="height: 55px;">
+                <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/4/kong-icon-3sm9z71jcjrf5m48vqw5hr.png/kong-icon-1sgcb8mkfoojp1rhasiqnho.png?_a=DATAiZAAZAA0" alt="Kong" class="logo">
+                <img src="https://img.icons8.com/?size=100&id=1hFR28gNL9Hy&format=png&color=000000" alt="Kubernetes" class="k8s-logo">
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h1>KONG INGRESS GATEWAY // EKS CLUSTER</h1>
+                <p><strong>Status:</strong> <span class="status">OPERATIONAL ✓</span> | Authentication Enforced | Rate Limiting Active</p>
+            </div>
+
+            <div class="section">
+                <h2>🗺️ CLUSTER ARCHITECTURE DIAGRAM</h2>
+                <div class="diagram">
+                    <div class="flow">
+                        <div class="box"><strong>CLIENT</strong><br><small>External Requests</small></div>
+                        <div class="arrow">→</div>
+                        <div class="box" style="border-color: #c300ff;"><strong>KONG GATEWAY</strong><br><small>NLB + Plugins</small></div>
+                        <div class="arrow">→</div>
+                        <div class="box"><strong>hello-service</strong><br><small>ClusterIP</small></div>
+                        <div class="arrow">→</div>
+                        <div class="box"><strong>hello-app Pods</strong><br><small>2 Replicas</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔍 TERRAFORM INFRASTRUCTURE SUMMARY</h2>
+                <pre><code>Cluster Name     : demo
+    Node Group       : demo-private-nodes
+    Instance Type    : t3.medium
+    Desired Size     : 2
+    VPC CIDR         : 10.100.0.0/16
+    Subnets          : 2 Private + 2 Public
+    EBS CSI          : Enabled with IRSA
+    Kong             : Helm ingress chart + CRDs</code></pre>
+            </div>
+
+            <div class="section">
+                <h2>🧪 CURL TEST COMMANDS</h2>
+                <pre><code>$ curl -I http://aa5e03fe7d1034f9eb4d2347703964f2-1968007985.us-east-1.elb.amazonaws.com/hello&#10;HTTP/1.1 401 Unauthorized&#10;&#10;$ curl -I -H "apikey: super-secret-key" http://aa5e03fe7d1034f9eb4d2347703964f2-1968007985.us-east-1.elb.amazonaws.com/hello&#10;HTTP/1.1 200 OK&#10;&#10;$ curl -I http://aa5e03fe7d1034f9eb4d2347703964f2-1968007985.us-east-1.elb.amazonaws.com/hello-ratelimit&#10;HTTP/1.1 429 Too Many Requests</code></pre>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="glow-text">
+                May the Force be with your Deployments • Built with Terraform + EKS + Kong • 2026
+            </p>
+        </div>
+    </body>
+    </html>
