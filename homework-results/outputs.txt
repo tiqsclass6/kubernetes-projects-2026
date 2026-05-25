@@ -1,29 +1,29 @@
 Project 3 - Gatekeeper + Argo CD Security for Splunk
-Generated: Sun Mar  8 23:00:46 PDT 2026
+Generated: Fri Apr 10 15:30:40 EDT 2026
 
 ======================================================================
 1. Gatekeeper Pods
 ======================================================================
 $ kubectl -n "gatekeeper-system" get pods
 
-NAME                                             READY   STATUS    RESTARTS   AGE
-gatekeeper-audit-79864f67b8-r48ft                1/1     Running   0          7m30s
-gatekeeper-controller-manager-6464dff5bc-rpdnr   1/1     Running   0          7m30s
+NAME                                           READY   STATUS    RESTARTS   AGE
+gatekeeper-audit-67fcf9bbdb-xm4hw              1/1     Running   0          6m36s
+gatekeeper-controller-manager-dc8f5cb9-fbf54   1/1     Running   0          6m36s
 
 ======================================================================
 2. Gatekeeper Validating Webhooks
 ======================================================================
 $ kubectl get validatingwebhookconfigurations | grep gatekeeper
 
-gatekeeper-validating-webhook-configuration   2          7m32s
+gatekeeper-validating-webhook-configuration   2          6m37s
 
 ======================================================================
 3. ConstraintTemplates
 ======================================================================
 $ kubectl get constrainttemplates | egrep 'k8sargoappenvironment|k8sserviceportbyenv'
 
-k8sargoappenvironment   6m41s
-k8sserviceportbyenv     6m35s
+k8sargoappenvironment   5m19s
+k8sserviceportbyenv     5m14s
 
 ======================================================================
 4. Constraints
@@ -31,7 +31,7 @@ k8sserviceportbyenv     6m35s
 $ kubectl get constraints | egrep 'argo-app-env-namespace-lock|splunk-service-port-lock'
 
 k8sargoappenvironment.constraints.gatekeeper.sh/argo-app-env-namespace-lock   deny                 0
-k8sserviceportbyenv.constraints.gatekeeper.sh/splunk-service-port-lock        deny                 0
+k8sserviceportbyenv.constraints.gatekeeper.sh/splunk-service-port-lock   deny                 0
 
 ======================================================================
 5. Argo CD Applications
@@ -48,14 +48,12 @@ splunk-test   Synced        Healthy
 ======================================================================
 $ kubectl apply -f "homework/40-cheat-prod-to-dev.yaml"
 
-Error from server (Forbidden): error when creating "homework/40-cheat-prod-to-dev.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [argo-app-env-namespace-lock] 
-DENY: ArgoCD Application env=prod must deploy only to namespace splunk-prod (got splunk-dev)
+Error from server (Forbidden): error when creating "homework/40-cheat-prod-to-dev.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [argo-app-env-namespace-lock] DENY: ArgoCD Application env=prod must deploy only to namespace splunk-prod (got splunk-dev)
 
 ======================================================================
 7. Cheat Test - Prod Service Wrong Port
 ======================================================================
 $ kubectl apply -f "homework/41-cheat-prod-service-wrong-port.yaml"
 
-Error from server (Forbidden): error when creating "homework/41-cheat-prod-service-wrong-port.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [splunk-service-port-lock] 
-DENY: Service splunk in namespace splunk-prod must expose port 8091 (got 28091)
+Error from server (Forbidden): error when creating "homework/41-cheat-prod-service-wrong-port.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [splunk-service-port-lock] DENY: Service splunk in namespace splunk-prod must expose port 8091 (got 28091)
 

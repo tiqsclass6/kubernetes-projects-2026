@@ -1,23 +1,24 @@
 # 📽 **Project 3 – OPA Gatekeeper + Argo CD (Kubernetes Policy Enforcement)**
 
-![Kubernetes](https://img.shields.io/badge/Kubernetes-EKS-blue?logo=kubernetes)
-![OPA](https://img.shields.io/badge/Policy-OPA%20Gatekeeper-purple)
-![Security](https://img.shields.io/badge/Security-Admission%20Control-green)
-![GitOps](https://img.shields.io/badge/GitOps-ArgoCD-orange)
-![Terraform](https://img.shields.io/badge/IaC-Terraform-purple?logo=terraform)
-![Rego](https://img.shields.io/badge/Policy%20Language-Rego-blue?logo=openpolicyagent)
-![Splunk](https://img.shields.io/badge/Monitoring-Splunk-green?logo=splunk)
-![Testing](https://img.shields.io/badge/Testing-Automated%20Scripts-yellow)
-![AWS](https://img.shields.io/badge/Cloud-AWS-black?logo=amazonaws)
-![DevSecOps](https://img.shields.io/badge/Practice-DevSecOps-red)
-![License](https://img.shields.io/badge/License-MIT-blue)
-![GitHub](https://img.shields.io/badge/GitHub-Repo-black?logo=github)
+![AWS](https://img.shields.io/badge/AWS-Cloud-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+![Amazon EKS](https://img.shields.io/badge/Amazon_EKS-Kubernetes-FF9900?style=for-the-badge&logo=amazoneks&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Argo CD](https://img.shields.io/badge/Argo_CD-GitOps-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![OPA Gatekeeper](https://img.shields.io/badge/OPA_Gatekeeper-Policy_Enforcement-7B42BC?style=for-the-badge&logo=openpolicyagent&logoColor=white)
+![Admission Control](https://img.shields.io/badge/Security-Admission_Control-2E7D32?style=for-the-badge&logo=securityscorecard&logoColor=white)
+![Rego](https://img.shields.io/badge/Rego-Policy_Language-00AEEF?style=for-the-badge&logo=openpolicyagent&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
+![Splunk](https://img.shields.io/badge/Splunk-Observability-000000?style=for-the-badge&logo=splunk&logoColor=white)
+![Automation](https://img.shields.io/badge/Testing-Automated_Scripts-F9A825?style=for-the-badge&logo=gnubash&logoColor=white)
+![DevSecOps](https://img.shields.io/badge/Practice-DevSecOps-C62828?style=for-the-badge&logo=devdotto&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-0A66C2?style=for-the-badge)
 
 ---
 
-## 🧪 **Lab Overview**
+## 🧪 **Project Overview**
 
-This project demonstrates **OPA Gatekeeper (Kubernetes Policy Enforcement) integrated with a GitOps workflow using Argo CD.** The lab simulates a **secure multi-environment platform** where applications are deployed through GitOps while **admission policies enforce strict environment rules.**
+This project demonstrates **OPA Gatekeeper (Kubernetes Policy Enforcement) integrated with a GitOps workflow using Argo CD.** The project simulates a **secure multi-environment platform** where applications are deployed through GitOps while **admission policies enforce strict environment rules.**
 
 ### 💡 **Key goals**
 
@@ -33,6 +34,12 @@ The system deploys a **Splunk application across three environments**:
 | **Production**  | `splunk-prod` |
 | **Testing**     | `splunk-test` |
 | **Development** | `splunk-dev`  |
+
+---
+
+## 🏗 **Network Architecture Diagram**
+
+![diagram.png](/images/diagram.png)
 
 ---
 
@@ -78,7 +85,7 @@ DENY: Service splunk in namespace splunk-prod must expose port 8091
 
 ## 🧠 **DevSecOps Skills Demonstrated**
 
-This lab demonstrates real enterprise platform skills:
+This project demonstrates real enterprise platform skills:
 
 | **Category**                | **Skills**               |
 | --------------------------- | ------------------------ |
@@ -91,89 +98,6 @@ This lab demonstrates real enterprise platform skills:
 | **Runtime Security**        | `Admission Controllers`  |
 | **Automation**              | `Bash`                   |
 | **Validation**              | `Automated test scripts` |
-
----
-
-## 🏗 **Architecture Overview**
-
-```mermaid
-flowchart TB
-
-%% ===============================
-%% STYLES
-%% ===============================
-classDef gitops fill:#1f2937,color:#ffffff,stroke:#111827,stroke-width:1.5px;
-classDef argocd fill:#f59e0b,color:#111827,stroke:#b45309,stroke-width:1.5px;
-classDef security fill:#7c3aed,color:#ffffff,stroke:#5b21b6,stroke-width:1.5px;
-classDef cluster fill:#0ea5e9,color:#ffffff,stroke:#0369a1,stroke-width:1.5px;
-classDef app fill:#16a34a,color:#ffffff,stroke:#166534,stroke-width:1.5px;
-
-%% ===============================
-%% GITOPS SOURCE
-%% ===============================
-subgraph GITOPS["GitOps Source of Truth"]
-    A[GitHub Repository<br/>Project-3 Branch / Manifests]
-end
-
-%% ===============================
-%% DELIVERY LAYER
-%% ===============================
-subgraph DELIVERY["GitOps Delivery Layer"]
-    B[Argo CD Controller]
-    B1[Argo CD Applications<br/>splunk-dev<br/>splunk-test<br/>splunk-prod]
-end
-
-%% ===============================
-%% POLICY ENFORCEMENT
-%% ===============================
-subgraph POLICY["Policy Enforcement Layer"]
-    C[OPA Gatekeeper]
-    D[ConstraintTemplates<br/>K8sArgoAppEnvironment<br/>K8sServicePortByEnv]
-    E[Constraints<br/>argo-app-env-namespace-lock<br/>splunk-service-port-lock]
-end
-
-%% ===============================
-%% KUBERNETES CLUSTER
-%% ===============================
-subgraph CLUSTER["AWS EKS Kubernetes Cluster"]
-    subgraph NS1["splunk-dev Namespace"]
-        F1[Splunk Dev Workload]
-    end
-
-    subgraph NS2["splunk-test Namespace"]
-        G1[Splunk Test Workload]
-    end
-
-    subgraph NS3["splunk-prod Namespace"]
-        H1[Splunk Prod Workload]
-    end
-end
-
-%% ===============================
-%% FLOWS
-%% ===============================
-A -->|GitOps Sync Source| B
-B -->|Manages| B1
-
-C -->|Loads Policy Logic| D
-D -->|Instantiates Rules| E
-
-B1 -->|Admission Review| C
-E -->|Enforces Namespace + Port Rules| B1
-
-B1 -->|Deploys Approved Resources| F1
-B1 -->|Deploys Approved Resources| G1
-B1 -->|Deploys Approved Resources| H1
-
-%% ===============================
-%% CLASS ASSIGNMENTS
-%% ===============================
-class A gitops;
-class B,B1 argocd;
-class C,D,E security;
-class F1,G1,H1 app;
-class F1,G1,H1 cluster;
-```
 
 ---
 
@@ -309,17 +233,17 @@ project-3/
 ## 🧾 **Automation Scripts**
 
 > !NOTE
-> The lab is fully automated using Bash scripts.
+> The project is fully automated using Bash scripts.
 
 ---
 
-### 0️⃣ **Preflight Checks**
+### 0️⃣ [**Preflight Checks**](./scripts/0-prerequisites.sh)
 
 ```bash
 ./scripts/0-prerequisites.sh
 ```
 
-![prerequisites-script.jpg](/Screenshots/prerequisites-script.jpg)
+![prerequisites-script.jpg](/images/prerequisites-script.jpg)
 
 Validates:
 
@@ -330,17 +254,17 @@ Validates:
 
 ---
 
-### 1️⃣ **Build Infrastructure**
+### 1️⃣ [**Build Infrastructure**](./scripts/1-build-infrastructure.sh)
 
 ```bash
 ./scripts/1-build-infrastructure.sh
 ```
 
-![build-infra-pt1.jpg](/Screenshots/build-infra-pt1.jpg)
-![build-infra-pt2.jpg](/Screenshots/build-infra-pt2.jpg)
-![build-infra-pt3.jpg](/Screenshots/build-infra-pt3.jpg)
-![build-infra-pt4.jpg](/Screenshots/build-infra-pt4.jpg)
-![build-infra-pt5.jpg](/Screenshots/build-infra-pt5.jpg)
+![build-infra-pt1.jpg](/images/build-infra-pt1.jpg)
+![build-infra-pt2.jpg](/images/build-infra-pt2.jpg)
+![build-infra-pt3.jpg](/images/build-infra-pt3.jpg)
+![build-infra-pt4.jpg](/images/build-infra-pt4.jpg)
+![build-infra-pt5.jpg](/images/build-infra-pt5.jpg)
 
 Creates:
 
@@ -351,13 +275,13 @@ Creates:
 
 ---
 
-### 2️⃣ **Install Gatekeeper**
+### 2️⃣ [**Install Gatekeeper**](./scripts/2-install-gatekeeper.sh)
 
 ```bash
 ./scripts/2-install-gatekeeper.sh
 ```
 
-![install-gatekeeper.jpg](/Screenshots/install-gatekeeper.jpg)
+![install-gatekeeper.jpg](/images/install-gatekeeper.jpg)
 
 Installs:
 
@@ -367,14 +291,14 @@ Installs:
 
 ---
 
-### 3️⃣ **Apply Security Policies**
+### 3️⃣ [**Apply Security Policies**](./scripts/3-apply-policies.sh)
 
 ```bash
 ./scripts/3-apply-policies.sh
 ```
 
-![apply-policies-pt1.jpg](/Screenshots/apply-policies-pt1.jpg)
-![apply-policies-pt2.jpg](/Screenshots/apply-policies-pt2.jpg)
+![apply-policies-pt1.jpg](/images/apply-policies-pt1.jpg)
+![apply-policies-pt2.jpg](/images/apply-policies-pt2.jpg)
 
 Deploys:
 
@@ -384,7 +308,7 @@ Deploys:
 
 ---
 
-### 4️⃣ **Deploy Applications**
+### 4️⃣ [**Deploy Applications**](./scripts/4-deploy-apps.sh)
 
 #### **Creates Argo CD namespace and installs Argo CD controller before validating prerequisites.**
 
@@ -397,7 +321,7 @@ kubectl apply -n argocd \
   -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
-![deploy-apps-pt1.jpg](/Screenshots/deploy-apps-pt1.jpg)
+![deploy-apps-pt1.jpg](/images/deploy-apps-pt1.jpg)
 
 #### **Run Deployment Script**
 
@@ -405,41 +329,41 @@ kubectl apply -n argocd \
 ./scripts/4-deploy-apps.sh
 ```
 
-![deploy-apps-pt2.jpg](/Screenshots/deploy-apps-pt2.jpg)
+![deploy-apps-pt2.jpg](/images/deploy-apps-pt2.jpg)
 
 Deploys Splunk apps through **Argo CD GitOps**.
 
 ---
 
-### 5️⃣ **Run Security Tests**
+### 5️⃣ [**Run Security Tests**](./scripts/5-run-tests.sh)
 
 ```bash
 ./scripts/5-run-tests.sh
 ```
 
-![run-tests.jpg](/Screenshots/run-tests.jpg)
+![run-tests.jpg](/images/run-tests.jpg)
 
 Runs negative tests to ensure policies block invalid deployments.
 
 ---
 
-### 6️⃣ **Collect Evidence**
+### 6️⃣ [**Collect Evidence**](./scripts/6-collect-homework.sh)
 
 ```bash
 ./scripts/6-collect-homework.sh
 ```
 
-![collect-homework-pt1.jpg](/Screenshots/collect-homework-pt1.jpg)
-![collect-homework-pt2.jpg](/Screenshots/collect-homework-pt2.jpg)
+![collect-homework-pt1.jpg](/images/collect-homework-pt1.jpg)
+![collect-homework-pt2.jpg](/images/collect-homework-pt2.jpg)
 
 Generates:
 
-* [**Lab Verification Output**](/homework-results/outputs.txt)
+* [**Project Verification Output**](/homework-results/outputs.txt)
 * [**Cluster Resource Inventory**](/homework-results/resources.json)
 
 ---
 
-### 7️⃣ **Teardown**
+### 7️⃣ [**Teardown**](./scripts/7-teardown.sh)
 
 ```bash
 ./scripts/7-teardown.sh
@@ -458,10 +382,10 @@ Then destroy infrastructure:
 terraform destroy
 ```
 
-![teardown-pt1.jpg](/Screenshots/teardown-pt1.jpg)
-![teardown-pt2.jpg](/Screenshots/teardown-pt2.jpg)
-![teardown-pt3.jpg](/Screenshots/teardown-pt3.jpg)
-![teardown-pt4.jpg](/Screenshots/teardown-pt4.jpg)
+![teardown-pt1.jpg](/images/teardown-pt1.jpg)
+![teardown-pt2.jpg](/images/teardown-pt2.jpg)
+![teardown-pt3.jpg](/images/teardown-pt3.jpg)
+![teardown-pt4.jpg](/images/teardown-pt4.jpg)
 
 ---
 
@@ -473,21 +397,21 @@ terraform destroy
 
 ### 🖥️ **Splunk Apps Synchronized**
 
-* ![argocd-apps-sync.jpg](/Screenshots/argocd-apps-sync.jpg)
-* ![argocd-apps-list.jpg](/Screenshots/argocd-apps-list.jpg)
+* ![argocd-apps-sync.jpg](/images/argocd-apps-sync.jpg)
+* ![argocd-apps-list.jpg](/images/argocd-apps-list.jpg)
 
 ---
 
 ### 🌳 **Application Trees**
 
 * **splunk-dev**
-  ![splunk-dev-tree.jpg](/Screenshots/splunk-dev-tree.jpg)
+  ![splunk-dev-tree.jpg](/images/splunk-dev-tree.jpg)
 
 * **splunk-prod**
-  ![splunk-prod-tree.jpg](/Screenshots/splunk-prod-tree.jpg)
+  ![splunk-prod-tree.jpg](/images/splunk-prod-tree.jpg)
 
 * **splunk-test**
-  ![splunk-test-tree.jpg](/Screenshots/splunk-test-tree.jpg)
+  ![splunk-test-tree.jpg](/images/splunk-test-tree.jpg)
 
 ---
 
@@ -499,7 +423,7 @@ Two attack scenarios are tested.
 
 Attempt to deploy prod app to dev namespace.
 
-![namespace-violation.jpg](/Screenshots/namespace-violation.jpg)
+![namespace-violation.jpg](/images/namespace-violation.jpg)
 
 Result:
 
@@ -513,7 +437,7 @@ DENY: ArgoCD Application env=prod must deploy only to namespace splunk-prod
 
 Attempt to expose incorrect port.
 
-![wrong-port.jpg](/Screenshots/wrong-port.jpg)
+![wrong-port.jpg](/images/wrong-port.jpg)
 
 Result:
 
@@ -575,9 +499,9 @@ argocd app sync splunk-dev splunk-prod splunk-test
 
 ---
 
-## 📊 **Lab Outcome**
+## 📊 **Project Outcome**
 
-After completing this lab the environment contains:
+After completing this project the environment contains:
 
 * AWS EKS cluster
 * Argo CD GitOps controller
@@ -602,5 +526,5 @@ This demonstrates **enterprise-grade Kubernetes runtime security.**
 ## 👥 **Authors**
 
 * **Author:** *T.I.Q.S. DevSecOps*
-* **Lab Team Lead:** *John Sweeney*
+* **Team Lead:** *John Sweeney*
 * [**GitHub Profile**](https://github.com/tiqsclass6)
