@@ -1,86 +1,86 @@
-Tuesday 07 April 2026  06:38:18 +0000 (0:00:00.118)       0:00:40.299 ********* 
+Saturday 11 April 2026  15:20:38 +0000 (0:00:00.103)       0:00:36.494 ******** 
 
 TASK [splunk_common : include_tasks] *******************************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/get_splunk_status.yml for localhost[0m
-Tuesday 07 April 2026  06:38:18 +0000 (0:00:00.055)       0:00:40.355 ********* 
+Saturday 11 April 2026  15:20:38 +0000 (0:00:00.041)       0:00:36.536 ******** 
 
 TASK [splunk_common : Restrict permissions on splunk.key for Status] ***********
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/restrict_permissions.yml for localhost => (item=/opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key)[0m
-Tuesday 07 April 2026  06:38:18 +0000 (0:00:00.075)       0:00:40.430 ********* 
+Saturday 11 April 2026  15:20:38 +0000 (0:00:00.055)       0:00:36.591 ******** 
 
 TASK [splunk_common : Check if /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key exists] ***
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:38:19 +0000 (0:00:00.599)       0:00:41.030 ********* 
-Tuesday 07 April 2026  06:38:19 +0000 (0:00:00.040)       0:00:41.071 ********* 
+Saturday 11 April 2026  15:20:39 +0000 (0:00:00.528)       0:00:37.119 ******** 
+Saturday 11 April 2026  15:20:39 +0000 (0:00:00.033)       0:00:37.153 ******** 
 
 TASK [splunk_common : Get Splunk status] ***************************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:38:19 +0000 (0:00:00.631)       0:00:41.703 ********* 
+Saturday 11 April 2026  15:20:39 +0000 (0:00:00.548)       0:00:37.702 ******** 
 
 TASK [splunk_common : Cleanup Splunk runtime files] ****************************
 [0;32mok: [localhost] => (item=/opt/splunk/var/run/splunk/splunkd.pid)[0m
 [0;32mok: [localhost] => (item=/opt/splunk/var/lib/splunk/kvstore/mongo/mongod.lock)[0m
-Tuesday 07 April 2026  06:38:20 +0000 (0:00:01.179)       0:00:42.883 ********* 
+Saturday 11 April 2026  15:20:40 +0000 (0:00:01.096)       0:00:38.799 ******** 
 
 TASK [splunk_common : Restrict permissions on splunk.key] **********************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/restrict_permissions.yml for localhost => (item=/opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key)[0m
-Tuesday 07 April 2026  06:38:20 +0000 (0:00:00.061)       0:00:42.944 ********* 
+Saturday 11 April 2026  15:20:40 +0000 (0:00:00.058)       0:00:38.857 ******** 
 
 TASK [splunk_common : Check if /opt/splunk/var/lib/splunk/kvstore/mongo/splunk.key exists] ***
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:38:21 +0000 (0:00:00.599)       0:00:43.543 ********* 
-Tuesday 07 April 2026  06:38:21 +0000 (0:00:00.050)       0:00:43.594 ********* 
+Saturday 11 April 2026  15:20:41 +0000 (0:00:00.538)       0:00:39.395 ******** 
+Saturday 11 April 2026  15:20:41 +0000 (0:00:00.042)       0:00:39.438 ******** 
 
 TASK [splunk_common : Start Splunk via CLI] ************************************
 [0;33mchanged: [localhost][0m
-Tuesday 07 April 2026  06:39:32 +0000 (0:01:11.207)       0:01:54.802 ********* 
-Tuesday 07 April 2026  06:39:32 +0000 (0:00:00.146)       0:01:54.948 ********* 
-Tuesday 07 April 2026  06:39:33 +0000 (0:00:00.165)       0:01:55.114 ********* 
+Saturday 11 April 2026  15:21:43 +0000 (0:01:02.497)       0:01:41.935 ******** 
+Saturday 11 April 2026  15:21:43 +0000 (0:00:00.134)       0:01:42.069 ******** 
+Saturday 11 April 2026  15:21:44 +0000 (0:00:00.128)       0:01:42.198 ******** 
 
 TASK [splunk_common : include_tasks] *******************************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/check_uds_file.yml for localhost[0m
-Tuesday 07 April 2026  06:39:33 +0000 (0:00:00.206)       0:01:55.321 ********* 
+Saturday 11 April 2026  15:21:44 +0000 (0:00:00.267)       0:01:42.465 ******** 
 
 TASK [splunk_common : Check if UDS file exists] ********************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:34 +0000 (0:00:01.516)       0:01:56.838 ********* 
+Saturday 11 April 2026  15:21:46 +0000 (0:00:01.883)       0:01:44.349 ******** 
 
 TASK [splunk_common : Set UDS enabled/disabled] ********************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:34 +0000 (0:00:00.127)       0:01:56.966 ********* 
+Saturday 11 April 2026  15:21:46 +0000 (0:00:00.123)       0:01:44.472 ******** 
 
 TASK [splunk_common : Wait for splunkd management port] ************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:35 +0000 (0:00:00.916)       0:01:57.883 ********* 
-Tuesday 07 April 2026  06:39:35 +0000 (0:00:00.008)       0:01:57.892 ********* 
+Saturday 11 April 2026  15:21:47 +0000 (0:00:01.361)       0:01:45.834 ******** 
+Saturday 11 April 2026  15:21:47 +0000 (0:00:00.011)       0:01:45.845 ******** 
 
 TASK [splunk_common : include_tasks] *******************************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/set_certificate_prefix.yml for localhost[0m
-Tuesday 07 April 2026  06:39:36 +0000 (0:00:00.242)       0:01:58.135 ********* 
+Saturday 11 April 2026  15:21:47 +0000 (0:00:00.266)       0:01:46.112 ******** 
 
 TASK [splunk_common : Test basic https endpoint] *******************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:38 +0000 (0:00:02.506)       0:02:00.641 ********* 
+Saturday 11 April 2026  15:21:50 +0000 (0:00:02.542)       0:01:48.655 ******** 
 
 TASK [splunk_common : Set url prefix for future REST calls] ********************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:38 +0000 (0:00:00.076)       0:02:00.718 ********* 
+Saturday 11 April 2026  15:21:50 +0000 (0:00:00.110)       0:01:48.766 ******** 
 
 TASK [splunk_common : include_tasks] *******************************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/clean_user_seed.yml for localhost[0m
-Tuesday 07 April 2026  06:39:38 +0000 (0:00:00.135)       0:02:00.854 ********* 
+Saturday 11 April 2026  15:21:50 +0000 (0:00:00.144)       0:01:48.910 ******** 
 
 TASK [splunk_common : Remove user-seed.conf] ***********************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:39 +0000 (0:00:00.826)       0:02:01.680 ********* 
+Saturday 11 April 2026  15:21:51 +0000 (0:00:00.964)       0:01:49.875 ******** 
 
 TASK [splunk_common : include_tasks] *******************************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/add_splunk_license.yml for localhost[0m
-Tuesday 07 April 2026  06:39:39 +0000 (0:00:00.114)       0:02:01.795 ********* 
+Saturday 11 April 2026  15:21:51 +0000 (0:00:00.156)       0:01:50.031 ******** 
 
 TASK [splunk_common : Initialize licenses array] *******************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:39 +0000 (0:00:00.079)       0:02:01.874 ********* 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.139)       0:01:50.171 ******** 
 [0;35m[DEPRECATION WARNING]: Conditional result at location [0m
 [0;35m/opt/ansible/roles/splunk_common/tasks/add_splunk_license.yml 10:9 was of type [0m
 [0;35m'str'. Conditional results should only be True or False. The result was [0m
@@ -89,42 +89,42 @@ Tuesday 07 April 2026  06:39:39 +0000 (0:00:00.079)       0:02:01.874 *********
 
 TASK [splunk_common : Determine available licenses] ****************************
 [0;32mok: [localhost] => (item=splunk.lic)[0m
-Tuesday 07 April 2026  06:39:40 +0000 (0:00:00.139)       0:02:02.014 ********* 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.092)       0:01:50.264 ******** 
 
 TASK [splunk_common : Apply licenses] ******************************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/apply_licenses.yml for localhost => (item=splunk.lic)[0m
-Tuesday 07 April 2026  06:39:40 +0000 (0:00:00.211)       0:02:02.225 ********* 
-Tuesday 07 April 2026  06:39:40 +0000 (0:00:00.165)       0:02:02.390 ********* 
-Tuesday 07 April 2026  06:39:40 +0000 (0:00:00.202)       0:02:02.593 ********* 
-Tuesday 07 April 2026  06:39:40 +0000 (0:00:00.134)       0:02:02.727 ********* 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.091)       0:01:50.355 ******** 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.063)       0:01:50.419 ******** 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.063)       0:01:50.482 ******** 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.044)       0:01:50.528 ******** 
 
 TASK [splunk_common : include_tasks] *******************************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/licenses/add_license.yml for localhost => (item=(censored due to no_log))[0m
-Tuesday 07 April 2026  06:39:40 +0000 (0:00:00.235)       0:02:02.963 ********* 
-Tuesday 07 April 2026  06:39:41 +0000 (0:00:00.160)       0:02:03.124 ********* 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.084)       0:01:50.612 ******** 
+Saturday 11 April 2026  15:21:52 +0000 (0:00:00.050)       0:01:50.663 ******** 
 
 TASK [splunk_common : Ensure license path] *************************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:01.060)       0:02:04.185 ********* 
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:00.074)       0:02:04.259 ********* 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.712)       0:01:51.375 ******** 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.123)       0:01:51.499 ******** 
 [0;35m[DEPRECATION WARNING]: Conditional result at location [0m
 [0;35m/opt/ansible/roles/splunk_common/tasks/add_splunk_license.yml 25:7 was of type [0m
 [0;35m'str'. Conditional results should only be True or False. The result was [0m
 [0;35minterpreted as False. This feature will be removed in version 2.19. Deprecation[0m
 [0;35m warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.[0m
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:00.073)       0:02:04.332 ********* 
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:00.013)       0:02:04.346 ********* 
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:00.101)       0:02:04.448 ********* 
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:00.037)       0:02:04.486 ********* 
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:00.088)       0:02:04.574 ********* 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.094)       0:01:51.594 ******** 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.017)       0:01:51.611 ******** 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.124)       0:01:51.735 ******** 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.082)       0:01:51.817 ******** 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.093)       0:01:51.911 ******** 
 
 TASK [splunk_standalone : include_tasks] ***************************************
 [0;36mincluded: /opt/ansible/roles/splunk_standalone/tasks/../../splunk_common/tasks/set_as_hec_receiver.yml for localhost[0m
-Tuesday 07 April 2026  06:39:42 +0000 (0:00:00.085)       0:02:04.660 ********* 
+Saturday 11 April 2026  15:21:53 +0000 (0:00:00.072)       0:01:51.983 ******** 
 
 TASK [splunk_standalone : Get existing HEC token] ******************************
 [0;33mchanged: [localhost][0m
-Tuesday 07 April 2026  06:39:45 +0000 (0:00:02.994)       0:02:07.654 ********* 
+Saturday 11 April 2026  15:21:56 +0000 (0:00:02.607)       0:01:54.591 ******** 
 
 TASK [splunk_standalone : Attempt] *********************************************
 [0;32mok: [localhost] => {}[0m
@@ -132,69 +132,69 @@ TASK [splunk_standalone : Attempt] *********************************************
 [0;32mMSG:[0m
 [0;32m[0m
 [0;32m404[0m
-Tuesday 07 April 2026  06:39:45 +0000 (0:00:00.143)       0:02:07.798 ********* 
-Tuesday 07 April 2026  06:39:45 +0000 (0:00:00.110)       0:02:07.908 ********* 
-Tuesday 07 April 2026  06:39:45 +0000 (0:00:00.062)       0:02:07.971 ********* 
+Saturday 11 April 2026  15:21:56 +0000 (0:00:00.109)       0:01:54.701 ******** 
+Saturday 11 April 2026  15:21:56 +0000 (0:00:00.086)       0:01:54.787 ******** 
+Saturday 11 April 2026  15:21:56 +0000 (0:00:00.070)       0:01:54.857 ******** 
 
 TASK [splunk_standalone : Setup global HEC] ************************************
 [0;33mchanged: [localhost][0m
-Tuesday 07 April 2026  06:39:48 +0000 (0:00:02.701)       0:02:10.672 ********* 
-Tuesday 07 April 2026  06:39:48 +0000 (0:00:00.083)       0:02:10.756 ********* 
-Tuesday 07 April 2026  06:39:48 +0000 (0:00:00.075)       0:02:10.832 ********* 
-Tuesday 07 April 2026  06:39:48 +0000 (0:00:00.129)       0:02:10.962 ********* 
-Tuesday 07 April 2026  06:39:49 +0000 (0:00:00.102)       0:02:11.064 ********* 
-Tuesday 07 April 2026  06:39:49 +0000 (0:00:00.162)       0:02:11.227 ********* 
+Saturday 11 April 2026  15:21:58 +0000 (0:00:02.220)       0:01:57.077 ******** 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.084)       0:01:57.169 ******** 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.131)       0:01:57.300 ******** 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.143)       0:01:57.444 ******** 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.134)       0:01:57.579 ******** 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.137)       0:01:57.716 ******** 
 [0;35m[DEPRECATION WARNING]: Conditional result at location [0m
 [0;35m/opt/ansible/roles/splunk_standalone/tasks/main.yml 39:7 was of type 'list'. [0m
 [0;35mConditional results should only be True or False. The result was interpreted as[0m
 [0;35m False. This feature will be removed in version 2.19. Deprecation warnings can [0m
 [0;35mbe disabled by setting deprecation_warnings=False in ansible.cfg.[0m
-Tuesday 07 April 2026  06:39:49 +0000 (0:00:00.056)       0:02:11.284 ********* 
-Tuesday 07 April 2026  06:39:49 +0000 (0:00:00.068)       0:02:11.353 ********* 
-Tuesday 07 April 2026  06:39:49 +0000 (0:00:00.126)       0:02:11.479 ********* 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.067)       0:01:57.784 ******** 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.078)       0:01:57.863 ******** 
+Saturday 11 April 2026  15:21:59 +0000 (0:00:00.192)       0:01:58.055 ******** 
 
 TASK [splunk_standalone : include_tasks] ***************************************
 [0;36mincluded: /opt/ansible/roles/splunk_standalone/tasks/../../splunk_common/tasks/check_for_required_restarts.yml for localhost[0m
-Tuesday 07 April 2026  06:39:49 +0000 (0:00:00.089)       0:02:11.569 ********* 
+Saturday 11 April 2026  15:22:00 +0000 (0:00:00.098)       0:01:58.154 ******** 
 
 TASK [splunk_standalone : Check for required restarts] *************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:51 +0000 (0:00:01.789)       0:02:13.358 ********* 
-Tuesday 07 April 2026  06:39:51 +0000 (0:00:00.057)       0:02:13.416 ********* 
+Saturday 11 April 2026  15:22:02 +0000 (0:00:01.990)       0:02:00.144 ******** 
+Saturday 11 April 2026  15:22:02 +0000 (0:00:00.036)       0:02:00.181 ******** 
 
 TASK [Check all instances for required restarts] *******************************
 [0;36mincluded: /opt/ansible/roles/splunk_common/tasks/check_for_required_restarts.yml for localhost[0m
-Tuesday 07 April 2026  06:39:51 +0000 (0:00:00.112)       0:02:13.528 ********* 
+Saturday 11 April 2026  15:22:02 +0000 (0:00:00.072)       0:02:00.253 ******** 
 
 TASK [Check for required restarts] *********************************************
 [0;32mok: [localhost][0m
-Tuesday 07 April 2026  06:39:55 +0000 (0:00:03.500)       0:02:17.028 ********* 
+Saturday 11 April 2026  15:22:05 +0000 (0:00:03.149)       0:02:03.403 ******** 
 
 PLAY RECAP *********************************************************************
 [0;33mlocalhost[0m                  : [0;32mok=83  [0m [0;33mchanged=11  [0m unreachable=0    failed=0    [0;36mskipped=83  [0m rescued=0    ignored=0   
 
-Tuesday 07 April 2026  06:39:55 +0000 (0:00:00.004)       0:02:17.033 ********* 
+Saturday 11 April 2026  15:22:05 +0000 (0:00:00.006)       0:02:03.410 ******** 
 =============================================================================== 
-splunk_common : Start Splunk via CLI ----------------------------------- 71.21s
-splunk_common : Update /opt/splunk/etc ---------------------------------- 5.56s
-splunk_common : Update Splunk directory owner --------------------------- 4.39s
-splunk_common : Get Splunk status --------------------------------------- 4.16s
-Check for required restarts --------------------------------------------- 3.50s
-splunk_standalone : Get existing HEC token ------------------------------ 2.99s
-Gathering Facts --------------------------------------------------------- 2.72s
-splunk_standalone : Setup global HEC ------------------------------------ 2.70s
-splunk_common : Check if requests_unixsocket exists --------------------- 2.51s
-splunk_common : Test basic https endpoint ------------------------------- 2.51s
-splunk_standalone : Check for required restarts ------------------------- 1.79s
-splunk_common : Hash the password --------------------------------------- 1.71s
-splunk_common : Check if UDS file exists -------------------------------- 1.52s
-splunk_common : Generate user-seed.conf (Linux) ------------------------- 1.48s
-splunk_common : Cleanup Splunk runtime files ---------------------------- 1.18s
-splunk_common : Ensure license path ------------------------------------- 1.06s
-splunk_common : Find manifests ------------------------------------------ 0.93s
-splunk_common : Wait for splunkd management port ------------------------ 0.92s
-splunk_common : Remove user-seed.conf ----------------------------------- 0.83s
-splunk_common : Check for scloud ---------------------------------------- 0.82s
+splunk_common : Start Splunk via CLI ----------------------------------- 62.50s
+splunk_common : Update /opt/splunk/etc ---------------------------------- 5.03s
+Gathering Facts --------------------------------------------------------- 4.21s
+splunk_common : Get Splunk status --------------------------------------- 3.59s
+splunk_common : Update Splunk directory owner --------------------------- 3.46s
+Check for required restarts --------------------------------------------- 3.15s
+splunk_standalone : Get existing HEC token ------------------------------ 2.61s
+splunk_common : Test basic https endpoint ------------------------------- 2.54s
+splunk_standalone : Setup global HEC ------------------------------------ 2.22s
+splunk_common : Check if requests_unixsocket exists --------------------- 2.11s
+splunk_common : Hash the password --------------------------------------- 2.02s
+splunk_standalone : Check for required restarts ------------------------- 1.99s
+splunk_common : Check if UDS file exists -------------------------------- 1.88s
+splunk_common : Generate user-seed.conf (Linux) ------------------------- 1.56s
+splunk_common : Wait for splunkd management port ------------------------ 1.36s
+splunk_common : Cleanup Splunk runtime files ---------------------------- 1.10s
+splunk_common : Remove user-seed.conf ----------------------------------- 0.96s
+splunk_common : Create .ui_login ---------------------------------------- 0.74s
+splunk_common : Ensure license path ------------------------------------- 0.71s
+splunk_common : Find manifests ------------------------------------------ 0.68s
 ===============================================================================
 
 Ansible playbook complete, will begin streaming splunkd_stderr.log

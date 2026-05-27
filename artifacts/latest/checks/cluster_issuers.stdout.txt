@@ -1,2 +1,2 @@
 NAME         READY   AGE
-selfsigned   True    7m4s
+selfsigned   True    4m8s

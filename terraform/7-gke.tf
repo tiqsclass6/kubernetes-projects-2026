@@ -26,29 +26,18 @@ resource "google_container_cluster" "demo" {
   provider = google-beta
 
   name     = var.cluster_name
-  location = var.region
+  location = "${var.region}-b"
 
   network    = google_compute_network.main.id
   subnetwork = google_compute_subnetwork.private_zone1.name
 
   networking_mode = "VPC_NATIVE"
 
-  remove_default_node_pool = true
+  remove_default_node_pool = false
   initial_node_count       = 1
-
-  node_locations = [
-    local.zone1,
-    local.zone2
-  ]
 
   release_channel {
     channel = "REGULAR"
-  }
-
-  private_cluster_config {
-    enable_private_nodes    = true
-    enable_private_endpoint = false
-    master_ipv4_cidr_block  = var.master_ipv4_cidr_block
   }
 
   ip_allocation_policy {

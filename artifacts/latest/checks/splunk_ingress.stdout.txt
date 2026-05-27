@@ -1,2 +1,2 @@
-NAME     CLASS   HOSTS                    ADDRESS         PORTS     AGE
-splunk   nginx   splunk-dev.example.com   34.56.179.147   80, 443   7m4s
+NAME     CLASS   HOSTS                    ADDRESS          PORTS     AGE
+splunk   nginx   splunk-dev.example.com   34.171.180.217   80, 443   4m8s

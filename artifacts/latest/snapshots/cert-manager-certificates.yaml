@@ -3,7 +3,7 @@ items:
 - apiVersion: cert-manager.io/v1
   kind: Certificate
   metadata:
-    creationTimestamp: "2026-04-07T06:35:39Z"
+    creationTimestamp: "2026-04-11T15:18:14Z"
     generation: 1
     labels:
       kustomize.toolkit.fluxcd.io/name: splunk-dev
@@ -16,9 +16,9 @@ items:
       controller: true
       kind: Ingress
       name: splunk
-      uid: 63ef3f7d-c3d9-4865-ab53-989fc614bdc4
-    resourceVersion: "1775543740149775011"
-    uid: 77bc9853-b531-4241-960e-8f9a798b88eb
+      uid: f61a4340-9d30-4587-b8d5-87a58aa6ac31
+    resourceVersion: "1775920695851999011"
+    uid: 4bef2f4c-40e6-4427-82c7-7c46391dba18
   spec:
     dnsNames:
     - splunk-dev.example.com
@@ -32,15 +32,15 @@ items:
     - key encipherment
   status:
     conditions:
-    - lastTransitionTime: "2026-04-07T06:35:40Z"
+    - lastTransitionTime: "2026-04-11T15:18:15Z"
       message: Certificate is up to date and has not expired
       observedGeneration: 1
       reason: Ready
       status: "True"
       type: Ready
-    notAfter: "2026-07-06T06:35:39Z"
-    notBefore: "2026-04-07T06:35:39Z"
-    renewalTime: "2026-06-06T06:35:39Z"
+    notAfter: "2026-07-10T15:18:15Z"
+    notBefore: "2026-04-11T15:18:15Z"
+    renewalTime: "2026-06-10T15:18:15Z"
     revision: 1
 kind: List
 metadata:

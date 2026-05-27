@@ -4,15 +4,15 @@ metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"kustomize.toolkit.fluxcd.io/v1","kind":"Kustomization","metadata":{"annotations":{},"name":"splunk-dev","namespace":"flux-system"},"spec":{"interval":"1m","path":"./clusters/dev/splunk","prune":true,"sourceRef":{"kind":"GitRepository","name":"github-platform"},"timeout":"10m","wait":true}}
-    reconcile.fluxcd.io/requestedAt: "2026-04-06T23:42:45.2793579-07:00"
-  creationTimestamp: "2026-04-07T06:35:36Z"
+    reconcile.fluxcd.io/requestedAt: "2026-04-11T11:22:28.8988927-04:00"
+  creationTimestamp: "2026-04-11T15:18:10Z"
   finalizers:
   - finalizers.fluxcd.io
   generation: 1
   name: splunk-dev
   namespace: flux-system
-  resourceVersion: "1775544171480575000"
-  uid: 7e2844c1-af4f-4e27-bdd5-d1e05b5baf0e
+  resourceVersion: "1775920950222767000"
+  uid: 5f7c15e2-c83e-42dd-bc69-8a63bf3cf94e
 spec:
   force: false
   interval: 1m
@@ -25,27 +25,27 @@ spec:
   wait: true
 status:
   conditions:
-  - lastTransitionTime: "2026-04-07T06:42:51Z"
-    message: 'Applied revision: project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'
+  - lastTransitionTime: "2026-04-11T15:22:30Z"
+    message: 'Applied revision: project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47'
     observedGeneration: 1
     reason: ReconciliationSucceeded
     status: "True"
     type: Ready
-  - lastTransitionTime: "2026-04-07T06:42:51Z"
-    message: Health check passed in 167.095335ms
+  - lastTransitionTime: "2026-04-11T15:22:30Z"
+    message: Health check passed in 751.22741ms
     observedGeneration: 1
     reason: Succeeded
     status: "True"
     type: Healthy
   history:
   - digest: sha256:bc414ab04bbf44f38e8531513412678c0a1550e963f44a5e2ca6c3e49e293fd3
-    firstReconciled: "2026-04-07T06:37:35Z"
-    lastReconciled: "2026-04-07T06:42:51Z"
-    lastReconciledDuration: 531.787167ms
+    firstReconciled: "2026-04-11T15:20:00Z"
+    lastReconciled: "2026-04-11T15:22:30Z"
+    lastReconciledDuration: 1.13997142s
     lastReconciledStatus: ReconciliationSucceeded
     metadata:
-      revision: project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
-    totalReconciliations: 7
+      revision: project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47
+    totalReconciliations: 6
   inventory:
     entries:
     - id: _splunk-dev__Namespace
@@ -64,7 +64,7 @@ status:
       v: v1
     - id: splunk-dev_splunk_networking.k8s.io_Ingress
       v: v1
-  lastAppliedRevision: project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
-  lastAttemptedRevision: project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
-  lastHandledReconcileAt: "2026-04-06T23:42:45.2793579-07:00"
+  lastAppliedRevision: project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47
+  lastAttemptedRevision: project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47
+  lastHandledReconcileAt: "2026-04-11T11:22:28.8988927-04:00"
   observedGeneration: 1

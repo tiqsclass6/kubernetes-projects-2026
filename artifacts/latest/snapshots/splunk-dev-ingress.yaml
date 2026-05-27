@@ -6,15 +6,15 @@ items:
     annotations:
       cert-manager.io/cluster-issuer: selfsigned
       nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    creationTimestamp: "2026-04-07T06:35:39Z"
+    creationTimestamp: "2026-04-11T15:18:14Z"
     generation: 1
     labels:
       kustomize.toolkit.fluxcd.io/name: splunk-dev
       kustomize.toolkit.fluxcd.io/namespace: flux-system
     name: splunk
     namespace: splunk-dev
-    resourceVersion: "1775543784337295021"
-    uid: 63ef3f7d-c3d9-4865-ab53-989fc614bdc4
+    resourceVersion: "1775920743915199021"
+    uid: f61a4340-9d30-4587-b8d5-87a58aa6ac31
   spec:
     ingressClassName: nginx
     rules:
@@ -35,7 +35,7 @@ items:
   status:
     loadBalancer:
       ingress:
-      - ip: 34.56.179.147
+      - ip: 34.171.180.217
 kind: List
 metadata:
   resourceVersion: ""

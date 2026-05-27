@@ -68,11 +68,11 @@ print_header "$MAGENTA" "5. INSTALL OR UPGRADE CERT-MANAGER WITH CRDS"
 helm upgrade --install cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --create-namespace \
-  --set installCRDs=true \
+  --set crds.enabled=true \
   --wait \
   --timeout 10m
 
-log_info "cert-manager release applied with CRDs."
+log_info "cert-manager release applied with Helm-managed CRDs."
 
 print_header "$TEAL" "6. WAIT FOR CERT-MANAGER CRDS TO REGISTER"
 CERT_MANAGER_CRDS=(

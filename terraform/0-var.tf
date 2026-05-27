@@ -109,8 +109,8 @@ variable "authorized_networks" {
 }
 
 locals {
-  zone1 = "${var.region}-b"
-  zone2 = "${var.region}-c"
+  zone1 = "${var.region}-a"
+  zone2 = "${var.region}-b"
 
   common_labels = {
     cluster = var.cluster_name

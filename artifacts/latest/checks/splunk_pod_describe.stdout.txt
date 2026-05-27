@@ -2,29 +2,29 @@ Name:             splunk-0
 Namespace:        splunk-dev
 Priority:         0
 Service Account:  default
-Node:             gke-demo-demo-private-nodes-b2fea047-9h4k/10.100.0.5
-Start Time:       Mon, 06 Apr 2026 23:35:41 -0700
+Node:             gke-demo-demo-private-nodes-a0d39f9a-3v04/10.100.0.4
+Start Time:       Sat, 11 Apr 2026 11:18:16 -0400
 Labels:           app=splunk
                   apps.kubernetes.io/pod-index=0
                   controller-revision-hash=splunk-57cf7fff8c
                   statefulset.kubernetes.io/pod-name=splunk-0
                   topology.kubernetes.io/region=us-central1
-                  topology.kubernetes.io/zone=us-central1-b
+                  topology.kubernetes.io/zone=us-central1-a
 Annotations:      <none>
 Status:           Running
-IP:               10.101.1.19
+IP:               10.101.1.20
 IPs:
-  IP:           10.101.1.19
+  IP:           10.101.1.20
 Controlled By:  StatefulSet/splunk
 Containers:
   splunk:
-    Container ID:   containerd://f5e699d41753076d7820f2ea609da6b16fe84a81fd59ceb6fd2fe1c62d1d1605
+    Container ID:   containerd://01b5497896878c10dbf822b5af361a5a3a4c49fa7f389e008f0a6fafc27eae74
     Image:          splunk/splunk:latest
     Image ID:       docker.io/splunk/splunk@sha256:184e80b079f149cae1134dd6330e077fd510f4ea87216a0d6ebd4399782d648c
     Ports:          8000/TCP (web), 8089/TCP (mgmt), 8088/TCP (hec), 9997/TCP (splunktcp)
     Host Ports:     0/TCP (web), 0/TCP (mgmt), 0/TCP (hec), 0/TCP (splunktcp)
     State:          Running
-      Started:      Mon, 06 Apr 2026 23:37:31 -0700
+      Started:      Sat, 11 Apr 2026 11:19:57 -0400
     Ready:          True
     Restart Count:  0
     Environment Variables from:
@@ -33,7 +33,7 @@ Containers:
       SPLUNK_PASSWORD:  <set to the key 'SPLUNK_PASSWORD' in secret 'splunk-secret'>  Optional: false
     Mounts:
       /opt/splunk/var from splunk-data (rw)
-      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-dvmch (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-94pqh (ro)
 Conditions:
   Type                        Status
   PodReadyToStartContainers   True 
@@ -46,7 +46,7 @@ Volumes:
     Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
     ClaimName:  splunk-pvc
     ReadOnly:   false
-  kube-api-access-dvmch:
+  kube-api-access-94pqh:
     Type:                    Projected (a volume that contains injected data from multiple sources)
     TokenExpirationSeconds:  3607
     ConfigMapName:           kube-root-ca.crt
@@ -59,9 +59,9 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
 Events:
   Type    Reason                  Age    From                     Message
   ----    ------                  ----   ----                     -------
-  Normal  Scheduled               6m53s  default-scheduler        Successfully assigned splunk-dev/splunk-0 to gke-demo-demo-private-nodes-b2fea047-9h4k
-  Normal  SuccessfulAttachVolume  6m48s  attachdetach-controller  AttachVolume.Attach succeeded for volume "pvc-b0071e13-4d3e-46f7-afff-4482994c9d5b"
-  Normal  Pulling                 6m42s  kubelet                  spec.containers{splunk}: Pulling image "splunk/splunk:latest"
-  Normal  Pulled                  5m3s   kubelet                  spec.containers{splunk}: Successfully pulled image "splunk/splunk:latest" in 1m38.944s (1m38.944s including waiting). Image size: 1879065946 bytes.
-  Normal  Created                 5m3s   kubelet                  spec.containers{splunk}: Container created
-  Normal  Started                 5m3s   kubelet                  spec.containers{splunk}: Container started
+  Normal  Scheduled               4m3s   default-scheduler        Successfully assigned splunk-dev/splunk-0 to gke-demo-demo-private-nodes-a0d39f9a-3v04
+  Normal  SuccessfulAttachVolume  3m52s  attachdetach-controller  AttachVolume.Attach succeeded for volume "pvc-d2ddaeae-5e47-4165-b4dc-b93b18731500"
+  Normal  Pulling                 3m51s  kubelet                  spec.containers{splunk}: Pulling image "splunk/splunk:latest"
+  Normal  Pulled                  2m22s  kubelet                  spec.containers{splunk}: Successfully pulled image "splunk/splunk:latest" in 1m28.281s (1m28.281s including waiting). Image size: 1879065946 bytes.
+  Normal  Created                 2m22s  kubelet                  spec.containers{splunk}: Container created
+  Normal  Started                 2m22s  kubelet                  spec.containers{splunk}: Container started

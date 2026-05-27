@@ -1,16 +1,16 @@
 Name:         github-platform
 Namespace:    flux-system
 Labels:       <none>
-Annotations:  reconcile.fluxcd.io/requestedAt: 2026-04-06T23:41:57.4694911-07:00
+Annotations:  reconcile.fluxcd.io/requestedAt: 2026-04-11T11:22:01.4524904-04:00
 API Version:  source.toolkit.fluxcd.io/v1
 Kind:         GitRepository
 Metadata:
-  Creation Timestamp:  2026-04-07T06:35:35Z
+  Creation Timestamp:  2026-04-11T15:18:09Z
   Finalizers:
     finalizers.fluxcd.io
   Generation:        1
-  Resource Version:  1775544123213087019
-  UID:               30b4ae0e-2b36-411d-a373-bd694e7fa209
+  Resource Version:  1775920921743823019
+  UID:               503e56c0-d585-41ef-a421-ee4b776cb10e
 Spec:
   Interval:  1m
   Ref:
@@ -19,29 +19,29 @@ Spec:
   URL:       https://github.com/tiqsclass6/kubernetes-projects-2026.git
 Status:
   Artifact:
-    Digest:            sha256:a7d4d682653a26540d6485455d882120ec7a98cc9bf1a2ffb3d3fe52a34d3f5e
-    Last Update Time:  2026-04-07T06:35:38Z
-    Path:              gitrepository/flux-system/github-platform/7d6bf863be440c290979a2f8b9eeac2b2383daa7.tar.gz
-    Revision:          project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
-    Size:              50965
-    URL:               http://source-controller.flux-system.svc.cluster.local./gitrepository/flux-system/github-platform/7d6bf863be440c290979a2f8b9eeac2b2383daa7.tar.gz
+    Digest:            sha256:90491dc40488c43557d2e10c6013f847cdbcff03222c2ee40fbdc8ec7798834c
+    Last Update Time:  2026-04-11T15:18:13Z
+    Path:              gitrepository/flux-system/github-platform/ca8d237f54db4cf21859c2999d2115962c599f47.tar.gz
+    Revision:          project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47
+    Size:              71242
+    URL:               http://source-controller.flux-system.svc.cluster.local./gitrepository/flux-system/github-platform/ca8d237f54db4cf21859c2999d2115962c599f47.tar.gz
   Conditions:
-    Last Transition Time:     2026-04-07T06:35:38Z
-    Message:                  stored artifact for revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'
+    Last Transition Time:     2026-04-11T15:18:13Z
+    Message:                  stored artifact for revision 'project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47'
     Observed Generation:      1
     Reason:                   Succeeded
     Status:                   True
     Type:                     Ready
-    Last Transition Time:     2026-04-07T06:35:38Z
-    Message:                  stored artifact for revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'
+    Last Transition Time:     2026-04-11T15:18:13Z
+    Message:                  stored artifact for revision 'project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47'
     Observed Generation:      1
     Reason:                   Succeeded
     Status:                   True
     Type:                     ArtifactInStorage
-  Last Handled Reconcile At:  2026-04-06T23:41:57.4694911-07:00
+  Last Handled Reconcile At:  2026-04-11T11:22:01.4524904-04:00
   Observed Generation:        1
 Events:
   Type    Reason                 Age                  From               Message
   ----    ------                 ----                 ----               -------
-  Normal  NewArtifact            6m52s                source-controller  stored artifact for commit 'sixth commit'
-  Normal  GitOperationSucceeded  27s (x10 over 6m9s)  source-controller  no changes since last reconcilation: observed revision 'project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7'
+  Normal  NewArtifact            4m4s                 source-controller  stored artifact for commit 'seventh commit'
+  Normal  GitOperationSucceeded  16s (x9 over 3m52s)  source-controller  no changes since last reconcilation: observed revision 'project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47'

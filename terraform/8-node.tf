@@ -35,7 +35,7 @@ resource "google_project_iam_member" "nodes_artifact_registry_reader" {
 
 resource "google_container_node_pool" "private-nodes" {
   name     = "${var.cluster_name}-private-nodes"
-  location = var.region
+  location = "${var.region}-b"
   cluster  = google_container_cluster.demo.name
 
   node_locations = [

@@ -73,8 +73,9 @@ print_header "$MAGENTA" "1. REMOVE APP-LEVEL FLUX OBJECTS"
 if [[ "${cluster_reachable}" == true ]]; then
   # Remove optional TLS helper manifests first
   if [[ -f "${TLS_KUSTOMIZATION_FILE}" ]]; then
-    kubectl delete -f "${TLS_KUSTOMIZATION_FILE}" --ignore-not-found=true || true
-    log_info "Deleted TLS kustomization manifest."
+    log_info "TLS kustomization file detected. Deleting rendered TLS resources instead of the kustomization config file."
+  else
+    log_warn "TLS kustomization file not found: ${TLS_KUSTOMIZATION_FILE}"
   fi
 
   if [[ -f "${PUBLIC_IP_INGRESS_FILE}" ]]; then

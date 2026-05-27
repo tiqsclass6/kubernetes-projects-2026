@@ -1,5 +1,5 @@
 {
-  "run_dir": "C:\\Users\\bjett\\Documents\\TheoWAF\\class6\\AWS\\Terraform\\Kubernetes\\Theo\\theo-labs\\project-4\\artifacts\\runs\\20260407-064228",
+  "run_dir": "C:\\Users\\bjett\\Documents\\TheoWAF\\class6\\AWS\\Terraform\\Kubernetes\\Theo\\theo-labs\\project-4\\artifacts\\runs\\20260411-152215",
   "file_count": 30,
   "files": [
     {
@@ -32,19 +32,19 @@
     },
     {
       "path": "checks\\git_source_describe.stdout.txt",
-      "size_bytes": 2393
+      "size_bytes": 2395
     },
     {
       "path": "checks\\ingress_nginx_pods.stdout.txt",
-      "size_bytes": 154
+      "size_bytes": 156
     },
     {
       "path": "checks\\ingress_nginx_service.stdout.txt",
-      "size_bytes": 352
+      "size_bytes": 356
     },
     {
       "path": "checks\\kustomization_describe.stdout.txt",
-      "size_bytes": 4251
+      "size_bytes": 4001
     },
     {
       "path": "checks\\kustomizations.stdout.txt",
@@ -56,7 +56,7 @@
     },
     {
       "path": "checks\\splunk_ingress.stdout.txt",
-      "size_bytes": 145
+      "size_bytes": 147
     },
     {
       "path": "checks\\splunk_logs.stdout.txt",
@@ -64,7 +64,7 @@
     },
     {
       "path": "checks\\splunk_namespace.stdout.txt",
-      "size_bytes": 752
+      "size_bytes": 753
     },
     {
       "path": "checks\\splunk_pod_describe.stdout.txt",
@@ -72,11 +72,11 @@
     },
     {
       "path": "checks\\splunk_resources.stdout.txt",
-      "size_bytes": 570
+      "size_bytes": 567
     },
     {
       "path": "checks\\splunk_statefulset.stdout.txt",
-      "size_bytes": 41
+      "size_bytes": 43
     },
     {
       "path": "checks\\tls_secret.stdout.txt",
@@ -92,7 +92,7 @@
     },
     {
       "path": "proof-resources.json",
-      "size_bytes": 63097
+      "size_bytes": 62857
     },
     {
       "path": "snapshots\\cert-manager-certificates.yaml",
@@ -108,7 +108,7 @@
     },
     {
       "path": "snapshots\\flux-system-kustomization.yaml",
-      "size_bytes": 2552
+      "size_bytes": 2550
     },
     {
       "path": "snapshots\\splunk-dev-all.yaml",
@@ -116,7 +116,7 @@
     },
     {
       "path": "snapshots\\splunk-dev-ingress.yaml",
-      "size_bytes": 1031
+      "size_bytes": 1032
     },
     {
       "path": "summary.json",

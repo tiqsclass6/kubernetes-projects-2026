@@ -32,7 +32,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 export PROJECT_ID="${PROJECT_ID:-class-6-5-tiqs}"
-export REGION="${REGION:-us-central1}"
+export ZONE="${ZONE:-us-central1-b}"
 export CLUSTER_NAME="${CLUSTER_NAME:-demo}"
 
 export TF_DIR="${TF_DIR:-${PROJECT_ROOT}/terraform}"
@@ -56,7 +56,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS:-${PROJE
 print_header "$MAGENTA" "LOADING PROJECT 4 FLUX ENVIRONMENT"
 
 log_info "PROJECT_ID=${PROJECT_ID}"
-log_info "REGION=${REGION}"
+log_info "ZONE=${ZONE}"
 log_info "CLUSTER_NAME=${CLUSTER_NAME}"
 log_info "TF_DIR=${TF_DIR}"
 log_info "FLUX_DIR=${FLUX_DIR}"

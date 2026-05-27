@@ -3,7 +3,7 @@ items:
 - apiVersion: v1
   kind: Pod
   metadata:
-    creationTimestamp: "2026-04-07T06:35:39Z"
+    creationTimestamp: "2026-04-11T15:18:14Z"
     generateName: splunk-
     generation: 1
     labels:
@@ -12,7 +12,7 @@ items:
       controller-revision-hash: splunk-57cf7fff8c
       statefulset.kubernetes.io/pod-name: splunk-0
       topology.kubernetes.io/region: us-central1
-      topology.kubernetes.io/zone: us-central1-b
+      topology.kubernetes.io/zone: us-central1-a
     name: splunk-0
     namespace: splunk-dev
     ownerReferences:
@@ -21,9 +21,9 @@ items:
       controller: true
       kind: StatefulSet
       name: splunk
-      uid: cadd2129-d21d-4eb0-be63-42c6500d057f
-    resourceVersion: "1775543852447023024"
-    uid: c888f6ec-bebb-4c0f-a90b-92466394b718
+      uid: 778fc2c9-bbed-4ccf-8f65-7534811b4945
+    resourceVersion: "1775920797513999024"
+    uid: a5503a59-281b-45e8-9c5b-deb1260fc3fd
   spec:
     containers:
     - env:
@@ -58,12 +58,12 @@ items:
       - mountPath: /opt/splunk/var
         name: splunk-data
       - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-dvmch
+        name: kube-api-access-94pqh
         readOnly: true
     dnsPolicy: ClusterFirst
     enableServiceLinks: true
     hostname: splunk-0
-    nodeName: gke-demo-demo-private-nodes-b2fea047-9h4k
+    nodeName: gke-demo-demo-private-nodes-a0d39f9a-3v04
     preemptionPolicy: PreemptLowerPriority
     priority: 0
     restartPolicy: Always
@@ -86,7 +86,7 @@ items:
     - name: splunk-data
       persistentVolumeClaim:
         claimName: splunk-pvc
-    - name: kube-api-access-dvmch
+    - name: kube-api-access-94pqh
       projected:
         defaultMode: 420
         sources:
@@ -107,32 +107,32 @@ items:
   status:
     conditions:
     - lastProbeTime: null
-      lastTransitionTime: "2026-04-07T06:37:32Z"
+      lastTransitionTime: "2026-04-11T15:19:57Z"
       observedGeneration: 1
       status: "True"
       type: PodReadyToStartContainers
     - lastProbeTime: null
-      lastTransitionTime: "2026-04-07T06:35:41Z"
+      lastTransitionTime: "2026-04-11T15:18:16Z"
       observedGeneration: 1
       status: "True"
       type: Initialized
     - lastProbeTime: null
-      lastTransitionTime: "2026-04-07T06:37:32Z"
+      lastTransitionTime: "2026-04-11T15:19:57Z"
       observedGeneration: 1
       status: "True"
       type: Ready
     - lastProbeTime: null
-      lastTransitionTime: "2026-04-07T06:37:32Z"
+      lastTransitionTime: "2026-04-11T15:19:57Z"
       observedGeneration: 1
       status: "True"
       type: ContainersReady
     - lastProbeTime: null
-      lastTransitionTime: "2026-04-07T06:35:41Z"
+      lastTransitionTime: "2026-04-11T15:18:16Z"
       observedGeneration: 1
       status: "True"
       type: PodScheduled
     containerStatuses:
-    - containerID: containerd://f5e699d41753076d7820f2ea609da6b16fe84a81fd59ceb6fd2fe1c62d1d1605
+    - containerID: containerd://01b5497896878c10dbf822b5af361a5a3a4c49fa7f389e008f0a6fafc27eae74
       image: docker.io/splunk/splunk:latest
       imageID: docker.io/splunk/splunk@sha256:184e80b079f149cae1134dd6330e077fd510f4ea87216a0d6ebd4399782d648c
       lastState: {}
@@ -143,7 +143,7 @@ items:
       started: true
       state:
         running:
-          startedAt: "2026-04-07T06:37:31Z"
+          startedAt: "2026-04-11T15:19:57Z"
       user:
         linux:
           gid: 999
@@ -155,36 +155,36 @@ items:
       - mountPath: /opt/splunk/var
         name: splunk-data
       - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-        name: kube-api-access-dvmch
+        name: kube-api-access-94pqh
         readOnly: true
         recursiveReadOnly: Disabled
-    hostIP: 10.100.0.5
+    hostIP: 10.100.0.4
     hostIPs:
-    - ip: 10.100.0.5
+    - ip: 10.100.0.4
     observedGeneration: 1
     phase: Running
-    podIP: 10.101.1.19
+    podIP: 10.101.1.20
     podIPs:
-    - ip: 10.101.1.19
+    - ip: 10.101.1.20
     qosClass: BestEffort
-    startTime: "2026-04-07T06:35:41Z"
+    startTime: "2026-04-11T15:18:16Z"
 - apiVersion: v1
   kind: Service
   metadata:
     annotations:
       cloud.google.com/neg: '{"ingress":true}'
-    creationTimestamp: "2026-04-07T06:35:39Z"
+    creationTimestamp: "2026-04-11T15:18:14Z"
     labels:
       kustomize.toolkit.fluxcd.io/name: splunk-dev
       kustomize.toolkit.fluxcd.io/namespace: flux-system
     name: splunk
     namespace: splunk-dev
-    resourceVersion: "1775543739345151008"
-    uid: 2f42e597-d282-4762-bf33-6599714aaf8a
+    resourceVersion: "1775920694164623008"
+    uid: 340da1e7-e66e-4854-a12b-09ca490654ad
   spec:
-    clusterIP: 10.102.14.196
+    clusterIP: 10.102.13.241
     clusterIPs:
-    - 10.102.14.196
+    - 10.102.13.241
     internalTrafficPolicy: Cluster
     ipFamilies:
     - IPv4
@@ -203,15 +203,15 @@ items:
 - apiVersion: apps/v1
   kind: StatefulSet
   metadata:
-    creationTimestamp: "2026-04-07T06:35:39Z"
+    creationTimestamp: "2026-04-11T15:18:14Z"
     generation: 1
     labels:
       kustomize.toolkit.fluxcd.io/name: splunk-dev
       kustomize.toolkit.fluxcd.io/namespace: flux-system
     name: splunk
     namespace: splunk-dev
-    resourceVersion: "1775543852487887001"
-    uid: cadd2129-d21d-4eb0-be63-42c6500d057f
+    resourceVersion: "1775920797560047001"
+    uid: 778fc2c9-bbed-4ccf-8f65-7534811b4945
   spec:
     persistentVolumeClaimRetentionPolicy:
       whenDeleted: Retain

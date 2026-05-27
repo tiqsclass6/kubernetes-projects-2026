@@ -1,2 +1,2 @@
 NAMESPACE  	NAME      	REVISION               	SUSPENDED	READY	MESSAGE                                   
-flux-system	splunk-dev	project-4@sha1:7d6bf863	False    	True 	Applied revision: project-4@sha1:7d6bf863
+flux-system	splunk-dev	project-4@sha1:ca8d237f	False    	True 	Applied revision: project-4@sha1:ca8d237f

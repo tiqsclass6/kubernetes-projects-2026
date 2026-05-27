@@ -1,8 +1,8 @@
 ► annotating GitRepository github-platform in flux-system namespace
 ✔ GitRepository annotated
 ◎ waiting for GitRepository reconciliation
-✔ fetched revision project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
+✔ fetched revision project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47
 ► annotating Kustomization splunk-dev in flux-system namespace
 ✔ Kustomization annotated
 ◎ waiting for Kustomization reconciliation
-✔ applied revision project-4@sha1:7d6bf863be440c290979a2f8b9eeac2b2383daa7
+✔ applied revision project-4@sha1:ca8d237f54db4cf21859c2999d2115962c599f47

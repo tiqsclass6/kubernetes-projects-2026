@@ -1,19 +1,29 @@
 # 🚀 **Project 4: Flux GitOps + Splunk Deployment on GKE**
 
-![Terraform](https://img.shields.io/badge/IaC-Terraform-623CE4?logo=terraform)
-![Kubernetes](https://img.shields.io/badge/Platform-Kubernetes-326CE5?logo=kubernetes)
-![Flux](https://img.shields.io/badge/GitOps-FluxCD-5468FF?logo=flux)
-![GKE](https://img.shields.io/badge/Cloud-Google%20Kubernetes%20Engine-4285F4?logo=googlecloud)
-![Splunk](https://img.shields.io/badge/Observability-Splunk-000000?logo=splunk)
-![Cert-Manager](https://img.shields.io/badge/Certificate%20Management-cert--manager-1E90FF?logo=cert-manager)
-![NGINX](https://img.shields.io/badge/Networking-NGINX-009639?logo=nginx)
-![GitOps](https://img.shields.io/badge/Method-GitOps-green)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-Platform-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
+![GKE](https://img.shields.io/badge/GKE-Google_Kubernetes_Engine-4285F4?style=for-the-badge&logo=googlekubernetesengine&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Flux CD](https://img.shields.io/badge/Flux_CD-GitOps-5468FF?style=for-the-badge&logo=flux&logoColor=white)
+![GitOps](https://img.shields.io/badge/GitOps-Declarative_Delivery-2E7D32?style=for-the-badge&logo=git&logoColor=white)
+![Kustomize](https://img.shields.io/badge/Kustomize-Manifests-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Splunk](https://img.shields.io/badge/Splunk-Observability-000000?style=for-the-badge&logo=splunk&logoColor=white)
+![NGINX](https://img.shields.io/badge/NGINX-Ingress_Controller-009639?style=for-the-badge&logo=nginx&logoColor=white)
+![cert-manager](https://img.shields.io/badge/cert--manager-TLS_Automation-1E90FF?style=for-the-badge&logo=letsencrypt&logoColor=white)
+![Cloud DNS](https://img.shields.io/badge/Cloud_DNS-Domain_Routing-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
+![Storage](https://img.shields.io/badge/GCE_PD-Persistent_Storage-34A853?style=for-the-badge&logo=googlecloud&logoColor=white)
 
 ---
 
 ## 📌 **Project Overview**
 
 This project demonstrates a GitOps-based deployment pipeline using `Flux CD` to deploy Splunk on **Google Kubernetes Engine (GKE).** The underlying infrastructure is provisioned with **Terraform**, while application manifests are continuously reconciled from a GitHub repository using Flux GitOps controllers. The implementation reflects a production-style DevOps workflow that incorporates Infrastructure as Code, continuous deployment through **GitOps**, Kubernetes-based application deployment, an observability platform via **Splunk**, TLS-enabled ingress networking, automated deployment scripting, and continuous reconciliation with drift correction. The overall architecture adheres to the core GitOps principle that Git serves as the single source of truth, and the cluster continuously reconciles itself to match the desired state defined in the repository.
+
+---
+
+## 🏗 **Project Network Architecture**
+
+![diagram.png](/images/diagram.png)
 
 ---
 
@@ -96,48 +106,6 @@ Key practices implemented include:
 * Evidence-based validation through structured artifact generation
 
 The system continuously compares the live cluster state against the Git repository and automatically reconciles any deviation, ensuring self-healing behavior. This approach shifts operations from imperative management to declarative control, enabling scalable, consistent, and resilient platform management.
-
----
-
-## 🧪 **Lab Demo**
-
-### What Students Learn
-
-[Demo](https://github.com/user-attachments/assets/651f31df-8c9a-4380-bc46-57c735ceb9c4)
-
----
-
-## 🏗 **Project Architecture**
-
-```text
-                ┌──────────────────────────────┐
-                │          GitHub Repo         │
-                │ kubernetes-projects-2026     │
-                └──────────────┬───────────────┘
-                               │
-                               ▼
-                       Flux Source Controller
-                               │
-                               ▼
-                      Flux Kustomize Controller
-                               │
-                               ▼
-                     Kubernetes Cluster (GKE)
-                               │
-              ┌────────────────┼────────────────┐
-              ▼                ▼                ▼
-         Namespace        StatefulSet         Service
-         splunk-dev         Splunk           ClusterIP
-              │
-              ▼
-         PersistentVolume
-              │
-              ▼
-        Ingress + TLS
-              │
-              ▼
-          Splunk Web UI
-```
 
 ---
 
@@ -283,7 +251,7 @@ project-4/
 ./scripts/0-prerequisites.sh
 ```
 
-![script0.jpg](/Screenshots/script0.jpg)
+![script0.jpg](/images/script0.jpg)
 
 Verifies:
 
@@ -299,9 +267,9 @@ Verifies:
 ./scripts/1-build-infrastructure.sh
 ```
 
-![script1-pt1.jpg](/Screenshots/script1-pt1.jpg)
-![script1-pt2.jpg](/Screenshots/script1-pt2.jpg)
-![script1-pt3.jpg](/Screenshots/script1-pt3.jpg)
+![script1-pt1.jpg](/images/script1-pt1.jpg)
+![script1-pt2.jpg](/images/script1-pt2.jpg)
+![script1-pt3.jpg](/images/script1-pt3.jpg)
 
 Creates:
 
@@ -317,7 +285,7 @@ Creates:
 ./scripts/2-gke-credentials.sh
 ```
 
-![script2.jpg](/Screenshots/script2.jpg)
+![script2.jpg](/images/script2.jpg)
 
 Validates cluster connectivity.
 
@@ -329,8 +297,8 @@ Validates cluster connectivity.
 ./scripts/3-install-flux.sh
 ```
 
-![script3-pt1.jpg](/Screenshots/script3-pt1.jpg)
-![script3-pt2.jpg](/Screenshots/script3-pt2.jpg)
+![script3-pt1.jpg](/images/script3-pt1.jpg)
+![script3-pt2.jpg](/images/script3-pt2.jpg)
 
 Installs:
 
@@ -347,9 +315,9 @@ Installs:
 ./scripts/4-install-ingress-cert-manager.sh
 ```
 
-![script4-pt1.jpg](/Screenshots/script4-pt1.jpg)
-![script4-pt2.jpg](/Screenshots/script4-pt2.jpg)
-![script4-pt3.jpg](/Screenshots/script4-pt3.jpg)
+![script4-pt1.jpg](/images/script4-pt1.jpg)
+![script4-pt2.jpg](/images/script4-pt2.jpg)
+![script4-pt3.jpg](/images/script4-pt3.jpg)
 
 Installs:
 
@@ -365,9 +333,9 @@ Installs:
 ./scripts/5-apply-flux.sh
 ```
 
-![script5-pt1.jpg](/Screenshots/script5-pt1.jpg)
-![script5-pt2.jpg](/Screenshots/script5-pt2.jpg)
-![script5-pt3.jpg](/Screenshots/script5-pt3.jpg)
+![script5-pt1.jpg](/images/script5-pt1.jpg)
+![script5-pt2.jpg](/images/script5-pt2.jpg)
+![script5-pt3.jpg](/images/script5-pt3.jpg)
 
 Creates:
 
@@ -382,7 +350,7 @@ Creates:
 ./scripts/6-deploy-flux.sh
 ```
 
-![script6.jpg](/Screenshots/script6.jpg)
+![script6.jpg](/images/script6.jpg)
 
 Flux pulls manifests from GitHub and deploys them to the cluster.
 
@@ -395,11 +363,11 @@ kubectl -n splunk-dev port-forward svc/splunk 8091:8091
 ./scripts/7-reconcile-and-verify.sh
 ```
 
-![script7-pt1.jpg](/Screenshots/script7-pt1.jpg)
-![script7-pt2.jpg](/Screenshots/script7-pt2.jpg)
-![script7-pt3.jpg](/Screenshots/script7-pt3.jpg)
-![script7-pt4.jpg](/Screenshots/script7-pt4.jpg)
-![script7-pt5.jpg](/Screenshots/script7-pt5.jpg)
+![script7-pt1.jpg](/images/script7-pt1.jpg)
+![script7-pt2.jpg](/images/script7-pt2.jpg)
+![script7-pt3.jpg](/images/script7-pt3.jpg)
+![script7-pt4.jpg](/images/script7-pt4.jpg)
+![script7-pt5.jpg](/images/script7-pt5.jpg)
 
 Checks:
 
@@ -411,6 +379,14 @@ Checks:
 
 ---
 
+## 🧪 **Project Demo**
+
+### What Students Learn
+
+[Demo](https://github.com/user-attachments/assets/651f31df-8c9a-4380-bc46-57c735ceb9c4)
+
+---
+
 ## 📸 **Artifacts / Screenshots**
 
 ### **Artifacts are automatically generated using:**
@@ -419,7 +395,7 @@ Checks:
 python/collect-artifacts.py
 ```
 
-![collect-artifacts-script.jpg](/Screenshots/collect-artifacts-script.jpg)
+![collect-artifacts-script.jpg](/images/collect-artifacts-script.jpg)
 
 ### **Outputs:**
 
@@ -441,10 +417,10 @@ Destroy infrastructure and remove Flux resources:
 ./scripts/8-teardown.sh
 ```
 
-![script8-pt1.jpg](/Screenshots/script8-pt1.jpg)
-![script8-pt2.jpg](/Screenshots/script8-pt2.jpg)
-![script8-pt3.jpg](/Screenshots/script8-pt3.jpg)
-![script8-pt4.jpg](/Screenshots/script8-pt4.jpg)
+![script8-pt1.jpg](/images/script8-pt1.jpg)
+![script8-pt2.jpg](/images/script8-pt2.jpg)
+![script8-pt3.jpg](/images/script8-pt3.jpg)
+![script8-pt4.jpg](/images/script8-pt4.jpg)
 
 This script:
 

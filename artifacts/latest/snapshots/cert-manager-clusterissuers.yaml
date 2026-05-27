@@ -3,19 +3,19 @@ items:
 - apiVersion: cert-manager.io/v1
   kind: ClusterIssuer
   metadata:
-    creationTimestamp: "2026-04-07T06:35:39Z"
+    creationTimestamp: "2026-04-11T15:18:14Z"
     generation: 1
     labels:
       kustomize.toolkit.fluxcd.io/name: splunk-dev
       kustomize.toolkit.fluxcd.io/namespace: flux-system
     name: selfsigned
-    resourceVersion: "1775543739563759005"
-    uid: b8bb7a8c-c87a-4670-a4bc-a254ac095f84
+    resourceVersion: "1775920694427759005"
+    uid: dc87ea4f-0b9d-4504-a30a-e783df0d79b6
   spec:
     selfSigned: {}
   status:
     conditions:
-    - lastTransitionTime: "2026-04-07T06:35:39Z"
+    - lastTransitionTime: "2026-04-11T15:18:14Z"
       observedGeneration: 1
       reason: IsReady
       status: "True"
