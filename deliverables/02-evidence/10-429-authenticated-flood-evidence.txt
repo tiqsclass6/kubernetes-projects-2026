@@ -1,0 +1,12 @@
+Title: 429 evidence - authenticated flood test
+Timestamp: 2026-06-13T22:10:43
+
+Command:
+bash -lc for i in $(seq 1 10); do printf 'Request %s -> ' "$i"; curl -s -o /tmp/project7-flood-response.txt -w '%{http_code}\n' http://34.31.86.102/hello -H 'apikey: super-secret-key'; done
+
+Exit code: 2
+
+Output:
+--- STDERR ---
+/bin/bash: -c: line 2: syntax error near unexpected token `2'
+/bin/bash: -c: line 2: `2'

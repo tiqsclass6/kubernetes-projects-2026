@@ -1,0 +1,14 @@
+Title: kubectl get pods
+Timestamp: 2026-06-13T22:10:36
+
+Command:
+kubectl get pods -n kong
+
+Exit code: 0
+
+Output:
+NAME                              READY   STATUS    RESTARTS   AGE
+hello-app-6fbdfd8446-s2kmk        1/1     Running   0          26m
+hello-app-6fbdfd8446-wmzk9        1/1     Running   0          26m
+kong-controller-cd7757cdb-nzpfg   1/1     Running   0          29m
+kong-gateway-57d64f6696-qk4jx     1/1     Running   0          29m

@@ -1,0 +1,147 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-html
+  namespace: kong
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PROJECT 7 // KONG RATE LIMITING // GKE</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap');
+
+            :root {
+                --neon-cyan: #00f5ff;
+                --neon-purple: #c300ff;
+                --neon-green: #00ff9d;
+            }
+
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+
+            body {
+                font-family: 'Roboto Mono', monospace;
+                background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), 
+                            url('https://wallpapercave.com/wp/YeoPqhy.jpg') center/cover no-repeat fixed;
+                color: #e0e0e0;
+                min-height: 100vh;
+            }
+
+            .header {
+                background: rgba(10, 10, 20, 0.95);
+                border-bottom: 2px solid var(--neon-cyan);
+                padding: 20px 40px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .title { 
+                font-family: 'Orbitron', sans-serif; 
+                font-size: 2.2rem; 
+                color: var(--neon-cyan); 
+                text-shadow: 0 0 15px var(--neon-cyan); 
+                letter-spacing: 3px; 
+            }
+
+            .logos { 
+                display: flex; 
+                gap: 20px; 
+                align-items: center; 
+            }
+
+            .logo { 
+                height: 55px; 
+                filter: drop-shadow(0 0 12px currentColor); 
+            }
+
+            .k8s-logo { 
+                height: 55px; 
+                filter: drop-shadow(0 0 15px #00f5ff) drop-shadow(0 0 25px #00f5ff); 
+            }
+
+            .container { max-width: 1250px; margin: 40px auto; padding: 0 20px; }
+
+            .section {
+                background: rgba(15, 15, 35, 0.9);
+                border: 1px solid var(--neon-purple);
+                border-radius: 8px;
+                margin-bottom: 30px;
+                padding: 25px;
+            }
+
+            h1, h2 { 
+                color: var(--neon-cyan); 
+                font-family: 'Orbitron', sans-serif; 
+                text-shadow: 0 0 10px var(--neon-cyan); 
+            }
+
+            pre {
+                background: #0a0a0f;
+                padding: 18px;
+                border-radius: 6px;
+                border-left: 4px solid var(--neon-cyan);
+                overflow-x: auto;
+                color: #a0ffa0;
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .status { color: var(--neon-green); font-weight: bold; }
+
+            .footer { 
+                text-align: center; 
+                padding: 40px 20px; 
+                font-size: 1.1rem; 
+                font-weight: bold; 
+            }
+
+            .glow-text {
+                animation: colorCycle 12s infinite linear;
+                text-shadow: 0 0 20px currentColor;
+            }
+
+            @keyframes colorCycle {
+                0% { color: #c300ff; }
+                50% { color: #00f5ff; }
+                100% { color: #c300ff; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="title">PROJECT 07 // RATE LIMITING ENFORCED</div>
+            <div class="logos">
+                <img src="https://icon.icepanel.io/Technology/svg/HashiCorp-Terraform.svg" alt="Terraform" class="logo">
+                <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/4/kong-icon-3sm9z71jcjrf5m48vqw5hr.png/kong-icon-1sgcb8mkfoojp1rhasiqnho.png?_a=DATAiZAAZAA0" alt="Kong" class="logo">
+                <img src="https://img.icons8.com/?size=100&id=1hFR28gNL9Hy&format=png&color=000000" alt="Kubernetes" class="k8s-logo">
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h1>KONG GATEWAY + GKE</h1>
+                <p><strong>Status:</strong> <span class="status">PROTECTED ✓</span> | Rate Limiting Active (5 req/min)</p>
+            </div>
+
+            <div class="section">
+                <h2>🛡️ Rate Limiting Demonstration</h2>
+                <pre><code>Unauthenticated → Some 200 OK, then 429<br>Authenticated   → 200 OK (with valid key), then 429</code></pre>
+            </div>
+
+            <div class="section">
+                <h2>📊 Project Summary</h2>
+                <pre><code>Platform     : Google Kubernetes Engine (GKE)<br>Cluster      : kong<br>Rate Limit   : 5 requests / minute<br>Plugin       : rate-limiting</code></pre>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="glow-text">
+                Rate Limiting Enforced at the Gateway • Terraform + GKE + Kong • 2026
+            </p>
+        </div>
+    </body>
+    </html>

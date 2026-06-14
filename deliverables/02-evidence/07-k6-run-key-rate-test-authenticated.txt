@@ -1,0 +1,11 @@
+Title: k6 run key-rate-test.js - authenticated should return 200 or 429
+Timestamp: 2026-06-13T22:10:41
+
+Command:
+bash -lc KONG_URL=http://34.31.86.102 API_KEY=super-secret-key k6 run C:\Users\bjett\Documents\TheoWAF\class6\AWS\Terraform\Kubernetes\Theo\theo-labs\project-7\python\key-rate-test.js
+
+Exit code: 127
+
+Output:
+--- STDERR ---
+/bin/bash: line 1: k6: command not found

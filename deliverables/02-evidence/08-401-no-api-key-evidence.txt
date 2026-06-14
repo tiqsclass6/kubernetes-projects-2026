@@ -1,0 +1,18 @@
+Title: 401 evidence - request without API key
+Timestamp: 2026-06-13T22:10:42
+
+Command:
+bash -lc curl -i http://34.31.86.102/hello | grep -E 'HTTP/1.1|message'
+
+Exit code: 0
+
+Output:
+HTTP/1.1 401 Unauthorized
+  "message":"No API key found in request",
+
+--- STDERR ---
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100    96  100    96    0     0    497      0 --:--:-- --:--:-- --:--:--   500

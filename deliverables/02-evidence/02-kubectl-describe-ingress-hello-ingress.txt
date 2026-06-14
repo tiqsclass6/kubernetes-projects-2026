@@ -1,0 +1,22 @@
+Title: kubectl describe ingress hello-ingress
+Timestamp: 2026-06-13T22:10:34
+
+Command:
+kubectl describe ingress hello-ingress -n kong
+
+Exit code: 0
+
+Output:
+Name:             hello-ingress
+Labels:           <none>
+Namespace:        kong
+Address:          34.31.86.102
+Ingress Class:    kong
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /hello   hello-service:80 (10.101.1.8:80,10.101.2.11:80)
+Annotations:  konghq.com/plugins: key-auth-plugin,rate-limit-plugin
+Events:       <none>

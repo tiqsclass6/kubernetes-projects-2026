@@ -1,0 +1,8 @@
+Title: Kong Endpoint
+Timestamp: 2026-06-13T22:10:42
+
+Detected Kong endpoint:
+http://34.31.86.102/hello
+
+External IP command:
+kubectl get svc kong-gateway-proxy -n kong -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
