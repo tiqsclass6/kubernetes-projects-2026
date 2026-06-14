@@ -2,19 +2,27 @@
 
 ![Project Status](https://img.shields.io/badge/Project%20Status-Active-22C55E?style=for-the-badge&logo=check-circle&logoColor=white)
 ![Repository](https://img.shields.io/badge/Repository-Kubernetes%20Projects%202026-0A66C2?style=for-the-badge&logo=github&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Platform Engineering](https://img.shields.io/badge/Platform_Engineering-Gateway_Control-2E7D32?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![AWS EKS](https://img.shields.io/badge/AWS%20EKS-Amazon%20EKS-FF9900?style=for-the-badge&logo=amazoneks&logoColor=white)
 ![Google GKE](https://img.shields.io/badge/Google%20GKE-GKE-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
 ![Argo CD](https://img.shields.io/badge/GitOps-Argo%20CD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
 ![Flux CD](https://img.shields.io/badge/GitOps-Flux%20CD-5468FF?style=for-the-badge&logo=flux&logoColor=white)
 ![OPA Gatekeeper](https://img.shields.io/badge/Policy-OPA%20Gatekeeper-7D3C98?style=for-the-badge&logo=openpolicyagent&logoColor=white)
-![Kong Gateway](https://img.shields.io/badge/API%20Gateway-Kong-003459?style=for-the-badge&logo=kong&logoColor=white)
-![Kubernetes RBAC](https://img.shields.io/badge/Security-RBAC-4F46E5?style=for-the-badge&logo=kubernetes&logoColor=white)
-![Helm](https://img.shields.io/badge/Packaging-Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
-![YAML](https://img.shields.io/badge/Manifests-YAML-3B82F6?style=for-the-badge&logo=yaml&logoColor=white)
-![Bash](https://img.shields.io/badge/Scripting-Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)
 ![Splunk](https://img.shields.io/badge/Observability-Splunk-000000?style=for-the-badge&logo=splunk&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
+![Kong](https://img.shields.io/badge/Kong-API_Gateway-003459?style=for-the-badge&logo=kong&logoColor=white)
+![Kong Ingress](https://img.shields.io/badge/Kong_Ingress-Controller-00A3A3?style=for-the-badge&logo=kong&logoColor=white)
+![Kong Gateway](https://img.shields.io/badge/API%20Gateway-Kong-003459?style=for-the-badge&logo=kong&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Kubernetes RBAC](https://img.shields.io/badge/Security-RBAC-4F46E5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Kubernetes Ingress](https://img.shields.io/badge/Ingress-Kubernetes%20Ingress-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-Package_Manager-0F1689?style=for-the-badge&logo=helm&logoColor=white)
+![k6](https://img.shields.io/badge/k6-Load_Testing-7D64FF?style=for-the-badge&logo=k6&logoColor=white)
+![Key Auth](https://img.shields.io/badge/Key_Auth-API_Security-FF6D00?style=for-the-badge&logo=securityscorecard&logoColor=white)
+![Rate Limiting](https://img.shields.io/badge/Rate_Limiting-Abuse_Control-00C853?style=for-the-badge&logo=datadog&logoColor=white)
+![API Security](https://img.shields.io/badge/API_Security-Gateway_Enforcement-D32F2F?style=for-the-badge&logo=owasp&logoColor=white)
+![Bash](https://img.shields.io/badge/Bash-Automation-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)
+![Secrets](https://img.shields.io/badge/Secrets-Credentials-6A1B9A?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![GitHub Forks](https://img.shields.io/github/forks/tiqsclass6/kubernetes-projects-2026?style=for-the-badge&logo=github&logoColor=white)
 ![GitHub Stars](https://img.shields.io/github/stars/tiqsclass6/kubernetes-projects-2026?style=for-the-badge&logo=github&logoColor=white)
 ![GitHub License](https://img.shields.io/github/license/tiqsclass6/kubernetes-projects-2026?style=for-the-badge&logo=github&logoColor=white)
@@ -28,13 +36,14 @@
 
 The repository is organized into dedicated project branches. Each branch represents a standalone Kubernetes lab with its own Terraform, manifests, scripts, screenshots, and documentation.
 
-It brings together five major deliverables:
+It brings together six major deliverables:
 
 - **Project 2:** Argo CD GitOps Security Lab with Splunk multi-environment deployment
 - **Project 3:** OPA Gatekeeper + Argo CD Kubernetes policy enforcement
 - **Project 4:** Flux GitOps + Splunk deployment on Google Kubernetes Engine
 - **Project 5:** Kong Ingress Controller with a basic Hello App on Elastic Kubernetes Service (EKS)
 - **Project 6:** Kong Ingress Controller with API key authentication and rate limiting on EKS
+- **Project 7:** Kong Rate Limiting on GKE with key authentication, KongConsumer, Kubernetes Secrets, k6 testing, and Terraform-managed GCP infrastructure
 
 Together, these branches demonstrate repeatable infrastructure provisioning, declarative Kubernetes operations, GitOps deployment, RBAC security, policy-as-code, ingress control, API gateway patterns, and operational validation.
 
@@ -63,6 +72,9 @@ Together, these branches demonstrate repeatable infrastructure provisioning, dec
 
 - [**Project 6 — Kong Security Plugins on EKS**](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-6)  
   Based on: AWS EKS, Terraform, Helm, Kong Gateway, KongPlugin resources, KongConsumer, Kubernetes Secrets, API key authentication, rate limiting, NGINX test workload, and deploy/teardown automation.
+
+- [**Project 7 — Kong Rate Limiting on GKE**](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-7)  
+  Based on: Google Kubernetes Engine, Terraform, Helm, Kong Gateway, Kong Ingress Controller, KongPlugin resources, KongConsumer, Kubernetes Secrets, key-auth, rate limiting, ConfigMap-hosted HTML content, k6 load testing, curl validation, and automated evidence collection.
 
 ### **Supporting Documentation**
 
@@ -96,18 +108,20 @@ Deliver a **secure, automated, GitOps-driven Kubernetes portfolio repository** c
 - Demonstrating API gateway controls such as authentication and rate limiting
 - Generating screenshots, logs, test outputs, and artifacts for proof-of-work submissions
 - Practicing clean teardown workflows to avoid orphaned cloud resources and unnecessary cost
+- Demonstrating GKE-based Kong API gateway controls with key authentication, request throttling, external LoadBalancer exposure, and repeatable evidence generation
 
 ---
 
 ## 🔗 **Branches**
 
-| **Branch**                                                                           | **Project**                 | **Platform**             | **Main Tools**                              | **Focus**                                |
-| ------------------------------------------------------------------------------------ | --------------------------- | ------------------------ | ------------------------------------------- | ---------------------------------------- |
-| [`project-2`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-2) | Argo CD GitOps Security Lab | AWS EKS                  | Terraform, Argo CD, Kubernetes, Bash        | RBAC, AppProjects, environment isolation |
-| [`project-3`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-3) | OPA Gatekeeper + Argo CD    | AWS EKS                  | Terraform, Argo CD, Gatekeeper, Rego        | Admission control and policy enforcement |
-| [`project-4`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-4) | Flux GitOps + Splunk on GKE | GCP GKE                  | Terraform, Flux CD, Kustomize, cert-manager | GitOps reconciliation and TLS ingress    |
-| [`project-5`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-5) | Kong Ingress Hello App      | AWS EKS                  | Terraform, Helm, Kong, Kubernetes           | Basic ingress gateway routing            |
-| [`project-6`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-6) | Kong Auth + Rate Limiting   | AWS EKS                  | Terraform, Helm, KongPlugin, KongConsumer   | API key authentication and rate limiting |
+| **Branch**                                                                           | **Project**                 | **Platform**             | **Main Tools**                              | **Focus**                                    |
+| ------------------------------------------------------------------------------------ | --------------------------- | ------------------------ | ------------------------------------------- | -------------------------------------------- |
+| [`project-2`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-2) | Argo CD GitOps Security Lab | AWS EKS                  | Terraform, Argo CD, Kubernetes, Bash        | RBAC, AppProjects, environment isolation     |
+| [`project-3`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-3) | OPA Gatekeeper + Argo CD    | AWS EKS                  | Terraform, Argo CD, Gatekeeper, Rego        | Admission control and policy enforcement     |
+| [`project-4`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-4) | Flux GitOps + Splunk on GKE | GCP GKE                  | Terraform, Flux CD, Kustomize, cert-manager | GitOps reconciliation and TLS ingress        |
+| [`project-5`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-5) | Kong Ingress Hello App      | AWS EKS                  | Terraform, Helm, Kong, Kubernetes           | Basic ingress gateway routing                |
+| [`project-6`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-6) | Kong Auth + Rate Limiting   | AWS EKS                  | Terraform, Helm, KongPlugin, KongConsumer   | API key authentication and rate limiting     |
+| [`project-7`](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-7) | Kong Rate Limiting on GKE   | GCP GKE                  | Terraform, Helm, KongPlugin, k6             | Kong API gateway controls with load testing  |
 
 ---
 
@@ -243,6 +257,42 @@ Deliver a **secure, automated, GitOps-driven Kubernetes portfolio repository** c
 
 ---
 
+## 🚦 [**Branch Project 7 — Kong Rate Limiting on GKE**](https://github.com/tiqsclass6/kubernetes-projects-2026/tree/project-7)
+
+![project-7-diagram.png](/diagrams/project-7-diagram.png)
+
+**Goal:** Deploy a custom Hello App on **Google Kubernetes Engine (GKE)** and protect it with **Kong Gateway** using API key authentication and rate limiting.
+
+**Highlights:**
+
+- Terraform provisions Google Cloud infrastructure, including VPC, subnets, firewall rules, Cloud NAT, Artifact Registry, GKE cluster, node pool, IAM/OIDC, and outputs
+- Helm installs Kong Gateway and Kong Ingress Controller into the `kong` namespace
+- Kubernetes manifests deploy the Hello App, Service, ConfigMap-hosted HTML page, and Kong-managed Ingress
+- `key-auth` KongPlugin enforces API key authentication
+- `rate-limiting` KongPlugin enforces request throttling at the gateway layer
+- KongConsumer and Kubernetes Secret define the authorized API client and credential
+- curl tests prove `401 Unauthorized`, `200 OK`, and `429 Too Many Requests` behavior
+- k6 tests generate load-test evidence for authenticated and unauthenticated request paths
+- Python artifact collection script gathers YAML exports, command outputs, screenshots, and project proof files
+- Teardown script removes Kubernetes resources, Kong components, and supports Terraform cleanup to avoid unnecessary GCP cost
+
+**Primary skills demonstrated:**
+
+- GKE infrastructure provisioning
+- Kong Gateway deployment on Kubernetes
+- KongPlugin configuration
+- API key authentication
+- Rate limiting and abuse control
+- Kubernetes Ingress routing
+- Kubernetes Secrets and KongConsumer mapping
+- ConfigMap-based static HTML delivery
+- k6 load testing
+- curl-based API validation
+- Automated evidence collection
+- Terraform teardown and cloud cost control
+
+---
+
 ## 🧩 **Repository Architecture Summary**
 
 ```text
@@ -276,13 +326,24 @@ kubernetes-projects-2026/
 │   ├── Kong Ingress route
 │   └── Kong teardown and validation workflow
 │
-└── project-6
-    ├── Terraform-managed AWS EKS foundation
-    ├── Helm-managed Kong Ingress Controller
+├── project-6
+│   ├── Terraform-managed AWS EKS foundation
+│   ├── Helm-managed Kong Ingress Controller
+│   ├── KongPlugin key-auth and rate-limiting resources
+│   ├── KongConsumer and API key Secret
+│   ├── secured /hello and /hello-ratelimit routes
+│   └── deploy and teardown scripts
+│
+└── project-7
+    ├── Terraform-managed GCP and GKE foundation
+    ├── Helm-managed Kong Gateway and Kong Ingress Controller
+    ├── Hello App Deployment, Service, and ConfigMap-hosted HTML content
     ├── KongPlugin key-auth and rate-limiting resources
     ├── KongConsumer and API key Secret
-    ├── secured /hello and /hello-ratelimit routes
-    └── deploy and teardown scripts
+    ├── Kong-managed Ingress route
+    ├── curl and k6 validation tests for 401, 200, and 429 responses
+    ├── screenshot, video, YAML, and command-output evidence
+    └── deploy, verify, artifact collection, and teardown automation
 ```
 
 ---
@@ -322,28 +383,57 @@ kubectl get pods -n kong
 kubectl get svc -n kong
 kubectl get kongplugins -A
 kubectl get kongconsumers -A
+
+# Confirm Kong resources for Project 7
+kubectl get pods -n kong
+kubectl get svc -n kong
+kubectl get ingress -n kong
+kubectl get kongplugin -n kong
+kubectl get kongconsumer -n kong
+kubectl describe ingress hello-ingress -n kong
+
+# Confirm Kong LoadBalancer endpoint
+kubectl get svc -n kong kong-gateway-proxy
+kubectl get svc -n kong kong-gateway-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+
+# Test API key authentication and rate limiting
+curl -i http://<KONG_PROXY_ENDPOINT>/
+curl -i -H "apikey: <REDACTED_API_KEY>" http://<KONG_PROXY_ENDPOINT>/
+
+# Run k6 load tests
+k6 run python/rate-test.js
+k6 run python/key-rate-test.js
+
+# Collect Project 7 deliverables
+python python/collect-deliverables.py
 ```
 
 ---
 
 ## 🛠 **Troubleshooting**
 
-| **Issue**                                      | **Common Cause**                                                 | **Resolution**                                                                   |
-| ---------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `LoadBalancer pending`                         | AWS or GKE load balancer still provisioning                      | Wait several minutes, then run `kubectl get svc -A`                              |
-| `ImagePullBackOff`                             | Invalid image name, missing registry auth, or image pull failure | Run `kubectl describe pod <pod> -n <namespace>` and verify image path            |
-| `CrashLoopBackOff`                             | Application startup failure or bad configuration                 | Run `kubectl logs <pod> -n <namespace>` and inspect events                       |
-| Argo CD app stuck `OutOfSync`                  | Manifest drift or missing dependency                             | Sync the app, inspect `kubectl describe application`, and validate manifests     |
-| Argo CD RBAC not applying                      | ConfigMap not reloaded or policy syntax issue                    | Restart Argo CD server and validate `argocd-rbac-cm`                             |
-| Gatekeeper policy not denying invalid resource | ConstraintTemplate or Constraint not installed correctly         | Check `kubectl get constrainttemplates` and `kubectl describe constraint <name>` |
-| Flux reconciliation failing                    | GitRepository or Kustomization path error                        | Run `flux get sources git`, `flux get kustomizations`, and `flux reconcile`      |
-| TLS certificate not ready                      | cert-manager issuer, DNS, or ingress mismatch                    | Run `kubectl describe certificate -A` and inspect cert-manager logs              |
-| Kong route returns `404`                       | Ingress rule path or service name mismatch                       | Check `kubectl get ingress -A` and verify service backend names                  |
-| Kong route returns `401`                       | Missing or incorrect API key                                     | Send the correct API key header expected by the KongPlugin configuration         |
-| Kong route returns `429`                       | Rate limit triggered successfully                                | Wait for the rate-limit window to reset or adjust plugin limits                  |
-| Namespace stuck `Terminating`                  | Finalizers blocking deletion                                     | Inspect finalizers and remove only after confirming cleanup safety               |
-| Terraform destroy blocked                      | Kubernetes resources or cloud load balancers still exist         | Run branch-specific teardown script before `terraform destroy`                   |
-| Orphaned cloud resources                       | LoadBalancer, NAT Gateway, or EBS volume left behind             | Check AWS/GCP console and CLI for leftover resources before closing the lab      |
+| **Issue**                                      | **Common Cause**                                                                     | **Resolution**                                                                                      |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `LoadBalancer pending`                         | AWS or GKE load balancer still provisioning                                          | Wait several minutes, then run `kubectl get svc -A`                                                 |
+| `ImagePullBackOff`                             | Invalid image name, missing registry auth, or image pull failure                     | Run `kubectl describe pod <pod> -n <namespace>` and verify image path                               |
+| `CrashLoopBackOff`                             | Application startup failure or bad configuration                                     | Run `kubectl logs <pod> -n <namespace>` and inspect events                                          |
+| Argo CD app stuck `OutOfSync`                  | Manifest drift or missing dependency                                                 | Sync the app, inspect `kubectl describe application`, and validate manifests                        |
+| Argo CD RBAC not applying                      | ConfigMap not reloaded or policy syntax issue                                        | Restart Argo CD server and validate `argocd-rbac-cm`                                                |
+| Gatekeeper policy not denying invalid resource | ConstraintTemplate or Constraint not installed correctly                             | Check `kubectl get constrainttemplates` and `kubectl describe constraint <name>`                    |
+| Flux reconciliation failing                    | GitRepository or Kustomization path error                                            | Run `flux get sources git`, `flux get kustomizations`, and `flux reconcile`                         |
+| TLS certificate not ready                      | cert-manager issuer, DNS, or ingress mismatch                                        | Run `kubectl describe certificate -A` and inspect cert-manager logs                                 |
+| Kong route returns `404`                       | Ingress rule path or service name mismatch                                           | Check `kubectl get ingress -A` and verify service backend names                                     |
+| Kong route returns `401`                       | Missing or incorrect API key                                                         | Send the correct API key header expected by the KongPlugin configuration                            |
+| Kong route returns `429`                       | Rate limit triggered successfully                                                    | Wait for the rate-limit window to reset or adjust plugin limits                                     |
+| Namespace stuck `Terminating`                  | Finalizers blocking deletion                                                         | Inspect finalizers and remove only after confirming cleanup safety                                  |
+| Terraform destroy blocked                      | Kubernetes resources or cloud load balancers still exist                             | Run branch-specific teardown script before `terraform destroy`                                      |
+| Orphaned cloud resources                       | LoadBalancer, NAT Gateway, or EBS volume left behind                                 | Check AWS/GCP console and CLI for leftover resources before closing the lab                         |
+| Kong route returns `401` on Project 7          | Missing API key, wrong header name, bad Secret, or KongConsumer not mapped correctly | Verify `key-auth` plugin, KongConsumer, Secret, and send the correct `apikey` header                |
+| Kong route returns `429` on Project 7          | Rate limit was triggered successfully                                                | Wait for the rate-limit window to reset or adjust the `rate-limit-plugin` settings                  |
+| Project 7 ConfigMap YAML fails to apply        | HTML block indentation or unescaped multiline content inside `index.html: \|`        | Validate YAML spacing and keep embedded HTML indented under the ConfigMap block                     |
+| k6 test does not show expected failures        | Test duration, virtual users, or request rate may be too low to exceed the limit     | Increase k6 request pressure or confirm the configured rate limit is `5 req/min`                    |
+| Kong LoadBalancer has no external IP on GKE    | GCP load balancer still provisioning or service pending                              | Wait several minutes and check `kubectl get svc -n kong kong-gateway-proxy`                         |
+| GKE cluster unreachable during teardown        | Local kubeconfig context may be stale or the cluster was already destroyed           | Re-run `gcloud container clusters get-credentials` or continue Terraform cleanup if cluster is gone |
 
 ---
 
@@ -363,6 +453,7 @@ git checkout project-3
 git checkout project-4
 git checkout project-5
 git checkout project-6
+git checkout project-7
 ```
 
 Each branch contains its own README, project structure, scripts, manifests, and validation evidence. Follow the branch-specific documentation before running Terraform or Kubernetes commands.
@@ -401,20 +492,38 @@ gcloud compute addresses list
 gcloud compute disks list
 ```
 
+For Project 7, remove Kong and application resources before destroying the GKE infrastructure:
+
+```bash
+./scripts/3-teardown.sh
+terraform destroy
+```
+
+Project 7 creates GCP resources that may continue billing if left running, including:
+
+GKE cluster and node pool
+External LoadBalancer forwarding rule
+Cloud NAT
+Artifact Registry
+Persistent disks if any were created
+Static or ephemeral external IP resources
+
 ---
 
 ## ✅ **Skills Demonstrated**
 
-| **Category**                 | **Skills**                                                                             |
-| ---------------------------- | -------------------------------------------------------------------------------------- |
-| **Infrastructure as Code**   | Terraform, modular cloud provisioning, remote-state-ready structure                    |
-| **Kubernetes**               | Deployments, Services, Ingress, StatefulSets, namespaces, secrets, ConfigMaps          |
-| **GitOps**                   | Argo CD, Flux CD, GitRepository, Kustomization, AppProjects                            |
-| **Security**                 | RBAC, OPA Gatekeeper, Rego, admission control, Kong key-auth                           |
-| **Networking**               | Ingress routing, LoadBalancer services, TLS ingress, gateway patterns                  |
-| **Platform Engineering**     | Repeatable build scripts, validation scripts, teardown automation, artifact collection |
-| **Observability / Evidence** | Screenshots, logs, resource snapshots, validation outputs, project demos               |
-| **Cloud Platforms**          | AWS EKS, Google Kubernetes Engine, IAM, VPC networking, managed node groups            |
+| **Category**                 | **Skills**                                                                                                     |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Infrastructure as Code**   | Terraform, modular cloud provisioning, remote-state-ready structure                                            |
+| **Kubernetes**               | Deployments, Services, Ingress, StatefulSets, namespaces, secrets, ConfigMaps                                  |
+| **GitOps**                   | Argo CD, Flux CD, GitRepository, Kustomization, AppProjects                                                    |
+| **Security**                 | RBAC, OPA Gatekeeper, Rego, admission control, Kong key-auth, Kubernetes Secrets                               |
+| **API Gateway Security**     | Kong Gateway, Kong Ingress Controller, KongPlugin, KongConsumer, key-auth, rate limiting, API abuse control    |
+| **Networking**               | Ingress routing, LoadBalancer services, TLS ingress, gateway patterns, GCP VPC, subnets, firewall rules, NAT   |
+| **Testing / Validation**     | curl, k6, bash loops, HTTP status validation, 401/200/429 proof collection                                     |
+| **Platform Engineering**     | Repeatable build scripts, validation scripts, teardown automation, artifact collection                         |
+| **Observability / Evidence** | Screenshots, logs, resource snapshots, validation outputs, project demos, k6 reports                           |
+| **Cloud Platforms**          | AWS EKS, Google Kubernetes Engine, IAM, VPC networking, managed node groups, Cloud NAT, Artifact Registry      |
 
 ---
 
@@ -425,8 +534,8 @@ gcloud compute disks list
 | **Author**       | `T.I.Q.S.`                                                                             |
 | **Group Leader** | `John Sweeney`                                                                         |
 | **Group Name**   | `The Brotherhood of jerMutants - Wolfpack`                                             |
-| **Version**      | `v1.4`                                                                                 |
-| **Date**         | `May 31, 2026`                                                                         |
+| **Version**      | `v1.5`                                                                                 |
+| **Date**         | `June 2026`                                                                            |
 | **GitHub**       | [**tiqsclass6**](https://github.com/tiqsclass6)                                        |
 | **Repository**   | [**kubernetes-projects-2026**](https://github.com/tiqsclass6/kubernetes-projects-2026) |
 
