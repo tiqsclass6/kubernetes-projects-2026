@@ -1,29 +1,29 @@
 # 🚀 **Project 7: Kong Rate Limiting + Key Auth on GKE**
 
-![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?style=for-the-badge\&logo=terraform\&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/Google_Cloud-Platform-4285F4?style=for-the-badge\&logo=googlecloud\&logoColor=white)
-![GKE](https://img.shields.io/badge/GKE-Google_Kubernetes_Engine-4285F4?style=for-the-badge\&logo=googlekubernetesengine\&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge\&logo=kubernetes\&logoColor=white)
-![Kong](https://img.shields.io/badge/Kong-API_Gateway-003459?style=for-the-badge\&logo=kong\&logoColor=white)
-![Kong Ingress](https://img.shields.io/badge/Kong_Ingress-Controller-00A3A3?style=for-the-badge\&logo=kong\&logoColor=white)
-![Helm](https://img.shields.io/badge/Helm-Package_Manager-0F1689?style=for-the-badge\&logo=helm\&logoColor=white)
-![LoadBalancer](https://img.shields.io/badge/LoadBalancer-External_Traffic-1976D2?style=for-the-badge\&logo=googlecloud\&logoColor=white)
-![Ingress](https://img.shields.io/badge/Ingress-L7_Routing-326CE5?style=for-the-badge\&logo=kubernetes\&logoColor=white)
-![Key Auth](https://img.shields.io/badge/Key_Auth-API_Security-FF6D00?style=for-the-badge\&logo=securityscorecard\&logoColor=white)
-![Rate Limiting](https://img.shields.io/badge/Rate_Limiting-Abuse_Control-00C853?style=for-the-badge\&logo=datadog\&logoColor=white)
-![API Security](https://img.shields.io/badge/API_Security-Gateway_Enforcement-D32F2F?style=for-the-badge\&logo=owasp\&logoColor=white)
-![k6](https://img.shields.io/badge/k6-Load_Testing-7D64FF?style=for-the-badge\&logo=k6\&logoColor=white)
-![curl](https://img.shields.io/badge/curl-HTTP_Testing-073551?style=for-the-badge\&logo=curl\&logoColor=white)
-![Bash](https://img.shields.io/badge/Bash-Automation-4EAA25?style=for-the-badge\&logo=gnubash\&logoColor=white)
-![YAML](https://img.shields.io/badge/YAML-Manifests-CB171E?style=for-the-badge\&logo=yaml\&logoColor=white)
-![ConfigMap](https://img.shields.io/badge/ConfigMap-App_Config-1565C0?style=for-the-badge\&logo=kubernetes\&logoColor=white)
-![Secrets](https://img.shields.io/badge/Secrets-Credentials-6A1B9A?style=for-the-badge\&logo=kubernetes\&logoColor=white)
-![Google Artifact Registry](https://img.shields.io/badge/Artifact_Registry-Container_Artifacts-4285F4?style=for-the-badge\&logo=googlecloud\&logoColor=white)
-![Cloud NAT](https://img.shields.io/badge/Cloud_NAT-Egress_Access-34A853?style=for-the-badge\&logo=googlecloud\&logoColor=white)
-![IAM](https://img.shields.io/badge/IAM-Access_Control-FBBC04?style=for-the-badge\&logo=googlecloud\&logoColor=black)
-![Git](https://img.shields.io/badge/Git-Version_Control-F05032?style=for-the-badge\&logo=git\&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-Portfolio_Repo-181717?style=for-the-badge\&logo=github\&logoColor=white)
-![Platform Engineering](https://img.shields.io/badge/Platform_Engineering-Gateway_Control-2E7D32?style=for-the-badge\&logo=kubernetes\&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-844FBA?style=for-the-badge&logo=terraform&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_Cloud-Platform-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
+![GKE](https://img.shields.io/badge/GKE-Google_Kubernetes_Engine-4285F4?style=for-the-badge&logo=googlekubernetesengine&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Kong](https://img.shields.io/badge/Kong-API_Gateway-003459?style=for-the-badge&logo=kong&logoColor=white)
+![Kong Ingress](https://img.shields.io/badge/Kong_Ingress-Controller-00A3A3?style=for-the-badge&logo=kong&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-Package_Manager-0F1689?style=for-the-badge&logo=helm&logoColor=white)
+![LoadBalancer](https://img.shields.io/badge/LoadBalancer-External_Traffic-1976D2?style=for-the-badge&logo=googlecloud&logoColor=white)
+![Ingress](https://img.shields.io/badge/Ingress-L7_Routing-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Key Auth](https://img.shields.io/badge/Key_Auth-API_Security-FF6D00?style=for-the-badge&logo=securityscorecard&logoColor=white)
+![Rate Limiting](https://img.shields.io/badge/Rate_Limiting-Abuse_Control-00C853?style=for-the-badge&logo=datadog&logoColor=white)
+![API Security](https://img.shields.io/badge/API_Security-Gateway_Enforcement-D32F2F?style=for-the-badge&logo=owasp&logoColor=white)
+![k6](https://img.shields.io/badge/k6-Load_Testing-7D64FF?style=for-the-badge&logo=k6&logoColor=white)
+![curl](https://img.shields.io/badge/curl-HTTP_Testing-073551?style=for-the-badge&logo=curl&logoColor=white)
+![Bash](https://img.shields.io/badge/Bash-Automation-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)
+![YAML](https://img.shields.io/badge/YAML-Manifests-CB171E?style=for-the-badge&logo=yaml&logoColor=white)
+![ConfigMap](https://img.shields.io/badge/ConfigMap-App_Config-1565C0?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Secrets](https://img.shields.io/badge/Secrets-Credentials-6A1B9A?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Google Artifact Registry](https://img.shields.io/badge/Artifact_Registry-Container_Artifacts-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
+![Cloud NAT](https://img.shields.io/badge/Cloud_NAT-Egress_Access-34A853?style=for-the-badge&logo=googlecloud&logoColor=white)
+![IAM](https://img.shields.io/badge/IAM-Access_Control-FBBC04?style=for-the-badge&logo=googlecloud&logoColor=black)
+![Git](https://img.shields.io/badge/Git-Version_Control-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-Portfolio_Repo-181717?style=for-the-badge&logo=github&logoColor=white)
+![Platform Engineering](https://img.shields.io/badge/Platform_Engineering-Gateway_Control-2E7D32?style=for-the-badge&logo=kubernetes&logoColor=white)
 
 ---
 
@@ -42,25 +42,84 @@ The completed implementation proves that Kong can act as a centralized API contr
 
 ## 🏗 **Project Network Architecture**
 
-```mermaid
+```mermaid id="e5pxgc"
 flowchart LR
-    User[User / Browser / curl] --> LB[Kong LoadBalancer Service]
-    K6[k6 Load Test Client] --> LB
-    LB --> Kong[Kong Gateway Proxy]
-    Kong --> Ingress[hello-ingress]
-    Ingress --> SVC[hello-service]
-    SVC --> PODS[hello Deployment Pods]
-    PODS --> CM[hello-configmap HTML]
+    subgraph LEFT[" "]
+        direction TB
 
-    KIC[Kong Ingress Controller] --> Ingress
-    KIC --> KP1[key-auth KongPlugin]
-    KIC --> KP2[rate-limit KongPlugin]
-    KIC --> Consumer[KongConsumer]
-    Consumer --> Secret[key-auth credential Secret]
+        subgraph CLIENTS[External Clients / Test Sources]
+            direction TB
+            User[User / Browser / curl]
+            K6[k6 Load Test Client]
+        end
 
-    TF[Terraform] --> GKE[GKE Cluster]
-    TF --> VPC[VPC / Subnets / Firewall / NAT]
-    GKE --> KIC
+        TF[Terraform IaC]
+
+        K6 ~~~ TF
+    end
+
+    subgraph GCP[Google Cloud Platform]
+        direction TB
+
+        subgraph NET[VPC Networking Layer]
+            direction LR
+            VPC[VPC Network]
+            SUBNET[Private Subnets]
+            FW[Firewall Rules]
+            NAT[Cloud NAT]
+
+            VPC --> SUBNET
+            VPC --> FW
+            VPC --> NAT
+        end
+
+        GCLB[GCP External LoadBalancer / External IP]
+
+        subgraph GKE[GKE Cluster: kong]
+            direction TB
+
+            subgraph RUNTIME[Lane 1: Runtime Traffic Flow]
+                direction LR
+                LB[Kong LoadBalancer Service]
+                Kong[Kong Gateway Proxy]
+                Ingress[hello-ingress]
+                SVC[hello-service ClusterIP]
+                PODS[hello Deployment Pods]
+                CM[hello-configmap HTML]
+
+                LB --> Kong --> Ingress --> SVC --> PODS
+                CM -. mounted into pods .-> PODS
+            end
+
+            subgraph CONTROL[Lane 2: Gateway Control / Configuration Flow]
+                direction LR
+                KIC[Kong Ingress Controller]
+                KP1[key-auth KongPlugin]
+                KP2[rate-limit KongPlugin]
+                Consumer[KongConsumer]
+                Secret[key-auth credential Secret]
+
+                KIC -. watches .-> Ingress
+                KIC -. applies .-> KP1
+                KIC -. applies .-> KP2
+                KIC -. programs .-> Kong
+                Consumer --> Secret
+                KP1 -. authenticates with .-> Consumer
+                KP2 -. enforces limits on .-> Kong
+            end
+        end
+
+        FW -. allows inbound 80/443 .-> GCLB
+        SUBNET -. provides cluster networking .-> GKE
+        NAT -. provides outbound egress .-> PODS
+        GCLB --> LB
+    end
+
+    User --> GCLB
+    K6 --> GCLB
+
+    TF --> VPC
+    TF --> GKE
 ```
 
 ### **Traffic Flow**
@@ -204,11 +263,16 @@ project-7/
 │   ├── frontpage-with-auth-header.jpg
 │   ├── gcloud-verification-cmds.jpg
 │   ├── key-test-authentication.jpg
+│   ├── kong-api-verification-and-deliverables.mp4
 │   ├── kong-manual-cmds.jpg
 │   ├── kubernetes-config.jpg
+│   ├── rate-test-and-curl-commands.mp4
 │   ├── rate-test-no-key.jpg
 │   ├── rate-test-with-key.jpg
 │   ├── teardown-manual.jpg
+│   ├── teardown-pt1.jpg
+│   ├── teardown-pt2.jpg
+│   ├── teardown.mp4
 │   ├── terraform-apply.jpg
 │   ├── terraform-destroy.jpg
 │   ├── terraform-init-fmt-validate.jpg
@@ -419,10 +483,23 @@ Send a request without an API key:
 curl -i -k http://<KONG_PROXY_ENDPOINT>/
 ```
 
+Expected unauthenticated result:
+
+```text
+HTTP/1.1 401 Unauthorized
+No API key found in request
+```
+
 Send a request with a valid API key:
 
 ```bash
 curl -i -k http://<KONG_PROXY_ENDPOINT>/ -H "apikey: <REDACTED_API_KEY>"
+```
+
+Expected authenticated result:
+
+```text
+HTTP/1.1 200 OK
 ```
 
 ![key-test-authentication.jpg](/images/key-test-authentication.jpg)
@@ -452,6 +529,12 @@ Expected gateway behavior:
 * Missing API key returns **401 Unauthorized**
 * Valid API key returns **200 OK**
 * Flood traffic eventually returns **429 Too Many Requests**
+
+Expected rate limiting result:
+
+```text
+HTTP/1.1 429 Too Many Requests
+```
 
 Evidence:
 
@@ -571,6 +654,7 @@ terraform destroy
 
 ![teardown-pt1.jpg](/images/teardown-pt1.jpg)
 ![teardown-pt2.jpg](/images/teardown-pt2.jpg)
+![teardown.mp4](/images/teardown.mp4)
 ![terraform-destroy.jpg](/images/terraform-destroy.jpg)
 
 This script removes:
@@ -597,6 +681,32 @@ Teardown is important because GKE clusters, external load balancers, NAT gateway
 
 ![teardown-manual.jpg](/images/teardown-manual.jpg)
 ![terraform-destroy.jpg](/images/terraform-destroy.jpg)
+
+---
+
+## 🧠 **Lessons Learned**
+
+This project reinforced how API gateway controls can protect backend services without requiring application code changes. By enforcing authentication and rate limiting at the Kong Gateway layer, the platform can protect multiple services with a consistent security model.
+
+### **Key Takeaways**
+
+* Authentication verifies who is allowed to access the API.
+* Rate limiting controls how much access an authenticated or unauthenticated client receives.
+* A valid API key does not prevent abuse by itself; rate limiting is still required.
+* KongPlugin resources make gateway behavior declarative and Kubernetes-native.
+* k6 provides stronger validation than one-off curl commands because it simulates repeated request pressure.
+* Evidence collection is critical for proving that security controls were deployed and tested successfully.
+
+### **Challenges Encountered**
+
+* YAML formatting inside a ConfigMap required careful indentation because the HTML content was embedded directly into `index.html`.
+* Kong authentication required the correct relationship between the `KongPlugin`, `KongConsumer`, Kubernetes Secret, and Ingress annotations.
+* Rate limiting required repeated request testing to prove the transition from successful requests to `429 Too Many Requests`.
+* GKE LoadBalancer provisioning required waiting for the external IP before running gateway tests.
+
+### **Cost Awareness**
+
+After testing was complete, teardown was required to avoid ongoing charges from GKE nodes, external LoadBalancers, Cloud NAT, Artifact Registry, and related Google Cloud networking resources.
 
 ---
 
@@ -699,6 +809,17 @@ kubectl logs -n kong -l app.kubernetes.io/component=controller
 kubectl get pods -n kong -o wide
 kubectl describe pod -n kong <POD_NAME>
 kubectl logs -n kong <POD_NAME>
+```
+
+### **Terraform troubleshooting**
+
+```bash
+cd terraform
+terraform fmt -recursive
+terraform validate
+terraform plan
+terraform state list
+terraform output
 ```
 
 ---
