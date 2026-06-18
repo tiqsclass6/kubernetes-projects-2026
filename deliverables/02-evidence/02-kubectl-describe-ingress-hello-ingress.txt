@@ -1,5 +1,5 @@
 Title: kubectl describe ingress hello-ingress
-Timestamp: 2026-06-13T22:10:34
+Timestamp: 2026-06-18T16:40:33
 
 Command:
 kubectl describe ingress hello-ingress -n kong
@@ -10,13 +10,13 @@ Output:
 Name:             hello-ingress
 Labels:           <none>
 Namespace:        kong
-Address:          34.31.86.102
+Address:          34.30.43.65
 Ingress Class:    kong
 Default backend:  <default>
 Rules:
   Host        Path  Backends
   ----        ----  --------
   *           
-              /hello   hello-service:80 (10.101.1.8:80,10.101.2.11:80)
+              /hello   hello-service:80 (10.101.5.13:80,10.101.2.10:80)
 Annotations:  konghq.com/plugins: key-auth-plugin,rate-limit-plugin
 Events:       <none>

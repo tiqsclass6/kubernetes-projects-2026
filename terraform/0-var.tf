@@ -1,8 +1,48 @@
+# Firewall source ranges for GKE cluster and workloads
+variable "admin_source_ranges" {
+  description = "Source CIDRs allowed to administer nodes over SSH if needed"
+  type        = list(string)
+  default     = []
+}
+
+variable "http_source_ranges" {
+  description = "Source CIDRs allowed to reach HTTP workloads on nodes, if node tags are used"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "https_source_ranges" {
+  description = "Source CIDRs allowed to reach HTTPS workloads on nodes, if node tags are used"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+# Artifact Registry parameters
+variable "artifact_registry_repository_id" {
+  description = "Artifact Registry repository ID"
+  type        = string
+  default     = "kong"
+}
+
+variable "artifact_registry_location" {
+  description = "Artifact Registry repository location"
+  type        = string
+  default     = "us-central1"
+}
+
+variable "artifact_registry_format" {
+  description = "Artifact Registry repository format"
+  type        = string
+  default     = "DOCKER"
+}
+
+# GKE cluster parameters
 variable "enable_kubeconfig" {
   default     = true
   description = "Set to false to skip local kubeconfig update"
 }
 
+# Project and region parameters
 variable "project_id" {
   description = "GCP project ID"
   type        = string
@@ -15,7 +55,7 @@ variable "region" {
   default     = "us-central1"
 }
 
-# core VPC parameters
+# Core VPC parameters
 variable "vpc_cidr" {
   description = "CIDR block for the VPC network"
   type        = string

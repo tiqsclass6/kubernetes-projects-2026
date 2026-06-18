@@ -7,6 +7,6 @@ export const options = {
 };
 
 export default function () {
-  http.get('http://34.28.214.112/hello');
+  http.get('http://34.30.43.65/hello');
   sleep(1);
 }

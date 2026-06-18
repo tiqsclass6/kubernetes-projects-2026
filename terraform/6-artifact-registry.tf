@@ -1,27 +1,13 @@
-variable "artifact_registry_repository_id" {
-  description = "Artifact Registry repository ID"
-  type        = string
-  default     = "kong"
-}
-
-variable "artifact_registry_location" {
-  description = "Artifact Registry repository location"
-  type        = string
-  default     = "us-central1"
-}
-
-variable "artifact_registry_format" {
-  description = "Artifact Registry repository format"
-  type        = string
-  default     = "DOCKER"
-}
-
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service
+# Enable Artifact Registry API for the project
 resource "google_project_service" "artifactregistry" {
   project            = var.project_id
   service            = "artifactregistry.googleapis.com"
   disable_on_destroy = false
 }
 
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/artifact_registry_repository
+# Create an Artifact Registry repository for container images
 resource "google_artifact_registry_repository" "kong" {
   provider = google-beta
 
@@ -35,6 +21,8 @@ resource "google_artifact_registry_repository" "kong" {
   ]
 }
 
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/artifact_registry_repository_iam_member
+# Grant the GKE nodes service account read access to the Artifact Registry repository
 resource "google_artifact_registry_repository_iam_member" "nodes_reader" {
   location   = google_artifact_registry_repository.kong.location
   repository = google_artifact_registry_repository.kong.name

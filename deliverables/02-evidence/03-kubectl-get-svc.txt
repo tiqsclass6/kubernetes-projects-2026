@@ -1,5 +1,5 @@
 Title: kubectl get svc
-Timestamp: 2026-06-13T22:10:35
+Timestamp: 2026-06-18T16:40:34
 
 Command:
 kubectl get svc -n kong
@@ -7,10 +7,10 @@ kubectl get svc -n kong
 Exit code: 0
 
 Output:
-NAME                                 TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)                         AGE
-hello-service                        ClusterIP      10.102.4.235   <none>         80/TCP                          28m
-kong-controller-metrics              ClusterIP      10.102.1.234   <none>         10255/TCP,10254/TCP             29m
-kong-controller-validation-webhook   ClusterIP      10.102.1.212   <none>         443/TCP                         29m
-kong-gateway-admin                   ClusterIP      None           <none>         8444/TCP                        29m
-kong-gateway-manager                 NodePort       10.102.5.128   <none>         8002:32325/TCP,8445:32150/TCP   29m
-kong-gateway-proxy                   LoadBalancer   10.102.8.187   34.31.86.102   80:30853/TCP,443:32045/TCP      29m
+NAME                                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                         AGE
+hello-service                        ClusterIP      10.102.14.160   <none>        80/TCP                          9m55s
+kong-controller-metrics              ClusterIP      10.102.3.127    <none>        10255/TCP,10254/TCP             10m
+kong-controller-validation-webhook   ClusterIP      10.102.4.38     <none>        443/TCP                         10m
+kong-gateway-admin                   ClusterIP      None            <none>        8444/TCP                        10m
+kong-gateway-manager                 NodePort       10.102.9.181    <none>        8002:31694/TCP,8445:32708/TCP   10m
+kong-gateway-proxy                   LoadBalancer   10.102.10.255   34.30.43.65   80:31574/TCP,443:31515/TCP      10m

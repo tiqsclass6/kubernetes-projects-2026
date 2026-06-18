@@ -14,11 +14,6 @@ API_PATH="${API_PATH:-/hello}"
 API_KEY="${API_KEY:-super-secret-key}"
 RUN_K6_TESTS="${RUN_K6_TESTS:-true}"
 
-# Resolve paths from this script location:
-# project-7/
-# ├── manifests/
-# ├── python/
-# └── scripts/1-deploy.sh
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 MANIFEST_DIR="${MANIFEST_DIR:-${PROJECT_ROOT}/manifests}"

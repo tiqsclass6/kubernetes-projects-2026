@@ -1,17 +1,17 @@
 Title: 200 evidence - request with valid API key
-Timestamp: 2026-06-13T22:10:42
+Timestamp: 2026-06-18T16:40:41
 
 Command:
-bash -lc curl -i http://34.31.86.102/hello -H 'apikey: super-secret-key' | grep -E 'HTTP/1.1|X-RateLimit|RateLimit|message'
+bash -lc curl -i http://34.30.43.65/hello -H 'apikey: super-secret-key' | grep -E 'HTTP/1.1|X-RateLimit|RateLimit|message'
 
 Exit code: 0
 
 Output:
 HTTP/1.1 200 OK
+RateLimit-Remaining: 4
 X-RateLimit-Remaining-Minute: 4
 X-RateLimit-Limit-Minute: 5
-RateLimit-Remaining: 4
-RateLimit-Reset: 16
+RateLimit-Reset: 18
 RateLimit-Limit: 5
 
 --- STDERR ---
@@ -19,4 +19,4 @@ RateLimit-Limit: 5
                                  Dload  Upload   Total   Spent    Left  Speed
 
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100  4558  100  4558    0     0  24386      0 --:--:-- --:--:-- --:--:-- 24505
+100  4558  100  4558    0     0  24548      0 --:--:-- --:--:-- --:--:-- 24637

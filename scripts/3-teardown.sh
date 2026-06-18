@@ -14,11 +14,6 @@ GCP_PROJECT="${GCP_PROJECT:-class-6-5-tiqs}"
 GKE_CLUSTER="${GKE_CLUSTER:-kong}"
 GKE_ZONE="${GKE_ZONE:-us-central1-b}"
 
-# Resolve paths from this script location:
-# project-7/
-# ├── manifests/
-# ├── python/
-# └── scripts/3-teardown.sh
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 MANIFEST_DIR="${MANIFEST_DIR:-${PROJECT_ROOT}/manifests}"

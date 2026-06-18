@@ -1,8 +1,12 @@
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account
+# Service account for GKE nodes
 resource "google_service_account" "nodes" {
   account_id   = "gke-node-group-nodes"
   display_name = "GKE Node Group Nodes"
 }
 
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member
+# IAM roles for the GKE nodes service account to access required Google Cloud services
 resource "google_project_iam_member" "nodes_default_node_sa" {
   project = var.project_id
   role    = "roles/container.defaultNodeServiceAccount"
@@ -33,6 +37,8 @@ resource "google_project_iam_member" "nodes_artifact_registry_reader" {
   member  = "serviceAccount:${google_service_account.nodes.email}"
 }
 
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_node_pool
+# Private node pool for the GKE cluster with autoscaling, auto-repair, and auto-upgrade enabled
 resource "google_container_node_pool" "private-nodes" {
   name     = "${var.cluster_name}-private-nodes"
   location = "${var.region}-b"

@@ -1,5 +1,5 @@
 Title: kubectl get kongplugin
-Timestamp: 2026-06-13T22:10:34
+Timestamp: 2026-06-18T16:40:32
 
 Command:
 kubectl get kongplugin -n kong
@@ -7,6 +7,6 @@ kubectl get kongplugin -n kong
 Exit code: 0
 
 Output:
-NAME                PLUGIN-TYPE     AGE   PROGRAMMED
-key-auth-plugin     key-auth        28m   
-rate-limit-plugin   rate-limiting   28m
+NAME                PLUGIN-TYPE     AGE     PROGRAMMED
+key-auth-plugin     key-auth        9m50s   
+rate-limit-plugin   rate-limiting   9m49s

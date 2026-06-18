@@ -1,9 +1,13 @@
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router
+# Cloud Router for NAT
 resource "google_compute_router" "nat" {
   name    = "nat"
   region  = var.region
   network = google_compute_network.main.id
 }
 
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router_nat
+# Cloud NAT for private GKE nodes to access the internet
 resource "google_compute_router_nat" "nat" {
   name                               = "nat"
   router                             = google_compute_router.nat.name

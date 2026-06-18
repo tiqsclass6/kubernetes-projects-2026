@@ -1,3 +1,4 @@
+# Output for Artifact Registry repository details, GKE cluster info, node pool summary, and other relevant information
 output "artifact_registry_repository" {
   description = "Artifact Registry repository for GKE images"
   value = {
@@ -8,11 +9,13 @@ output "artifact_registry_repository" {
   }
 }
 
+# Output for Artifact Registry Docker repository URL, which can be used to push and pull container images
 output "artifact_registry_docker_repo_url" {
   description = "Base Docker repository URL for Artifact Registry"
   value       = "${var.artifact_registry_location}-docker.pkg.dev/${var.project_id}/${var.artifact_registry_repository_id}"
 }
 
+# Output for Firewall rule names created for the GKE environment, including internal, SSH, HTTP, and HTTPS rules
 output "firewall_rule_names" {
   description = "Firewall rules created for the GKE environment"
   value = compact([
@@ -23,6 +26,7 @@ output "firewall_rule_names" {
   ])
 }
 
+# Output for GKE cluster information including name, endpoint, ID, and location
 output "gke_cluster_info" {
   value = {
     name        = google_container_cluster.kong.name
@@ -33,6 +37,7 @@ output "gke_cluster_info" {
   }
 }
 
+# Node pool summary output provides details about the GKE node pool configuration, including machine type and autoscaling range
 output "gke_node_pool_summary" {
   value = format(
     "Node pool '%s' runs machine type %s with autoscaling range %d-%d",
@@ -44,11 +49,13 @@ output "gke_node_pool_summary" {
   description = "Summary of GKE node pool configuration"
 }
 
+# Kong Gateway proxy URL output provides the full URL to access the Kong Gateway after Helm installation, using the external IP of the load balancer service
 output "kong_proxy_url" {
   description = "Full URL to access the Kong Gateway (after Helm install)"
   value       = "http://$(kubectl get svc kong-gateway-proxy -n kong -o jsonpath='{.status.loadBalancer.ingress[0].ip}')/hello"
 }
 
+# Workload Identity output provides the GKE Workload Identity configuration
 output "workload_identity" {
   description = "GKE Workload Identity configuration"
   value = {

@@ -1,3 +1,5 @@
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_subnetwork
+# Private subnets for GKE cluster and other private resources
 resource "google_compute_subnetwork" "private_zone1" {
   name                     = "private-${local.zone1}"
   ip_cidr_range            = var.subnet_cidr_blocks.private_zone1
@@ -24,6 +26,7 @@ resource "google_compute_subnetwork" "private_zone2" {
   private_ip_google_access = true
 }
 
+# Public subnets for load balancers and other public facing resources
 resource "google_compute_subnetwork" "public_zone1" {
   name                     = "public-${local.zone1}"
   ip_cidr_range            = var.subnet_cidr_blocks.public_zone1

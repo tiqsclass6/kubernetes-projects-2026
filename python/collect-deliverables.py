@@ -1,31 +1,23 @@
 #!/usr/bin/env python3
 """
-collect-deliverables.py
+collect-deliverables-fixed.py
 
 Project 7 Deliverables Collector
 
-Creates a fresh deliverables/ folder containing:
-  1. Markdown-only YAML documentation in deliverables/01-yaml/
-     - No .yaml files are written into the deliverables folder.
-     - Each Markdown file documents the relevant YAML/configuration in fenced code blocks.
-
-  2. Plain-text evidence outputs in deliverables/02-evidence/
-     - Every evidence file uses .txt
-     - Evidence file contents are plain text, not Markdown.
-
-  3. Markdown explanation in deliverables/03-explanation/
-     - The explanation remains Markdown.
-
-Before collecting new deliverables, this script deletes the existing deliverables/ folder
-and rebuilds it from scratch.
+Fixes common evidence-collection failures by avoiding fragile `bash -lc` wrappers
+for kubectl, curl, and k6. This is especially important on Windows/Git Bash,
+where Python may find kubectl/k6 but Bash may not inherit the same PATH.
 
 Usage:
-  python3 ./python/collect-deliverables.py
+  python ./python/collect-deliverables.py
 
 Recommended:
-  Run from the project root.
+  Run from the project root after the GKE cluster and Kong resources are live.
 
 Optional environment variables:
+  KUBECTL=kubectl
+  CURL=curl
+  K6=k6
   KONG_NAMESPACE=kong
   KONG_SERVICE=kong-gateway-proxy
   INGRESS_NAME=hello-ingress
@@ -37,10 +29,14 @@ Optional environment variables:
 from __future__ import annotations
 
 import os
+import re
+import shlex
 import shutil
 import subprocess
+import tempfile
 from datetime import datetime
 from pathlib import Path
+from typing import Callable
 
 
 # -----------------------------------------------------------------------------
@@ -48,10 +44,6 @@ from pathlib import Path
 # -----------------------------------------------------------------------------
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-
-# Supports running from either:
-#   project-root/collect-deliverables.py
-#   project-root/python/collect-deliverables.py
 PROJECT_ROOT = SCRIPT_DIR.parent if SCRIPT_DIR.name == "python" else Path.cwd()
 
 MANIFEST_DIR = Path(os.getenv("MANIFEST_DIR", PROJECT_ROOT / "manifests"))
@@ -110,15 +102,69 @@ def print_step(text: str) -> None:
 # Command helpers
 # -----------------------------------------------------------------------------
 
+def resolve_executable(env_name: str, default: str) -> str:
+    configured = os.getenv(env_name, default)
+    configured_path = Path(configured)
+
+    # Explicit path supplied by user.
+    if configured_path.is_absolute() or configured_path.parent != Path("."):
+        return str(configured_path)
+
+    return shutil.which(configured) or configured
+
+
+KUBECTL = resolve_executable("KUBECTL", "kubectl")
+CURL = resolve_executable("CURL", "curl")
+K6 = resolve_executable("K6", "k6")
+
+
 def command_exists(command: str) -> bool:
+    # If command is an explicit path, check that file. Otherwise search PATH.
+    p = Path(command)
+    if p.is_absolute() or p.parent != Path("."):
+        return p.exists()
     return shutil.which(command) is not None
 
 
-def run_command(command: list[str], timeout: int = 120) -> tuple[int, str]:
+def kubectl_cmd(*args: str) -> list[str]:
+    return [KUBECTL, *args]
+
+
+def curl_cmd(*args: str) -> list[str]:
+    return [CURL, *args]
+
+
+def k6_cmd(*args: str) -> list[str]:
+    return [K6, *args]
+
+
+def format_command(command: list[str]) -> str:
+    """Return a readable command line for evidence files."""
+    try:
+        return shlex.join(str(part) for part in command)
+    except Exception:
+        return " ".join(str(part) for part in command)
+
+
+def redact_sensitive(text: str) -> str:
+    if API_KEY:
+        text = text.replace(API_KEY, "<redacted>")
+    return text
+
+
+def run_command(
+    command: list[str],
+    timeout: int = 120,
+    env: dict[str, str] | None = None,
+) -> tuple[int, str]:
     """
     Run a command and return (exit_code, combined_output).
     Does not raise on non-zero exit so evidence is still captured.
     """
+    merged_env = os.environ.copy()
+    if env:
+        merged_env.update(env)
+
     try:
         completed = subprocess.run(
             command,
@@ -126,6 +172,7 @@ def run_command(command: list[str], timeout: int = 120) -> tuple[int, str]:
             capture_output=True,
             timeout=timeout,
             check=False,
+            env=merged_env,
         )
 
         output = ""
@@ -155,55 +202,66 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(content.rstrip() + "\n", encoding="utf-8")
 
 
-def evidence_text(name: str, command: list[str], exit_code: int, output: str) -> str:
+def evidence_text(name: str, command: list[str] | str, exit_code: int, output: str) -> str:
+    command_text = command if isinstance(command, str) else format_command(command)
     return f"""Title: {name}
 Timestamp: {datetime.now().isoformat(timespec="seconds")}
 
 Command:
-{' '.join(str(part) for part in command)}
+{redact_sensitive(command_text)}
 
 Exit code: {exit_code}
 
 Output:
-{output}
+{redact_sensitive(output)}
 """
 
 
-def capture_command(name: str, command: list[str], output_path: Path, timeout: int = 120) -> tuple[int, str]:
-    """
-    Capture command evidence as plain text.
-    Output paths should use .txt.
-    """
+def capture_command(
+    name: str,
+    command: list[str],
+    output_path: Path,
+    timeout: int = 120,
+    env: dict[str, str] | None = None,
+) -> tuple[int, str]:
     print_step(f"Capturing: {name}")
-    exit_code, output = run_command(command, timeout=timeout)
-
+    exit_code, output = run_command(command, timeout=timeout, env=env)
     write_text(output_path, evidence_text(name, command, exit_code, output))
-
     status = "PASS" if exit_code == 0 else "WARN"
     print(f"{status}: wrote {output_path}")
-
     return exit_code, output
 
 
+def capture_custom_text(name: str, command_display: str, exit_code: int, output: str, output_path: Path) -> None:
+    print_step(f"Capturing: {name}")
+    write_text(output_path, evidence_text(name, command_display, exit_code, output))
+    status = "PASS" if exit_code == 0 else "WARN"
+    print(f"{status}: wrote {output_path}")
+
+
+# -----------------------------------------------------------------------------
+# Kubernetes helpers
+# -----------------------------------------------------------------------------
+
 def get_kong_host() -> str:
-    hostname_cmd = [
-        "kubectl", "get", "svc", KONG_SERVICE,
+    hostname_cmd = kubectl_cmd(
+        "get", "svc", KONG_SERVICE,
         "-n", KONG_NAMESPACE,
         "-o", "jsonpath={.status.loadBalancer.ingress[0].hostname}",
-    ]
+    )
 
-    ip_cmd = [
-        "kubectl", "get", "svc", KONG_SERVICE,
+    ip_cmd = kubectl_cmd(
+        "get", "svc", KONG_SERVICE,
         "-n", KONG_NAMESPACE,
         "-o", "jsonpath={.status.loadBalancer.ingress[0].ip}",
-    ]
+    )
 
-    _, hostname = run_command(hostname_cmd)
-    if hostname and "Error" not in hostname:
+    hostname_code, hostname = run_command(hostname_cmd)
+    if hostname_code == 0 and hostname.strip():
         return hostname.strip()
 
-    _, ip_address = run_command(ip_cmd)
-    if ip_address and "Error" not in ip_address:
+    ip_code, ip_address = run_command(ip_cmd)
+    if ip_code == 0 and ip_address.strip():
         return ip_address.strip()
 
     return ""
@@ -217,16 +275,17 @@ def find_kong_controller_pod() -> str:
     ]
 
     for selector in selectors:
-        cmd = [
-            "kubectl", "get", "pods",
+        cmd = kubectl_cmd(
+            "get", "pods",
             "-n", KONG_NAMESPACE,
             "-l", selector,
             "-o", "jsonpath={.items[0].metadata.name}",
-        ]
+        )
 
-        _, output = run_command(cmd)
+        exit_code, output = run_command(cmd)
+        bad_output = "array index out of bounds" in output or "Error" in output
 
-        if output and "Error" not in output and "array index out of bounds" not in output:
+        if exit_code == 0 and output.strip() and not bad_output:
             return output.strip()
 
     return ""
@@ -259,6 +318,46 @@ def reset_deliverables_folder() -> None:
         print(f"Created: {directory}")
 
 
+def redact_secret_yaml(output: str) -> str:
+    # Redact both plain `key:` fields and base64 `data.key` fields if present.
+    output = re.sub(r"(?m)^(\s*key:\s*).+$", r"\1<redacted>", output)
+    output = re.sub(r"(?m)^(\s*apikey:\s*).+$", r"\1<redacted>", output)
+    return output
+
+
+def filter_ingress_annotations(output: str) -> str:
+    patterns = re.compile(r"Name:|Annotations:|konghq\.com/plugins")
+    lines = [line for line in output.splitlines() if patterns.search(line)]
+    return "\n".join(lines) if lines else output
+
+
+def write_live_markdown(output_name: str, title: str, command: list[str], transform: Callable[[str], str] | None = None) -> None:
+    exit_code, output = run_command(command, timeout=120)
+
+    if transform and exit_code == 0:
+        output = transform(output)
+
+    md = f"""# {title}
+
+Timestamp: {datetime.now().isoformat(timespec="seconds")}
+
+Command:
+
+```bash
+{redact_sensitive(format_command(command))}
+```
+
+Exit code: {exit_code}
+
+```yaml
+{redact_sensitive(output)}
+```
+"""
+    output_path = YAML_DIR / output_name
+    write_text(output_path, md)
+    print(f"Wrote live Markdown evidence: {output_path}")
+
+
 def collect_yaml_deliverables_as_markdown() -> None:
     print_header("COLLECTING YAML DELIVERABLES AS MARKDOWN ONLY")
 
@@ -283,72 +382,43 @@ Source manifest:
         write_text(output_path, md)
         print(f"Wrote Markdown YAML documentation: {output_path}")
 
-    live_exports = [
-        (
-            "live-key-auth-plugin-export.md",
-            "Live Key Auth KongPlugin Export",
-            ["kubectl", "get", "kongplugin", KEY_AUTH_PLUGIN_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"],
-        ),
-        (
-            "live-rate-limit-plugin-export.md",
-            "Live Rate Limit KongPlugin Export",
-            ["kubectl", "get", "kongplugin", RATE_LIMIT_PLUGIN_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"],
-        ),
-        (
-            "live-kong-consumer-export.md",
-            "Live KongConsumer Export",
-            ["kubectl", "get", "kongconsumer", KONG_CONSUMER_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"],
-        ),
-        (
-            "live-key-auth-secret-export-redacted.md",
-            "Live Key Auth Secret Export Redacted",
-            [
-                "bash", "-lc",
-                (
-                    f"kubectl get secret {KEY_AUTH_SECRET_NAME} -n {KONG_NAMESPACE} -o yaml "
-                    "| sed -E 's/(key: ).*/\\1<redacted>/'"
-                ),
-            ],
-        ),
-        (
-            "live-ingress-hello-ingress-export.md",
-            "Live Ingress Export",
-            ["kubectl", "get", "ingress", INGRESS_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"],
-        ),
-        (
-            "ingress-annotation-evidence.md",
-            "Ingress Annotation Evidence",
-            [
-                "bash", "-lc",
-                (
-                    f"kubectl describe ingress {INGRESS_NAME} -n {KONG_NAMESPACE} "
-                    "| grep -E 'Name:|Annotations:|konghq.com/plugins' || true"
-                ),
-            ],
-        ),
-    ]
+    write_live_markdown(
+        "live-key-auth-plugin-export.md",
+        "Live Key Auth KongPlugin Export",
+        kubectl_cmd("get", "kongplugin", KEY_AUTH_PLUGIN_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"),
+    )
 
-    for output_name, title, command in live_exports:
-        exit_code, output = run_command(command, timeout=120)
-        md = f"""# {title}
+    write_live_markdown(
+        "live-rate-limit-plugin-export.md",
+        "Live Rate Limit KongPlugin Export",
+        kubectl_cmd("get", "kongplugin", RATE_LIMIT_PLUGIN_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"),
+    )
 
-Timestamp: {datetime.now().isoformat(timespec="seconds")}
+    write_live_markdown(
+        "live-kong-consumer-export.md",
+        "Live KongConsumer Export",
+        kubectl_cmd("get", "kongconsumer", KONG_CONSUMER_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"),
+    )
 
-Command:
+    write_live_markdown(
+        "live-key-auth-secret-export-redacted.md",
+        "Live Key Auth Secret Export Redacted",
+        kubectl_cmd("get", "secret", KEY_AUTH_SECRET_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"),
+        transform=redact_secret_yaml,
+    )
 
-```bash
-{' '.join(str(part) for part in command)}
-```
+    write_live_markdown(
+        "live-ingress-hello-ingress-export.md",
+        "Live Ingress Export",
+        kubectl_cmd("get", "ingress", INGRESS_NAME, "-n", KONG_NAMESPACE, "-o", "yaml"),
+    )
 
-Exit code: {exit_code}
-
-```yaml
-{output}
-```
-"""
-        output_path = YAML_DIR / output_name
-        write_text(output_path, md)
-        print(f"Wrote live Markdown evidence: {output_path}")
+    write_live_markdown(
+        "ingress-annotation-evidence.md",
+        "Ingress Annotation Evidence",
+        kubectl_cmd("describe", "ingress", INGRESS_NAME, "-n", KONG_NAMESPACE),
+        transform=filter_ingress_annotations,
+    )
 
 
 def collect_required_verification_commands() -> None:
@@ -356,25 +426,25 @@ def collect_required_verification_commands() -> None:
 
     capture_command(
         "kubectl get kongplugin",
-        ["kubectl", "get", "kongplugin", "-n", KONG_NAMESPACE],
+        kubectl_cmd("get", "kongplugin", "-n", KONG_NAMESPACE),
         EVIDENCE_DIR / "01-kubectl-get-kongplugin.txt",
     )
 
     capture_command(
         "kubectl describe ingress hello-ingress",
-        ["kubectl", "describe", "ingress", INGRESS_NAME, "-n", KONG_NAMESPACE],
+        kubectl_cmd("describe", "ingress", INGRESS_NAME, "-n", KONG_NAMESPACE),
         EVIDENCE_DIR / "02-kubectl-describe-ingress-hello-ingress.txt",
     )
 
     capture_command(
         "kubectl get svc",
-        ["kubectl", "get", "svc", "-n", KONG_NAMESPACE],
+        kubectl_cmd("get", "svc", "-n", KONG_NAMESPACE),
         EVIDENCE_DIR / "03-kubectl-get-svc.txt",
     )
 
     capture_command(
         "kubectl get pods",
-        ["kubectl", "get", "pods", "-n", KONG_NAMESPACE],
+        kubectl_cmd("get", "pods", "-n", KONG_NAMESPACE),
         EVIDENCE_DIR / "04-kubectl-get-pods.txt",
     )
 
@@ -383,7 +453,7 @@ def collect_required_verification_commands() -> None:
     if controller_pod:
         capture_command(
             f"kubectl logs -n kong {controller_pod}",
-            ["kubectl", "logs", "-n", KONG_NAMESPACE, controller_pod, "--tail=200"],
+            kubectl_cmd("logs", "-n", KONG_NAMESPACE, controller_pod, "--tail=200"),
             EVIDENCE_DIR / "05-kubectl-logs-kong-controller-pod.txt",
             timeout=180,
         )
@@ -403,18 +473,16 @@ kubectl logs -n {KONG_NAMESPACE} <kong-controller-pod>
         )
         print("WARN: could not detect Kong controller pod. Wrote manual instructions.")
 
-    if command_exists("k6") and RATE_TEST_FILE.exists():
-        kong_host = get_kong_host()
-        env_prefix = f"KONG_URL=http://{kong_host} " if kong_host else ""
+    kong_host = get_kong_host()
+    kong_url = f"http://{kong_host}" if kong_host else ""
 
+    if command_exists(K6) and RATE_TEST_FILE.exists():
         capture_command(
             "k6 run rate-test.js - unauthenticated should return 401",
-            [
-                "bash", "-lc",
-                f"{env_prefix}k6 run {RATE_TEST_FILE}",
-            ],
+            k6_cmd("run", str(RATE_TEST_FILE)),
             EVIDENCE_DIR / "06-k6-run-rate-test-unauthenticated.txt",
             timeout=300,
+            env={"KONG_URL": kong_url} if kong_url else None,
         )
     else:
         write_text(
@@ -425,23 +493,22 @@ Timestamp: {datetime.now().isoformat(timespec="seconds")}
 Result:
 Could not run k6 automatically.
 
+Reason:
+- k6 found: {command_exists(K6)}
+- Expected file exists: {RATE_TEST_FILE.exists()}
+
 Expected file:
 {RATE_TEST_FILE}
 """,
         )
 
-    if command_exists("k6") and KEY_RATE_TEST_FILE.exists():
-        kong_host = get_kong_host()
-        env_prefix = f"KONG_URL=http://{kong_host} API_KEY={API_KEY} " if kong_host else f"API_KEY={API_KEY} "
-
+    if command_exists(K6) and KEY_RATE_TEST_FILE.exists():
         capture_command(
             "k6 run key-rate-test.js - authenticated should return 200 or 429",
-            [
-                "bash", "-lc",
-                f"{env_prefix}k6 run {KEY_RATE_TEST_FILE}",
-            ],
+            k6_cmd("run", str(KEY_RATE_TEST_FILE)),
             EVIDENCE_DIR / "07-k6-run-key-rate-test-authenticated.txt",
             timeout=300,
+            env={"KONG_URL": kong_url, "API_KEY": API_KEY} if kong_url else {"API_KEY": API_KEY},
         )
     else:
         write_text(
@@ -451,6 +518,10 @@ Timestamp: {datetime.now().isoformat(timespec="seconds")}
 
 Result:
 Could not run authenticated k6 automatically.
+
+Reason:
+- k6 found: {command_exists(K6)}
+- Expected file exists: {KEY_RATE_TEST_FILE.exists()}
 
 Expected file:
 {KEY_RATE_TEST_FILE}
@@ -496,41 +567,52 @@ kubectl get svc {KONG_SERVICE} -n {KONG_NAMESPACE} -o jsonpath='{{.status.loadBa
 
     capture_command(
         "401 evidence - request without API key",
-        [
-            "bash", "-lc",
-            f"curl -i {base_url} | grep -E 'HTTP/1.1|message'",
-        ],
+        curl_cmd("-i", "-sS", base_url),
         EVIDENCE_DIR / "08-401-no-api-key-evidence.txt",
         timeout=120,
     )
 
     capture_command(
         "200 evidence - request with valid API key",
-        [
-            "bash", "-lc",
-            (
-                f"curl -i {base_url} -H 'apikey: {API_KEY}' "
-                "| grep -E 'HTTP/1.1|X-RateLimit|RateLimit|message'"
-            ),
-        ],
+        curl_cmd("-i", "-sS", base_url, "-H", f"apikey: {API_KEY}"),
         EVIDENCE_DIR / "09-200-valid-api-key-evidence.txt",
         timeout=120,
     )
 
-    capture_command(
+    capture_authenticated_flood(base_url)
+
+
+def capture_authenticated_flood(base_url: str) -> None:
+    response_file = Path(tempfile.gettempdir()) / "project7-flood-response.txt"
+    lines: list[str] = []
+    final_exit = 0
+
+    display_command = (
+        "for i in 1..10: "
+        f"curl -s -o {response_file} -w %{{http_code}} {base_url} -H 'apikey: <redacted>'"
+    )
+
+    for i in range(1, 11):
+        command = curl_cmd(
+            "-sS",
+            "-o", str(response_file),
+            "-w", "%{http_code}",
+            base_url,
+            "-H", f"apikey: {API_KEY}",
+        )
+        exit_code, output = run_command(command, timeout=30)
+        if exit_code != 0:
+            final_exit = exit_code
+
+        status = output.strip().splitlines()[-1] if output.strip() else f"exit={exit_code}"
+        lines.append(f"Request {i} -> {status}")
+
+    capture_custom_text(
         "429 evidence - authenticated flood test",
-        [
-            "bash", "-lc",
-            (
-                f"for i in $(seq 1 10); do "
-                f"printf 'Request %s -> ' \"$i\"; "
-                f"curl -s -o /tmp/project7-flood-response.txt -w '%{{http_code}}\\n' "
-                f"{base_url} -H 'apikey: {API_KEY}'; "
-                f"done"
-            ),
-        ],
+        display_command,
+        final_exit,
+        "\n".join(lines),
         EVIDENCE_DIR / "10-429-authenticated-flood-evidence.txt",
-        timeout=180,
     )
 
 
@@ -699,6 +781,29 @@ The `02-evidence/` folder intentionally contains plain `.txt` files only. Eviden
     write_text(DELIVERABLES_DIR / "README.md", content)
 
 
+def preflight_checks() -> None:
+    print_step("Checking required CLI tools")
+    required = {"kubectl": KUBECTL, "curl": CURL}
+    missing = [name for name, path in required.items() if not command_exists(path)]
+
+    if missing:
+        print(f"{RED}ERROR: Missing required tools: {', '.join(missing)}{NC}")
+        print("Install the missing tools or set explicit paths, for example:")
+        print("  PowerShell: $env:KUBECTL='C:\\path\\to\\kubectl.exe'")
+        print("  Bash:       export KUBECTL=/usr/local/bin/kubectl")
+        raise SystemExit(1)
+
+    if not command_exists(K6):
+        print(f"{YELLOW}WARN: k6 was not found. Placeholder k6 evidence will be written.{NC}")
+
+    # Fail fast if kubectl exists but cannot talk to the configured cluster.
+    exit_code, output = run_command(kubectl_cmd("version", "--client"), timeout=30)
+    if exit_code != 0:
+        print(f"{RED}ERROR: kubectl exists but failed to run.{NC}")
+        print(output)
+        raise SystemExit(1)
+
+
 def main() -> None:
     print_header("PROJECT 7 DELIVERABLES COLLECTOR")
 
@@ -707,16 +812,11 @@ def main() -> None:
     print(f"Manifest dir : {MANIFEST_DIR}")
     print(f"Python dir   : {PYTHON_DIR}")
     print(f"Deliverables : {DELIVERABLES_DIR}")
+    print(f"kubectl      : {KUBECTL}")
+    print(f"curl         : {CURL}")
+    print(f"k6           : {K6}")
 
-    print_step("Checking required CLI tools")
-    missing = [cmd for cmd in ["kubectl", "bash", "curl"] if not command_exists(cmd)]
-
-    if missing:
-        print(f"{RED}ERROR: Missing required tools: {', '.join(missing)}{NC}")
-        raise SystemExit(1)
-
-    if not command_exists("k6"):
-        print(f"{YELLOW}WARN: k6 was not found. The script will still create placeholder evidence where needed.{NC}")
+    preflight_checks()
 
     reset_deliverables_folder()
     collect_yaml_deliverables_as_markdown()

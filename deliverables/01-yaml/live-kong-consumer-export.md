@@ -1,6 +1,6 @@
 # Live KongConsumer Export
 
-Timestamp: 2026-06-13T22:10:26
+Timestamp: 2026-06-18T16:40:23
 
 Command:
 
@@ -20,15 +20,15 @@ metadata:
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"configuration.konghq.com/v1","credentials":["key-auth-super-secret"],"kind":"KongConsumer","metadata":{"annotations":{"kubernetes.io/ingress.class":"kong"},"name":"lizzo-devote","namespace":"kong"},"username":"lizzo-devote"}
     kubernetes.io/ingress.class: kong
-  creationTimestamp: "2026-06-14T04:41:56Z"
+  creationTimestamp: "2026-06-18T23:30:42Z"
   generation: 1
   name: lizzo-devote
   namespace: kong
-  resourceVersion: "1781412116719695016"
-  uid: 8606e3dc-b3d8-4ad8-bd5c-61e5413ebb38
+  resourceVersion: "1781825444036159016"
+  uid: 568ff56d-3faf-4138-86c8-66c10fe6631f
 status:
   conditions:
-  - lastTransitionTime: "2026-06-14T04:41:56Z"
+  - lastTransitionTime: "2026-06-18T23:30:44Z"
     message: Object was successfully configured in Kong.
     observedGeneration: 1
     reason: Programmed

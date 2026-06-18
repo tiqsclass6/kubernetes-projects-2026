@@ -1,3 +1,5 @@
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service
+# Enable required APIs for GKE cluster
 resource "google_project_service" "compute" {
   project            = var.project_id
   service            = "compute.googleapis.com"
@@ -22,6 +24,8 @@ resource "google_project_service" "sts" {
   disable_on_destroy = false
 }
 
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_cluster
+# Create a GKE cluster with private nodes and VPC-native networking
 resource "google_container_cluster" "kong" {
   provider = google-beta
 
@@ -45,6 +49,7 @@ resource "google_container_cluster" "kong" {
     services_secondary_range_name = "${var.cluster_name}-services"
   }
 
+  # Network policy for pod-to-pod communication and ingress/egress control
   master_authorized_networks_config {
     dynamic "cidr_blocks" {
       for_each = var.authorized_networks
@@ -55,10 +60,12 @@ resource "google_container_cluster" "kong" {
     }
   }
 
+  # Workload Identity for secure service account access from GKE workloads
   workload_identity_config {
     workload_pool = "${var.project_id}.svc.id.goog"
   }
 
+  # Addons for HTTP load balancing, horizontal pod autoscaling, and GCE persistent disk CSI driver
   addons_config {
     http_load_balancing {
       disabled = false

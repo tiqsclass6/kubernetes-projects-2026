@@ -40,87 +40,9 @@ The completed implementation proves that Kong can act as a centralized API contr
 
 ---
 
-## 🏗 **Project Network Architecture**
+## 🏗 **Network Architecture Diagram**
 
-```mermaid id="e5pxgc"
-flowchart LR
-    subgraph LEFT[" "]
-        direction TB
-
-        subgraph CLIENTS[External Clients / Test Sources]
-            direction TB
-            User[User / Browser / curl]
-            K6[k6 Load Test Client]
-        end
-
-        TF[Terraform IaC]
-
-        K6 ~~~ TF
-    end
-
-    subgraph GCP[Google Cloud Platform]
-        direction TB
-
-        subgraph NET[VPC Networking Layer]
-            direction LR
-            VPC[VPC Network]
-            SUBNET[Private Subnets]
-            FW[Firewall Rules]
-            NAT[Cloud NAT]
-
-            VPC --> SUBNET
-            VPC --> FW
-            VPC --> NAT
-        end
-
-        GCLB[GCP External LoadBalancer / External IP]
-
-        subgraph GKE[GKE Cluster: kong]
-            direction TB
-
-            subgraph RUNTIME[Lane 1: Runtime Traffic Flow]
-                direction LR
-                LB[Kong LoadBalancer Service]
-                Kong[Kong Gateway Proxy]
-                Ingress[hello-ingress]
-                SVC[hello-service ClusterIP]
-                PODS[hello Deployment Pods]
-                CM[hello-configmap HTML]
-
-                LB --> Kong --> Ingress --> SVC --> PODS
-                CM -. mounted into pods .-> PODS
-            end
-
-            subgraph CONTROL[Lane 2: Gateway Control / Configuration Flow]
-                direction LR
-                KIC[Kong Ingress Controller]
-                KP1[key-auth KongPlugin]
-                KP2[rate-limit KongPlugin]
-                Consumer[KongConsumer]
-                Secret[key-auth credential Secret]
-
-                KIC -. watches .-> Ingress
-                KIC -. applies .-> KP1
-                KIC -. applies .-> KP2
-                KIC -. programs .-> Kong
-                Consumer --> Secret
-                KP1 -. authenticates with .-> Consumer
-                KP2 -. enforces limits on .-> Kong
-            end
-        end
-
-        FW -. allows inbound 80/443 .-> GCLB
-        SUBNET -. provides cluster networking .-> GKE
-        NAT -. provides outbound egress .-> PODS
-        GCLB --> LB
-    end
-
-    User --> GCLB
-    K6 --> GCLB
-
-    TF --> VPC
-    TF --> GKE
-```
+![diagram.png](/images/diagram.png)
 
 ### **Traffic Flow**
 

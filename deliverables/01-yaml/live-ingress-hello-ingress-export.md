@@ -1,6 +1,6 @@
 # Live Ingress Export
 
-Timestamp: 2026-06-13T22:10:33
+Timestamp: 2026-06-18T16:40:31
 
 Command:
 
@@ -18,12 +18,12 @@ metadata:
     konghq.com/plugins: key-auth-plugin,rate-limit-plugin
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"konghq.com/plugins":"key-auth-plugin,rate-limit-plugin"},"name":"hello-ingress","namespace":"kong"},"spec":{"ingressClassName":"kong","rules":[{"http":{"paths":[{"backend":{"service":{"name":"hello-service","port":{"number":80}}},"path":"/hello","pathType":"Prefix"}]}}]}}
-  creationTimestamp: "2026-06-14T04:41:59Z"
+  creationTimestamp: "2026-06-18T23:30:45Z"
   generation: 1
   name: hello-ingress
   namespace: kong
-  resourceVersion: "1781412119738143011"
-  uid: 5f11648e-4574-4b16-877c-4230bbd6a7cf
+  resourceVersion: "1781825463113647011"
+  uid: d5486d7e-b805-461e-b50f-e6e009689099
 spec:
   ingressClassName: kong
   rules:
@@ -39,5 +39,5 @@ spec:
 status:
   loadBalancer:
     ingress:
-    - ip: 34.31.86.102
+    - ip: 34.30.43.65
 ```
